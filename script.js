@@ -534,8 +534,7 @@
       }},
       { id: 'mail',     label: 'Open email client',           hint: '✉', kind: 'do', action: () => { window.location.href = 'mailto:nicholaslasagna@gmail.com'; } },
       { id: 'resume',   label: 'Download resume (PDF)',       hint: '↓', kind: 'do', action: () => { window.open('Resume.pdf', '_blank'); } },
-      { id: 'github',   label: 'Open GitHub · Maze77-AH',     hint: '↗', kind: 'do', action: () => { window.open('https://github.com/Maze77-AH', '_blank'); } },
-      { id: 'github2',  label: 'Open GitHub · NemesisSSBU',   hint: '↗', kind: 'do', action: () => { window.open('https://github.com/NemesisSSBU', '_blank'); } },
+      { id: 'github',   label: 'Open GitHub · nicholaslasagna', hint: '↗', kind: 'do', action: () => { window.open('https://github.com/nicholaslasagna', '_blank'); } },
       { id: 'linkedin', label: 'Open LinkedIn',               hint: '↗', kind: 'do', action: () => { window.open('https://www.linkedin.com/in/nicholas-lasagna-798118277', '_blank'); } },
       { id: 'realfic',  label: 'Open realfiction.live',       hint: '↗', kind: 'do', action: () => { window.open('https://realfiction.live', '_blank'); } },
       { id: 'theme',    label: 'Toggle theme',                hint: '◐', kind: 'do', action: () => $('#themeBtn')?.click() },
@@ -804,8 +803,9 @@ type 'help' to see commands, or 'tour' for a guided walk.
 start somewhere:
   cat about.md
   cat projects/realfiction.md
-  cat projects/united-exams.md
-  cat projects/nemesisssbu.md
+  cat projects/abandoned-horror.md
+  cat projects/hearthaven.md
+  cat projects/rust-runtime.md
   cat principles.md
   ls projects/
   neofetch
@@ -813,17 +813,19 @@ start somewhere:
 
     const ABOUT = `nicholas lasagna — software engineering intern candidate.
 
-cs at texas tech university (b.s. expected may 2027). currently in
-berkeley, california / bay area.
+cs at texas tech university — accelerated b.s./m.s. program.
+b.s. expected may 2027, math minor, gpa 3.56 / 4.00.
+currently in berkeley, california / bay area.
 
-i started building production-style software early through indie game
-development with a small distributed team — three years of engine-level
-work in unreal engine 4/5, mostly in c++ and c#.
+co-founded imagicast studios in 2021 and lead end-to-end development of
+"abandoned horror," an asymmetrical multiplayer horror game (6v1v1).
+three years of engine-level work in unreal engine 4/5, mostly in c++
+and c#.
 
-from there i moved deeper into systems, runtime tooling, infrastructure,
-and backend / platform work. my energy goes into the layer of the stack
-where the abstraction breaks — servers, runtimes, tooling, and real
-user-facing systems.
+from there i moved deeper into systems, runtime tooling, distributed
+infrastructure, and backend / platform work. my energy goes into the
+layer of the stack where the abstraction breaks — servers, runtimes,
+tooling, and real user-facing systems.
 
 looking for: summer 2026 swe internship.
 strongest fits: systems, runtime / tooling, distributed services,
@@ -854,36 +856,42 @@ performance, infrastructure, backend / platform, game tech.
     the cli you build for yourself sets the velocity for everything else.
 `;
 
-    const STACK = `comfortable shipping with
-  rust          ── runtime, tooling
-  java          ── backends, plugins
-  typescript    ── next.js, web
-  python        ── ocr, automation
-  c++ / c       ── ue5, low-level
-  c#            ── ue / unity
+    const STACK = `languages
+  python         ── automation, ocr
+  java           ── backends, jvm tuning
+  rust           ── runtime, tooling
+  c++ / c        ── ue5, low-level
+  c#             ── ue / unity
+  x64 assembly   ── architecture coursework
+  javascript/ts  ── next.js, web
+  sql            ── schema, rls
+  html / css     ── structure, layout
 
-systems & infra
-  linux (ubuntu)     ── daily driver, prod
-  oracle cloud       ── realfiction host
-  mariadb / postgres ── realfiction · supabase
-  redis              ── cache, state
-  docker             ── isolation, deploy
-  git · cloudflare   ── distributed wf · dns, edge
+infrastructure & cloud
+  linux (ubuntu)      ── daily driver, prod
+  oracle cloud (oci)  ── realfiction host
+  docker              ── isolation, deploy
+  git                 ── distributed workflow
+  rest apis · ci/cd   ── design, pipelines
 
-web · game · currently deepening
-  next.js · supabase     ── united exams, heroic submission
-  postgresql · rls       ── schema, policies, triggers
-  tailwind · shadcn/ui   ── ui systems
-  velocity · folia       ── jvm proxies, region-threaded
-  unreal engine 4/5      ── gameplay systems, engine
-  assembly · architecture ── risc-v, masm/x86, study
+systems & backend
+  distributed systems ── multi-node, real-time
+  runtime debugging   ── jvm tuning, monitoring
+  postgresql          ── schema, queries
+  supabase            ── auth, realtime, rls
+
+engines & frameworks
+  unreal engine 4/5   ── abandoned horror, gameplay
+  unity               ── prototype work
+  clickteam fusion 2.5 ── rapid 2d prototypes
+  next.js             ── hearthaven, web
+  blender             ── asset pipeline
 `;
 
     const CONTACT = `contact
 
   email     nicholaslasagna@gmail.com
-  github    github.com/Maze77-AH
-  github 2  github.com/NemesisSSBU
+  github    github.com/nicholaslasagna
   linkedin  linkedin.com/in/nicholas-lasagna-798118277
   resume    /Resume.pdf
   website   https://www.nicholaslasagna.com
@@ -891,166 +899,133 @@ web · game · currently deepening
 shortcut: 'email' opens your mail client, 'resume' downloads the pdf.
 `;
 
-    const EDU = `texas tech university   — b.s. computer science
-  enrolled  fall 2023
-  graduate  may 2027
-  coursework  systems, architecture, languages, math
+    const EDU = `texas tech university   — b.s. computer science (math minor)
+  program     accelerated bs/ms — grad-level coursework during undergrad
+  enrolled    fall 2023
+  graduate    b.s. may 2027
+  gpa         3.56 / 4.00
+
+  coursework  computer architecture, theory of automata,
+              software engineering, data structures & algorithms,
+              analysis of algorithms, systems & assembly,
+              engineering statistics, differential equations
 `;
 
-    const REALFIC = `realfiction — live game server infrastructure        [ 2023 → live ]
+    const REALFIC = `realfiction — distributed multiplayer server infrastructure [ 2023 → live ]
 
-stack: java · ubuntu · oracle cloud · velocity · folia/purpur · mariadb · redis
+stack: java · distributed systems · oracle cloud (oci) · ubuntu · jvm tuning · live ops
 
-a live, user-facing multi-server java game network running on ubuntu /
-oracle cloud free-tier infrastructure. designed, deployed, and currently
-operated end to end. setup includes a velocity proxy, multiple server
-nodes (lobby / arcade / smp / anarchy), mariadb + redis, a reverse proxy
-layer, and a folia / purpur / pufferfish style runtime.
+architected and operated a distributed multiplayer server infrastructure
+hosted on oracle cloud infrastructure (oci) using ubuntu linux. managed
+live production backend systems supporting concurrent real-time
+multiplayer workloads — high availability, low latency.
 
 highlights:
-  → proxy routing, plugin interoperability, database access,
-    server configuration, permissions, deployment hygiene.
-  → region-threaded plugin work on folia: refactored unsafe world
-    access into region-safe scheduling; cut async-violation crashes.
-  → tuned jvm, proxy, and chunk / database pipelines under real player
-    load; treated tail latency as the actual kpi, not mean.
-  → owned config hygiene, plugin compatibility, observability —
-    every change shipped behind a known-good baseline.
+  → multi-server architecture integrating custom backend services,
+    persistent player data systems, and live production debugging.
+  → configured advanced networking, permissions, deployment pipelines,
+    process monitoring, jvm tuning, and runtime optimization.
+  → tail latency over mean as the actual player-experience kpi.
+  → every change shipped behind a known-good baseline.
 
 links:
   https://realfiction.live
-  https://github.com/Maze77-AH
+  https://github.com/nicholaslasagna
 `;
 
-    const NEMESIS = `nemesisssbu — rust runtime tooling                     [ 2024 → active ]
+    const RUSTRUNTIME = `rust runtime tooling — memory-safe systems for a live community [ 2024 → active ]
 
-stack: rust · runtime tooling · low-level systems
+stack: rust · memory safety · concurrency · low-level systems
 
-rust runtime / tooling work for a non-commercial super smash bros.
-ultimate modding project with a public community. the work targets
-memory safety, explicit failure handling, and robust api boundaries —
-the kind of layer where being slightly wrong can hurt someone else's
-machine.
+engineered performance-sensitive runtime tooling in rust for a large-scale
+game modification project with active community usage. debugged complex
+runtime behavior involving concurrent execution and systems-level
+resource management.
 
 why rust over c++:
   the type system pays for itself in tooling that runs close to a host
   process. memory safety isn't a feature here — it's a precondition.
 
 highlights:
-  → careful api boundaries between modded code and the host runtime,
-    no silent fallbacks, explicit errors.
-  → emphasized debuggability and explainability for a public modding
-    community.
-  → patched paths designed to fail loudly in dev, gracefully in prod.
+  → strict focus on memory safety, runtime correctness, and low-level
+    systems interaction to ensure stability under load.
+  → debugged complex concurrency behavior and explicit failure handling
+    across many user environments.
+  → loud-in-dev, graceful-in-prod for community-facing tooling.
 
 links:
-  https://github.com/NemesisSSBU
+  https://github.com/nicholaslasagna
 `;
 
-    const REALCHAT = `realchat — ocr desktop automation assistant           [ 2023 ]
+    const ABANDONED = `abandoned horror @ imagicast studios                  [ 2021 → present ]
 
-stack: python · ocr · tesseract · macos · packaging
+stack: unreal engine 4/5 · c++ · c# · multiplayer · gameplay systems
 
-python desktop tool combining screen capture, tesseract ocr, ai-assisted
-interpretation, and os-level automation with explicit safeguards.
+co-founded imagicast studios and led the end-to-end development of
+"abandoned horror," an asymmetrical multiplayer horror game built on a
+6v1v1 gameplay loop. owned core systems architecture from initial
+design through production deployment.
 
 highlights:
-  → robust ocr noise filtering for unstable on-screen text and
-    inconsistent ui layouts.
-  → safeguards around input dispatch — predictable, testable
-    automation behavior.
-  → macos packaging: app bundling, encrypted local config, license-key
-    validation, hotkeys, gui.
+  → engineered engine-level gameplay systems, state management, input
+    handling, and runtime multiplayer logic.
+  → designed and implemented distinctive roles within the 6v1v1 loop.
+  → coordinated distributed development workflows via git, balancing
+    technical correctness, maintainability, and feature delivery.
 
 links:
-  https://github.com/Maze77-AH
+  https://github.com/nicholaslasagna
 `;
 
-    const INDIE = `indie game studio — co-founder & developer            [ 2021 — 2023 ]
+    const HEARTHAVEN = `hearthaven — real-time multiplayer web platform       [ 2025 → in dev ]
 
-stack: unreal engine 4/5 · c++ · c# · java
+stack: next.js · typescript · supabase · postgresql · rls · realtime
 
-co-founded a multi-year indie studio. led development of a multi-year
-software project, owning core systems from initial design through
-production deployment and iteration.
+real-time multiplayer interactive web platform with persistent user
+systems, social interaction, and browser-based gameplay mechanics.
+full-stack on modern cloud-backed technologies.
 
 highlights:
-  → engine-level systems: state management, input handling, gameplay
-    logic. clean, well-documented, maintainable codebases.
-  → collaborated with a distributed team using git-based workflows,
-    code reviews, and iterative development.
-  → balanced technical correctness with product goals.
+  → auth, persistent player state, and real-time synchronization
+    using supabase + postgresql.
+  → scalable schema with row-level security (rls) for progression
+    systems, inventories, and live user experiences.
+  → browser-native gameplay loop with first-class security boundaries
+    and validation throughout.
 `;
 
-    const FOLIA = `folia compatibility                                    [ 2024 ]
+    const REALCHAT = `realchat — high-performance python automation system  [ 2023 ]
 
-stack: java · concurrency · refactoring
+stack: python · event-driven systems · automation · ocr · tesseract · macos
 
-migrated and refactored java plugins to satisfy folia's region-threaded
-model. the interesting bug class here is "looks correct, runs correct,
-crashes once a week."
+high-performance python desktop automation system integrating ocr
+pipelines and ai-assisted workflows. event-driven, low-latency, and
+safe by construction.
 
 highlights:
-  → refactored unsafe world access patterns into region-safe scheduling.
-  → eliminated async-thread access violations and slow cleanup leaks.
-  → documented patterns the rest of the plugin set could re-use.
+  → complex screen capture, text parsing, decision matrices, and
+    system-level automation with runtime safety.
+  → encrypted licensing and authentication: secure environment
+    variables, runtime validation.
+  → optimized low-latency execution and robust error handling for
+    safe operating system interaction.
 
 links:
-  https://github.com/Maze77-AH
+  https://github.com/nicholaslasagna
 `;
 
     const LOWLEVEL = `low-level cs & systems                                [ ongoing ]
 
-stack: c · assembly (risc-v, masm/x86) · architecture · parsing
+stack: c · x64 assembly · architecture · automata · algorithms
 
-coursework and self-study in computer architecture, assembly, c, and
-operating-systems fundamentals. the kind of work that makes rust's
-borrow checker feel like a friend.
+texas tech coursework + self-study via the accelerated bs/ms program.
+the kind of work that makes rust's borrow checker feel like a friend.
 
-  → assembly and architecture: registers, memory, calling conventions,
-    instruction-level behavior, risc-style concepts.
-  → c / c++ systems study: pointers, memory layout, compilation,
-    os fundamentals.
-  → programming languages: grammars, parsing, finite automata,
-    semantics, recursive descent, shift-reduce.
-`;
-
-    const UNITED = `united exams — full-stack study platform              [ 2025 → active ]
-
-stack: next.js (app router) · typescript · supabase · postgresql · rls · tailwind · shadcn/ui
-
-a full-stack study platform with auth, persistent quiz attempts,
-mastery / streaks, leaderboard, and a polished academic ui.
-
-highlights:
-  → designed sql schema, rls policies, and triggers / views for
-    leaderboard, mastery, and streak tracking.
-  → supabase auth, protected routes, account settings, password reset,
-    email templates.
-  → courses, quizzes, profile, settings, contact — responsive across
-    desktop and mobile.
-  → security fundamentals: least-privilege access, rls, validation,
-    reliable session behavior.
-`;
-
-    const HEROIC = `heroic submission — game backend prototype            [ 2025 → r&d ]
-
-stack: next.js · typescript · postgresql · api design · eos (planned)
-
-backend foundations for an original-ip live-service multiplayer game.
-public catalog api with locale / chapter filtering, account-linking
-groundwork, and epic online services planning for cross-progression.
-
-highlights:
-  → catalog endpoint:
-      get /api/heroic-submission/v1/catalog
-    returns success, requestid, data.meta, currentchapterkey, chapters,
-    paragons, operators, incidentzones, chapterpasstiers, directives,
-    cosmetics.
-  → reads public hs catalog tables; excludes internal release_state and
-    parent chapter data.
-  → public / private boundaries treated as a first-class design concern.
-  → planning eos integration for multiplayer / account foundation.
+  → computer architecture and x64 assembly: registers, memory layout,
+    calling conventions, instruction-level behavior.
+  → c / c++ systems study: pointers, compilation, os fundamentals.
+  → theory: grammars, automata, recursive descent, shift-reduce,
+    analysis of algorithms, engineering statistics.
 `;
 
     const PORTSHELL = `interactive portfolio shell                           [ 2026 ]
@@ -1064,7 +1039,8 @@ and accessible mobile nav — no frameworks.
 highlights:
   → real repl with virtual filesystem (you're using it).
   → command palette (⌘k), keyboard shortcuts, theme toggle, live local
-    time pinned to berkeley.
+    time pinned to berkeley, live web vitals readout.
+  → live realfiction status ping in the hero.
   → deployed via github pages with a cloudflare-managed custom domain.
 `;
 
@@ -1078,13 +1054,11 @@ highlights:
         'education.txt':   f(EDU),
         'projects':        d({
           'realfiction.md':       f(REALFIC),
-          'nemesisssbu.md':       f(NEMESIS),
-          'united-exams.md':      f(UNITED),
-          'heroic-submission.md': f(HEROIC),
+          'rust-runtime.md':      f(RUSTRUNTIME),
+          'abandoned-horror.md':  f(ABANDONED),
+          'hearthaven.md':        f(HEARTHAVEN),
           'realchat.md':          f(REALCHAT),
-          'folia.md':             f(FOLIA),
           'portfolio-shell.md':   f(PORTSHELL),
-          'indie-studio.md':      f(INDIE),
           'lowlevel.md':          f(LOWLEVEL),
         }),
         '.secrets':        d({
@@ -1339,16 +1313,16 @@ no scheduled maintenance windows. occasional production fires.`);
           const yrs = ((Date.now() - start) / (1000 * 60 * 60 * 24 * 365.25)).toFixed(1);
 
           const rows = [
-            ['user',   'nicholas@portfolio'],
-            ['os',     'nicholaslasagna.com (static, hand-written)'],
-            ['kernel', 'inter / instrument-serif / jetbrains-mono'],
-            ['shell',  'js (esm, no deps)'],
-            ['uptime', `${yrs} years (shipping since 2021)`],
-            ['edu',    'texas tech university — b.s. cs (\'27)'],
-            ['stack',  'rust · java · typescript · python · c++'],
-            ['active', 'united exams · heroic submission · realfiction'],
-            ['focus',  'systems · runtime · infra · backend / platform'],
-            ['status', 'open to summer 2026 swe internships'],
+            ['user',    'nicholas@portfolio'],
+            ['os',      'nicholaslasagna.com (static, hand-written)'],
+            ['kernel',  'inter / instrument-serif / jetbrains-mono'],
+            ['shell',   'js (esm, no deps)'],
+            ['uptime',  `${yrs} years (shipping since 2021)`],
+            ['edu',     'texas tech — accel. bs/ms cs (\'27) · gpa 3.56'],
+            ['stack',   'rust · java · typescript · python · c++ · x64 asm'],
+            ['active',  'abandoned horror · hearthaven · rust runtime · realfiction'],
+            ['focus',   'systems · runtime · infra · backend / platform · game tech'],
+            ['status',  'open to summer 2026 swe internships'],
           ];
 
           const rowHtml = rows.map(([k, v]) => `<span class="k">${escape(k)}</span> <span class="v">${linkify(escape(v))}</span>`).join('\n');
@@ -1399,8 +1373,8 @@ no scheduled maintenance windows. occasional production fires.`);
 
       github: {
         desc: 'open github',
-        run: (args) => {
-          const url = args[0] === 'alt' ? 'https://github.com/NemesisSSBU' : 'https://github.com/Maze77-AH';
+        run: () => {
+          const url = 'https://github.com/nicholaslasagna';
           window.open(url, '_blank'); printOk(`opening ${url}`);
         }
       },
@@ -1680,7 +1654,7 @@ no scheduled maintenance windows. occasional production fires.`);
      LIVE GITHUB ACTIVITY — public events + heatmap
      ========================================================================== */
 
-  const GITHUB_USER = 'Maze77-AH';
+  const GITHUB_USER = 'nicholaslasagna';
 
   function relTime(date) {
     const d = (Date.now() - date.getTime()) / 1000;

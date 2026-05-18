@@ -42,7 +42,7 @@
   <text x="80" y="180"
     font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace"
     font-size="20" letter-spacing="3.6" fill="#8d8a82">
-    SOFTWARE ENGINEERING INTERN CANDIDATE · TEXAS TECH CS '27
+    SWE INTERN CANDIDATE · TEXAS TECH CS · ACCEL. BS/MS · GPA 3.56
   </text>
 
   <!-- Display headline -->
@@ -78,7 +78,9 @@
     <text x="680" y="555" fill="#ec4d6e">·</text>
     <text x="700" y="555">C++</text>
     <text x="755" y="555" fill="#4dd6cf">·</text>
-    <text x="775" y="555">Linux</text>
+    <text x="775" y="555">UE5</text>
+    <text x="830" y="555" fill="#ec4d6e">·</text>
+    <text x="850" y="555">x64 ASM</text>
   </g>
 
   <text x="80" y="595"
