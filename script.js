@@ -366,117 +366,468 @@
   }
 
   /* -------- modal -------- */
-  function initModal() {
-    const modal = $('#modal');
-    if (!modal) return null;
+  /* ==========================================================================
+     CASE STUDIES — rich, structured engineering write-ups rendered from data.
+     Each project opens a full-screen overlay: overview, architecture diagram,
+     engineering challenges, performance, deployment, timeline, stack, links.
+     ========================================================================== */
+  const esc = (s) => String(s ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-    const backdrop = $('.modal-backdrop', modal);
-    const closes = $$('[data-close="true"]', modal);
-    const titleEl = $('#modalTitle', modal);
-    const bodyEl = $('#modalBody', modal);
-    const tagsEl = $('#modalTags', modal);
-    const linksEl = $('#modalLinks', modal);
+  const CASES = {
+    realfiction: {
+      title: 'RealFiction',
+      subtitle: 'Distributed Multiplayer Server Infrastructure',
+      role: 'Architect & Operator',
+      timeline: '2023 → Live',
+      status: 'Live in production',
+      tag: 'Infrastructure',
+      summary: 'A live, multi-node Java game backend on Oracle Cloud — proxy routing, persistent data, JVM tuning, and real on-call.',
+      overview: [
+        'RealFiction is a distributed multiplayer server platform I architected, deployed, and operate on Oracle Cloud Infrastructure (OCI) running Ubuntu Linux. It serves concurrent real-time multiplayer workloads with high availability and low latency.',
+        'The interesting engineering is not the game — it is the seam between distributed services and a JVM runtime under real player load. A request fans out across a proxy, multiple authoritative server nodes, a relational store, and a cache, and every hop is a place tail latency can hide.'
+      ],
+      arch: {
+        caption: 'Request path: edge → proxy → authoritative nodes → persistence, with monitoring out-of-band.',
+        tiers: [
+          { label: 'Edge', nodes: [{ name: 'Players', note: 'concurrent clients' }, { name: 'Cloudflare', note: 'DNS · edge' }] },
+          { label: 'Gateway', nodes: [{ name: 'Velocity Proxy', note: 'routing · auth handoff', primary: true }] },
+          { label: 'Compute · OCI / Ubuntu', nodes: [{ name: 'Lobby', note: 'Java · Folia' }, { name: 'SMP', note: 'Java · Purpur' }, { name: 'Arcade', note: 'Java' }, { name: 'Anarchy', note: 'Java' }] },
+          { label: 'State', nodes: [{ name: 'MariaDB', note: 'persistent player data' }, { name: 'Redis', note: 'cache · cross-node state' }] },
+          { label: 'Ops', nodes: [{ name: 'Monitoring', note: 'process · latency' }, { name: 'Deploy pipeline', note: 'known-good baseline' }] }
+        ]
+      },
+      challenges: [
+        { problem: 'Region-threaded runtime (Folia) makes naive world access a crash, not a warning.', approach: 'Refactored plugin/service code to be region-safe — schedule work onto the owning region instead of touching shared state from arbitrary threads.', outcome: 'Eliminated a whole class of async world-access violations that only surfaced under load.' },
+        { problem: 'Tail latency spikes were invisible in averages.', approach: 'Treated p99, not mean, as the player-experience KPI; tuned JVM garbage collection and chunk/database pipelines around it.', outcome: 'Smoother frame pacing under concurrency; spikes became diagnosable instead of anecdotal.' },
+        { problem: 'A bad deploy on a live service is a felt outage.', approach: 'Every change ships behind a known-good baseline that can be restored in one command.', outcome: 'Confidence to iterate on production without gambling uptime.' }
+      ],
+      performance: [
+        'JVM GC tuning targeting pause-time predictability over raw throughput.',
+        'Redis as a cross-node cache to keep hot reads off the relational store.',
+        'Proxy-level routing so node restarts do not drop the whole network.'
+      ],
+      deployment: [
+        'Oracle Cloud Infrastructure (OCI) compute, Ubuntu Linux, managed by systemd-style service supervision.',
+        'Reverse proxy + DNS via Cloudflare; per-node configuration kept under version control.',
+        'Rollback to a known-good baseline as a first-class operation, not an afterthought.'
+      ],
+      stack: {
+        Languages: ['Java'],
+        'Infrastructure': ['Oracle Cloud (OCI)', 'Ubuntu Linux', 'Cloudflare', 'Docker'],
+        'Runtime & data': ['Velocity', 'Folia / Purpur', 'MariaDB', 'Redis', 'JVM tuning']
+      },
+      links: [
+        { label: 'Visit realfiction.live', url: 'https://realfiction.live', primary: true },
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna' }
+      ]
+    },
 
+    hearthaven: {
+      title: 'HeartHaven',
+      subtitle: 'Real-time Multiplayer Web Platform',
+      role: 'Full-stack Engineer',
+      timeline: '2025 → In development',
+      status: 'In active development',
+      tag: 'Platform',
+      summary: 'Not a website — a multiplayer application platform: live presence, companions, room decorating, and gardening, all cloud-persisted.',
+      overview: [
+        'HeartHaven is a real-time multiplayer web platform where players share a living space: a companion system, room decorating, gardening, and social interaction, all synchronized live and persisted to the cloud.',
+        'The architecture problem is keeping many clients consistent in real time while every player mutates shared, persistent state — and doing it with browser-native rendering rather than a native client.'
+      ],
+      arch: {
+        caption: 'Next.js + Phaser render the world; Supabase provides auth, realtime channels, and a row-level-secured Postgres.',
+        tiers: [
+          { label: 'Client', nodes: [{ name: 'Next.js', note: 'app shell · routing' }, { name: 'Phaser', note: 'canvas world · render loop', primary: true }, { name: 'TypeScript', note: 'typed state bridge' }] },
+          { label: 'Realtime', nodes: [{ name: 'Supabase Realtime', note: 'presence · broadcast', primary: true }] },
+          { label: 'Backend', nodes: [{ name: 'Supabase Auth', note: 'sessions' }, { name: 'Postgres', note: 'authoritative state' }, { name: 'Row-Level Security', note: 'per-user policies' }] },
+          { label: 'Domain tables', nodes: [{ name: 'players' }, { name: 'rooms' }, { name: 'gardens' }, { name: 'companions' }, { name: 'inventory' }] }
+        ]
+      },
+      challenges: [
+        { problem: 'Live multiplayer state diverges the moment two clients act at once.', approach: 'Optimistic local updates reconciled against authoritative Postgres, with Supabase Realtime presence + broadcast keeping a room in sync.', outcome: 'Edits feel instant locally while the server stays the source of truth.' },
+        { problem: 'Phaser owns a render loop; React owns the DOM. They must not fight.', approach: 'A typed state bridge: React/Next manages app state and auth, Phaser subscribes to a normalized store and renders — one direction of truth.', outcome: 'No tearing between UI chrome and the canvas world.' },
+        { problem: 'Persistent shared state is a security surface — anyone can call the API.', approach: 'Row-Level Security policies enforce per-user access at the database, not just in the client; writes are validated server-side.', outcome: 'Least-privilege by construction: a forged request cannot read or write another player’s data.' }
+      ],
+      performance: [
+        'Debounced persistence so decorating/gardening edits batch instead of hammering the DB.',
+        'Realtime channels partitioned per room to bound fan-out.',
+        'Optimistic UI to hide round-trip latency on common actions.'
+      ],
+      deployment: [
+        'Next.js app deployed on managed edge hosting; Supabase-managed Postgres + Auth + Realtime.',
+        'Environment-scoped secrets; RLS policies versioned alongside schema migrations.'
+      ],
+      stack: {
+        Languages: ['TypeScript', 'SQL'],
+        Frontend: ['Next.js', 'Phaser', 'React'],
+        Backend: ['Supabase', 'PostgreSQL', 'Row-Level Security', 'Realtime']
+      },
+      links: [
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
+      ]
+    },
+
+    reallang: {
+      title: 'RealLang',
+      subtitle: 'An AI-native Programming Language',
+      role: 'Language & Compiler Engineer',
+      timeline: '2025 → R&D',
+      status: 'Research / in development',
+      tag: 'Compilers',
+      summary: 'A language designed to be generated and repaired reliably by LLMs: deterministic syntax, structured repairable diagnostics, C-backed execution.',
+      overview: [
+        'RealLang is a programming language designed around a specific question: what would a language look like if its primary author were a model, not a human? The goal is reliable generation and automatic repair.',
+        'Three ideas drive the design. Deterministic syntax: one canonical way to express a construct, so a model is not forced to choose between equivalent spellings. Repairable diagnostics: errors carry structured, machine-applicable fixes instead of prose. C-backed execution: the language lowers to C for predictable, native performance.'
+      ],
+      arch: {
+        caption: 'A classic front-end pipeline with a repair loop: diagnostics are structured so a tool or model can apply fixes and re-run.',
+        tiers: [
+          { label: 'Source', nodes: [{ name: 'RealLang source', note: 'deterministic syntax' }] },
+          { label: 'Front end', nodes: [{ name: 'Lexer', note: 'tokens' }, { name: 'Parser', note: 'recursive descent', primary: true }, { name: 'AST', note: 'typed tree' }] },
+          { label: 'Diagnostics', nodes: [{ name: 'Repairable diagnostics', note: 'structured fixes', primary: true }, { name: 'Repair loop', note: 'apply → re-check' }] },
+          { label: 'Back end', nodes: [{ name: 'Codegen', note: 'lower to C' }, { name: 'C compiler', note: 'native binary' }] }
+        ]
+      },
+      challenges: [
+        { problem: 'Ambiguous grammars make model output unstable — many spellings, same meaning.', approach: 'Designed a deterministic syntax with a single canonical form and a canonical formatter, shrinking the decision space the model has to navigate.', outcome: 'Generation becomes more repeatable; diffs stay meaningful.' },
+        { problem: 'Traditional compiler errors are written for humans, not machines.', approach: 'Diagnostics are emitted as structured records — location, cause, and a suggested edit — so tooling (or an LLM) can apply a fix programmatically.', outcome: 'Errors become a repair API, not a dead end.' },
+        { problem: 'A new language with no runtime is a toy.', approach: 'Lower to C and lean on a mature C toolchain for execution, so programs run as predictable native binaries.', outcome: 'Real performance and portability without building a backend from scratch.' }
+      ],
+      performance: [
+        'C-backed lowering: execution is native, not interpreted.',
+        'Recursive-descent parser with explicit error recovery to keep diagnostics flowing after the first mistake.'
+      ],
+      deployment: [],
+      stack: {
+        Languages: ['Rust', 'C'],
+        'Compiler': ['Lexer', 'Recursive-descent parser', 'AST', 'Codegen'],
+        'Research': ['LLM reliability', 'Structured diagnostics', 'Deterministic syntax']
+      },
+      links: [
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
+      ]
+    },
+
+    unitedexams: {
+      title: 'UnitedExams',
+      subtitle: 'Full-stack Educational Platform',
+      role: 'Full-stack Engineer',
+      timeline: '2025',
+      status: 'Built',
+      tag: 'Platform',
+      summary: 'A practice-and-progress platform: adaptive practice, course organization, accounts, and a secure, row-level-secured backend.',
+      overview: [
+        'UnitedExams is a full-stack educational platform for structured practice: organized courses, practice systems, progress tracking, and user accounts on a secure backend.',
+        'The backend is the product. Content organization, progress modeling, and adaptive selection all live behind authenticated, row-level-secured APIs so a user only ever sees their own state.'
+      ],
+      arch: {
+        caption: 'Next.js front end over a Supabase backend; adaptive selection reads mastery to choose the next item.',
+        tiers: [
+          { label: 'Client', nodes: [{ name: 'Next.js', note: 'app router' }, { name: 'TypeScript', note: 'typed UI' }] },
+          { label: 'Backend', nodes: [{ name: 'Supabase Auth', note: 'accounts' }, { name: 'Postgres', note: 'courses · attempts · progress', primary: true }, { name: 'RLS', note: 'per-user policies' }] },
+          { label: 'Logic', nodes: [{ name: 'Adaptive selection', note: 'next item by mastery', primary: true }, { name: 'Progress tracking', note: 'streaks · mastery' }] }
+        ]
+      },
+      challenges: [
+        { problem: 'Practice is only useful if it adapts to the learner.', approach: 'Model per-topic mastery and select the next item from weak areas instead of a fixed sequence.', outcome: 'Practice targets gaps rather than re-drilling what is already known.' },
+        { problem: 'Educational data is per-user and sensitive.', approach: 'Row-Level Security enforces ownership at the database; protected routes guard the app surface.', outcome: 'A request can only ever touch the requesting user’s rows.' }
+      ],
+      performance: [
+        'Indexed queries for attempt history and progress lookups.',
+        'Server-validated writes to keep the client from being the source of truth.'
+      ],
+      deployment: [
+        'Next.js on managed hosting; Supabase-managed Postgres + Auth.',
+        'Schema, policies, and migrations kept together and versioned.'
+      ],
+      stack: {
+        Languages: ['TypeScript', 'SQL'],
+        Frontend: ['Next.js', 'React'],
+        Backend: ['Supabase', 'PostgreSQL', 'Row-Level Security']
+      },
+      links: [
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
+      ]
+    },
+
+    rust: {
+      title: 'Rust Runtime Tooling',
+      subtitle: 'Memory-safe systems for a live community',
+      role: 'Systems Engineer',
+      timeline: '2024 → Active',
+      status: 'Active',
+      tag: 'Systems',
+      summary: 'Performance-sensitive runtime tooling in Rust for a large modding project — memory safety and concurrency where being wrong hurts someone else’s machine.',
+      overview: [
+        'Performance-sensitive runtime tooling written in Rust for a large-scale game modification project with active community usage. The work lives at the low level: concurrent execution and systems-level resource management.',
+        'Rust over C++ was a deliberate call. This code runs close to a host process on machines I do not control, so memory safety and runtime correctness are preconditions, not features — the type system pays for itself in tooling that has to run unsupervised.'
+      ],
+      arch: {
+        caption: 'Tooling sits between user input and the host runtime, with explicit, debuggable boundaries.',
+        tiers: [
+          { label: 'Input', nodes: [{ name: 'Community config', note: 'untrusted' }] },
+          { label: 'Tooling (Rust)', nodes: [{ name: 'Validation', note: 'fail loudly in dev' }, { name: 'Runtime layer', note: 'memory-safe', primary: true }, { name: 'Error handling', note: 'no silent fallbacks' }] },
+          { label: 'Host', nodes: [{ name: 'Game runtime', note: 'host process' }] }
+        ]
+      },
+      challenges: [
+        { problem: 'Concurrency bugs in unsafe code corrupt a stranger’s session.', approach: 'Used Rust’s ownership model to make data races a compile error, and kept failure handling explicit.', outcome: 'Whole categories of memory and concurrency faults ruled out before shipping.' },
+        { problem: 'Tooling that fails silently is worse than tooling that crashes.', approach: 'Designed to fail loudly in development and degrade gracefully in production.', outcome: 'Problems are visible to me, not mysterious to users.' }
+      ],
+      performance: [],
+      deployment: [],
+      stack: {
+        Languages: ['Rust'],
+        Focus: ['Memory safety', 'Concurrency', 'Low-level systems', 'Runtime debugging']
+      },
+      links: [
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
+      ]
+    },
+
+    realchat: {
+      title: 'RealChat',
+      subtitle: 'High-performance Python Automation System',
+      role: 'Engineer',
+      timeline: '2023',
+      status: 'Built',
+      tag: 'Tools',
+      summary: 'Event-driven desktop automation with OCR pipelines, AI-assisted workflows, encrypted licensing, and safe OS interaction.',
+      overview: [
+        'RealChat is a high-performance Python desktop automation system integrating OCR pipelines and AI-assisted workflows: screen capture, text parsing, decision logic, and system-level automation — built for runtime safety.',
+        'It ships as a real product, with an encrypted licensing and authentication layer handling secure environment variables and runtime validation.'
+      ],
+      arch: {
+        caption: 'An event-driven loop: capture → recognize → decide → act, with safety checks before any OS interaction.',
+        tiers: [
+          { label: 'Capture', nodes: [{ name: 'Screen capture', note: 'regions' }, { name: 'OCR (Tesseract)', note: 'text extraction', primary: true }] },
+          { label: 'Decide', nodes: [{ name: 'Parsing', note: 'noise filtering' }, { name: 'Decision matrix', note: 'AI-assisted' }] },
+          { label: 'Act', nodes: [{ name: 'Safety checks', note: 'validate first', primary: true }, { name: 'OS automation', note: 'input dispatch' }] },
+          { label: 'Cross-cutting', nodes: [{ name: 'Encrypted licensing', note: 'secrets · validation' }] }
+        ]
+      },
+      challenges: [
+        { problem: 'OCR on real screens is noisy and layouts shift.', approach: 'Robust filtering and tolerant parsing instead of brittle pixel/exact-string matching.', outcome: 'Predictable behavior across inconsistent UI states.' },
+        { problem: 'Automating OS input is dangerous if it fires blindly.', approach: 'Safety checks gate every dispatch; the loop is event-driven and testable.', outcome: 'Automation stays predictable and recoverable.' }
+      ],
+      performance: ['Low-latency execution path with robust error handling around OS interaction.'],
+      deployment: ['Packaged for macOS with app bundling, encrypted local config, and license-key validation.'],
+      stack: {
+        Languages: ['Python'],
+        Focus: ['OCR / Tesseract', 'Event-driven systems', 'Automation', 'Encrypted licensing']
+      },
+      links: [
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
+      ]
+    },
+
+    imagicast: {
+      title: 'Imagicast Studios',
+      subtitle: 'Independent Game Studio — Engine & Systems',
+      role: 'Co-founder & Lead Developer',
+      timeline: '2021 → Present',
+      status: 'Active',
+      tag: 'Games',
+      summary: 'Co-founded a studio; lead engine-level systems across two titles — Abandoned Horror (6v1v1 multiplayer horror) and Heroic Submission.',
+      overview: [
+        'I co-founded Imagicast Studios in 2021 and lead development across its titles. The flagship, Abandoned Horror, is an asymmetrical multiplayer horror game built around a 6v1v1 gameplay loop; Heroic Submission is a second original IP in development.',
+        'My work is the engineering spine: core systems architecture from initial design through production deployment — state management, input handling, and runtime multiplayer logic in Unreal Engine 4/5.'
+      ],
+      arch: {
+        caption: 'Engine-level systems beneath gameplay: authoritative state, input, and replicated multiplayer logic.',
+        tiers: [
+          { label: 'Engine', nodes: [{ name: 'Unreal Engine 4/5', note: 'C++ · C#' }] },
+          { label: 'Core systems', nodes: [{ name: 'State management', note: 'authoritative', primary: true }, { name: 'Input handling', note: 'buffered' }, { name: 'Gameplay systems', note: 'roles · rules' }] },
+          { label: 'Multiplayer', nodes: [{ name: 'Runtime replication', note: '6v1v1 loop', primary: true }] }
+        ]
+      },
+      challenges: [
+        { problem: 'Asymmetrical 6v1v1 design means every role needs distinct, balanced systems.', approach: 'Designed and implemented distinctive roles within one shared, authoritative gameplay loop.', outcome: 'A coherent multiplayer experience instead of bolted-on mechanics.' },
+        { problem: 'A multi-year project with a distributed team rots without discipline.', approach: 'Git-based workflows and iterative practices, balancing technical correctness, maintainability, and feature delivery.', outcome: 'Sustained development from prototype toward production.' }
+      ],
+      performance: [],
+      deployment: [],
+      stack: {
+        Languages: ['C++', 'C#'],
+        Engine: ['Unreal Engine 4/5'],
+        Focus: ['Multiplayer systems', 'State management', 'Gameplay architecture']
+      },
+      links: [
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
+      ]
+    }
+  };
+
+  function renderArch(arch) {
+    if (!arch || !Array.isArray(arch.tiers) || !arch.tiers.length) return '';
+    const tiers = arch.tiers.map((tier, i) => {
+      const nodes = tier.nodes.map(n => `
+        <div class="arch-node${n.primary ? ' is-primary' : ''}">
+          <strong>${esc(n.name)}</strong>${n.note ? `<span>${esc(n.note)}</span>` : ''}
+        </div>`).join('');
+      const arrow = i < arch.tiers.length - 1
+        ? `<div class="arch-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M12 4v16M6 14l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`
+        : '';
+      return `
+        <div class="arch-tier">
+          <span class="arch-tier-label mono">${esc(tier.label)}</span>
+          <div class="arch-nodes">${nodes}</div>
+        </div>${arrow}`;
+    }).join('');
+    return `
+      <div class="case-section">
+        <h3 class="case-h">Architecture</h3>
+        <div class="arch" role="img" aria-label="Architecture diagram">${tiers}</div>
+        ${arch.caption ? `<p class="arch-caption mono dim">${esc(arch.caption)}</p>` : ''}
+      </div>`;
+  }
+
+  function renderCase(d) {
+    const facts = [
+      ['Role', d.role],
+      ['Timeline', d.timeline],
+      ['Status', d.status],
+    ].filter(([, v]) => v);
+
+    const factRow = `
+      <div class="case-facts">
+        ${facts.map(([k, v]) => `<div class="case-fact"><dt class="mono">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}
+      </div>`;
+
+    const overview = (d.overview || []).map(p => `<p>${esc(p)}</p>`).join('');
+
+    const challenges = (d.challenges && d.challenges.length) ? `
+      <div class="case-section">
+        <h3 class="case-h">Engineering challenges</h3>
+        <div class="challenges">
+          ${d.challenges.map((c, i) => `
+            <div class="challenge">
+              <span class="challenge-n mono">${String(i + 1).padStart(2, '0')}</span>
+              <div class="challenge-body">
+                <div class="challenge-row"><span class="challenge-k mono">Problem</span><p>${esc(c.problem)}</p></div>
+                <div class="challenge-row"><span class="challenge-k mono">Approach</span><p>${esc(c.approach)}</p></div>
+                <div class="challenge-row"><span class="challenge-k mono">Outcome</span><p>${esc(c.outcome)}</p></div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>` : '';
+
+    const bulletSection = (title, items) => (items && items.length) ? `
+      <div class="case-section">
+        <h3 class="case-h">${esc(title)}</h3>
+        <ul class="case-bullets">${items.map(b => `<li><span class="mono">→</span> ${esc(b)}</li>`).join('')}</ul>
+      </div>` : '';
+
+    const stack = (d.stack && Object.keys(d.stack).length) ? `
+      <div class="case-section">
+        <h3 class="case-h">Stack</h3>
+        <div class="case-stack">
+          ${Object.entries(d.stack).map(([group, items]) => `
+            <div class="case-stack-group">
+              <span class="mono uppercase tiny dim">${esc(group)}</span>
+              <div class="case-stack-chips">${items.map(t => `<span class="chip-static">${esc(t)}</span>`).join('')}</div>
+            </div>`).join('')}
+        </div>
+      </div>` : '';
+
+    const links = (d.links && d.links.length) ? `
+      <div class="case-links">
+        ${d.links.map(l => `<a class="btn${l.primary ? ' primary' : ''}" href="${esc(l.url)}"${l.url.startsWith('http') ? ' target="_blank" rel="noreferrer"' : ''}>
+          <span>${esc(l.label)}</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>`).join('')}
+      </div>` : '';
+
+    return `
+      <header class="case-hero">
+        <span class="eyebrow mono">${esc(d.tag || 'Case study')} · ${esc(d.timeline || '')}</span>
+        <h2 id="caseTitle" class="case-title">${esc(d.title)}</h2>
+        <p class="case-subtitle">${esc(d.subtitle)}</p>
+        <p class="case-summary">${esc(d.summary)}</p>
+        ${factRow}
+      </header>
+      <div class="case-section">
+        <h3 class="case-h">Overview</h3>
+        ${overview}
+      </div>
+      ${renderArch(d.arch)}
+      ${challenges}
+      ${bulletSection('Performance', d.performance)}
+      ${bulletSection('Deployment', d.deployment)}
+      ${stack}
+      ${links}`;
+  }
+
+  function initCases() {
+    const overlay = $('#case');
+    if (!overlay) return null;
+    const scroll = $('#caseScroll', overlay);
+    const closes = $$('[data-close="true"]', overlay);
     const focusables = 'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])';
     let prevFocus = null;
-    let prevOverflow = '';
-    let prevPad = '';
-    let locked = false;
 
-    const lock = () => {
-      if (locked) return;
-      locked = true;
-      prevOverflow = document.body.style.overflow;
-      prevPad = document.body.style.paddingRight;
-      const sw = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
-      if (sw > 0) document.body.style.paddingRight = `${sw}px`;
-    };
-    const unlock = () => {
-      if (!locked) return;
-      locked = false;
-      document.body.style.overflow = prevOverflow;
-      document.body.style.paddingRight = prevPad;
-    };
-
-    const setOpen = open => {
+    const setOpen = (open, id) => {
       if (open) {
+        const data = CASES[id];
+        if (!data || !scroll) return;
         prevFocus = document.activeElement;
-        modal.hidden = false;
-        modal.setAttribute('aria-hidden', 'false');
-        lock();
-        safeFocus(closes[0] || titleEl || modal);
+        scroll.innerHTML = renderCase(data);
+        scroll.scrollTop = 0;
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+        lockPageScroll();
+        requestAnimationFrame(() => {
+          overlay.classList.add('on');
+          safeFocus($('.case-panel', overlay));
+        });
       } else {
-        modal.setAttribute('aria-hidden', 'true');
-        modal.hidden = true;
-        unlock();
-        safeFocus(prevFocus);
+        overlay.classList.remove('on');
+        overlay.setAttribute('aria-hidden', 'true');
+        const finish = () => {
+          overlay.hidden = true;
+          if (scroll) scroll.innerHTML = '';
+          unlockPageScroll();
+          safeFocus(prevFocus);
+        };
+        if (reduceMotion()) finish();
+        else setTimeout(finish, 240);
       }
     };
 
-    const fillFromButton = btn => {
-      if (titleEl) titleEl.textContent = '';
-      if (bodyEl) bodyEl.textContent = '';
-      if (tagsEl) tagsEl.innerHTML = '';
-      if (linksEl) linksEl.innerHTML = '';
-
-      const title = btn.getAttribute('data-title') || 'Project';
-      const body = btn.getAttribute('data-body') || '';
-      const tags = (btn.getAttribute('data-tags') || '').split('•').map(s => s.trim()).filter(Boolean);
-      let links = [];
-      try {
-        const parsed = JSON.parse(btn.getAttribute('data-links') || '[]');
-        if (Array.isArray(parsed)) links = parsed;
-      } catch {}
-
-      if (titleEl) titleEl.textContent = title;
-      if (bodyEl) bodyEl.textContent = body;
-
-      tags.forEach(t => {
-        const s = document.createElement('span');
-        s.className = 'tag';
-        s.textContent = t;
-        tagsEl?.appendChild(s);
-      });
-      links.forEach(l => {
-        if (!l?.url) return;
-        const a = document.createElement('a');
-        a.className = 'btn';
-        a.href = l.url;
-        a.target = '_blank';
-        a.rel = 'noreferrer';
-        a.textContent = l.label || 'Link';
-        a.addEventListener('click', () => setOpen(false));
-        linksEl?.appendChild(a);
-      });
-
-      setOpen(true);
-    };
-
     document.addEventListener('click', e => {
-      const btn = e.target instanceof Element ? e.target.closest('.open-modal') : null;
-      if (!btn) return;
-      e.preventDefault();
-      fillFromButton(btn);
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      // Explicit "Case study" buttons (in cards and feature blocks)
+      const btn = t.closest('.open-case');
+      if (btn) {
+        e.preventDefault();
+        setOpen(true, btn.getAttribute('data-case'));
+        return;
+      }
+      // Whole project card is clickable — but let real links/buttons do their thing
+      const card = t.closest('.project[data-case]');
+      if (card && !t.closest('a, button')) {
+        setOpen(true, card.getAttribute('data-case'));
+      }
     });
 
-    backdrop?.addEventListener('click', () => setOpen(false));
     closes.forEach(c => c.addEventListener('click', () => setOpen(false)));
 
-    modal.addEventListener('keydown', e => {
+    overlay.addEventListener('keydown', e => {
       if (e.key === 'Escape') { e.preventDefault(); setOpen(false); return; }
       if (e.key !== 'Tab') return;
-      const list = $$(focusables, modal).filter(el => el.offsetParent !== null);
+      const list = $$(focusables, overlay).filter(el => el.offsetParent !== null);
       if (!list.length) return;
       const first = list[0], last = list[list.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); safeFocus(last); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); safeFocus(first); }
     });
 
-    if (!modal.hasAttribute('aria-hidden')) modal.setAttribute('aria-hidden', 'true');
-    modal.hidden = modal.getAttribute('aria-hidden') !== 'false';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.hidden = true;
 
-    return { open: () => setOpen(true), close: () => setOpen(false) };
+    return { open: (id) => setOpen(true, id), close: () => setOpen(false) };
   }
 
   /* -------- toast -------- */
@@ -803,9 +1154,9 @@ type 'help' to see commands, or 'tour' for a guided walk.
 start somewhere:
   cat about.md
   cat projects/realfiction.md
-  cat projects/abandoned-horror.md
   cat projects/hearthaven.md
-  cat projects/rust-runtime.md
+  cat projects/reallang.md
+  cat projects/unitedexams.md
   cat principles.md
   ls projects/
   neofetch
@@ -822,14 +1173,16 @@ co-founded imagicast studios in 2021 and lead end-to-end development of
 three years of engine-level work in unreal engine 4/5, mostly in c++
 and c#.
 
-from there i moved deeper into systems, runtime tooling, distributed
-infrastructure, and backend / platform work. my energy goes into the
-layer of the stack where the abstraction breaks — servers, runtimes,
-tooling, and real user-facing systems.
+from there i moved deeper into systems, infrastructure, and backend /
+platform work — distributed game servers on oracle cloud, real-time
+multiplayer platforms, rust runtime tooling, and a from-scratch
+compiler (reallang). my energy goes into the layer of the stack where
+the abstraction breaks: servers, runtimes, compilers, and distributed
+systems.
 
 looking for: summer 2026 swe internship.
-strongest fits: systems, runtime / tooling, distributed services,
-performance, infrastructure, backend / platform, game tech.
+strongest fits: systems, backend / platform, distributed services,
+cloud infrastructure, runtime / compilers, performance.
 `;
 
     const PRINCIPLES = `engineering principles — six opinions, earned the hard way.
@@ -874,17 +1227,20 @@ infrastructure & cloud
   git                 ── distributed workflow
   rest apis · ci/cd   ── design, pipelines
 
-systems & backend
+systems & backend & compilers
   distributed systems ── multi-node, real-time
   runtime debugging   ── jvm tuning, monitoring
   postgresql          ── schema, queries
   supabase            ── auth, realtime, rls
+  compiler design     ── reallang · parsing · codegen
+  memory safety       ── rust runtime tooling
 
-engines & frameworks
-  unreal engine 4/5   ── abandoned horror, gameplay
+frameworks & engines
+  next.js             ── hearthaven, unitedexams
+  phaser              ── browser game runtime
+  unreal engine 4/5   ── imagicast titles
   unity               ── prototype work
   clickteam fusion 2.5 ── rapid 2d prototypes
-  next.js             ── hearthaven, web
   blender             ── asset pipeline
 `;
 
@@ -957,21 +1313,23 @@ links:
   https://github.com/nicholaslasagna
 `;
 
-    const ABANDONED = `abandoned horror @ imagicast studios                  [ 2021 → present ]
+    const IMAGICAST = `imagicast studios — engine & systems                  [ 2021 → present ]
 
 stack: unreal engine 4/5 · c++ · c# · multiplayer · gameplay systems
 
-co-founded imagicast studios and led the end-to-end development of
-"abandoned horror," an asymmetrical multiplayer horror game built on a
-6v1v1 gameplay loop. owned core systems architecture from initial
-design through production deployment.
+co-founded a game studio; lead engine-level systems across two titles:
+  • abandoned horror  — asymmetrical 6v1v1 multiplayer horror
+  • heroic submission — second original ip, in development
+
+owned core systems architecture from initial design through production
+deployment.
 
 highlights:
-  → engineered engine-level gameplay systems, state management, input
-    handling, and runtime multiplayer logic.
+  → engine-level gameplay systems, state management, input handling,
+    and runtime multiplayer logic in unreal engine 4/5.
   → designed and implemented distinctive roles within the 6v1v1 loop.
-  → coordinated distributed development workflows via git, balancing
-    technical correctness, maintainability, and feature delivery.
+  → git-based distributed workflows — correctness, maintainability,
+    and feature delivery in balance.
 
 links:
   https://github.com/nicholaslasagna
@@ -979,19 +1337,70 @@ links:
 
     const HEARTHAVEN = `hearthaven — real-time multiplayer web platform       [ 2025 → in dev ]
 
-stack: next.js · typescript · supabase · postgresql · rls · realtime
+stack: next.js · typescript · phaser · supabase · postgresql · rls · realtime
 
-real-time multiplayer interactive web platform with persistent user
-systems, social interaction, and browser-based gameplay mechanics.
-full-stack on modern cloud-backed technologies.
+a multiplayer application platform — not a website. players share a
+living space: a companion system, room decorating, gardening, and
+social interaction, rendered with phaser and synchronized live.
+
+architecture:
+  next.js + phaser (client) → supabase realtime (presence/broadcast)
+  → supabase auth + postgres (authoritative state, row-level security)
 
 highlights:
-  → auth, persistent player state, and real-time synchronization
-    using supabase + postgresql.
-  → scalable schema with row-level security (rls) for progression
-    systems, inventories, and live user experiences.
-  → browser-native gameplay loop with first-class security boundaries
-    and validation throughout.
+  → optimistic local updates reconciled against an authoritative
+    postgres; realtime presence + broadcast keep a room in sync.
+  → typed state bridge between phaser's render loop and react/next —
+    one direction of truth, no tearing.
+  → row-level security enforces per-user access at the database; a
+    forged request can't read or write another player's data.
+
+links:
+  https://github.com/nicholaslasagna
+`;
+
+    const REALLANG = `reallang — an ai-native programming language          [ 2025 → r&d ]
+
+stack: rust · c backend · compiler design · parsing · llm reliability
+
+a language designed to be generated and repaired reliably by models.
+three ideas drive it:
+  • deterministic syntax   — one canonical way to express a construct
+  • repairable diagnostics — errors carry machine-applicable fixes
+  • c-backed execution     — lower to c for predictable native speed
+
+pipeline:
+  source → lexer → parser (recursive descent) → ast
+         → repairable diagnostics → codegen (c) → native binary
+
+highlights:
+  → deterministic syntax + canonical formatter shrink the decision
+    space a model has to navigate; generation becomes repeatable.
+  → diagnostics emitted as structured records (location, cause, fix)
+    so tooling or an llm can apply repairs programmatically.
+  → recursive-descent front end with explicit error recovery; lowers
+    to c so programs run as predictable native binaries.
+
+links:
+  https://github.com/nicholaslasagna
+`;
+
+    const UNITED = `unitedexams — full-stack educational platform         [ 2025 ]
+
+stack: next.js · typescript · supabase · postgresql · rls
+
+a practice-and-progress platform: organized courses, adaptive practice,
+accounts, and progress tracking on a secure, row-level-secured backend.
+
+highlights:
+  → adaptive selection models per-topic mastery and picks the next
+    item from weak areas instead of a fixed sequence.
+  → supabase auth + protected routes; rls enforces per-user ownership
+    at the database, not just the client.
+  → schema, policies, and migrations versioned together.
+
+links:
+  https://github.com/nicholaslasagna
 `;
 
     const REALCHAT = `realchat — high-performance python automation system  [ 2023 ]
@@ -1054,9 +1463,11 @@ highlights:
         'education.txt':   f(EDU),
         'projects':        d({
           'realfiction.md':       f(REALFIC),
-          'rust-runtime.md':      f(RUSTRUNTIME),
-          'abandoned-horror.md':  f(ABANDONED),
           'hearthaven.md':        f(HEARTHAVEN),
+          'reallang.md':          f(REALLANG),
+          'unitedexams.md':       f(UNITED),
+          'rust-runtime.md':      f(RUSTRUNTIME),
+          'imagicast.md':         f(IMAGICAST),
           'realchat.md':          f(REALCHAT),
           'portfolio-shell.md':   f(PORTSHELL),
           'lowlevel.md':          f(LOWLEVEL),
@@ -1320,8 +1731,8 @@ no scheduled maintenance windows. occasional production fires.`);
             ['uptime',  `${yrs} years (shipping since 2021)`],
             ['edu',     'texas tech — accel. bs/ms cs (\'27) · gpa 3.56'],
             ['stack',   'rust · java · typescript · python · c++ · x64 asm'],
-            ['active',  'abandoned horror · hearthaven · rust runtime · realfiction'],
-            ['focus',   'systems · runtime · infra · backend / platform · game tech'],
+            ['active',  'reallang · hearthaven · realfiction · rust runtime'],
+            ['focus',   'systems · backend · infra · cloud · distributed · compilers'],
             ['status',  'open to summer 2026 swe internships'],
           ];
 
@@ -2523,7 +2934,7 @@ no scheduled maintenance windows. occasional production fires.`);
     initMobileNav();
 
     const projects = initProjects();
-    initModal();
+    initCases();
     initPalette(projects);
     initContactCopy();
     initFootTop();
