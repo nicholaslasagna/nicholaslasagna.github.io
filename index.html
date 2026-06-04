@@ -99,6 +99,7 @@
   <aside class="rail" id="rail" aria-label="Section progress">
     <a href="#shell" data-rail-id="shell"><span class="dot"></span><span class="lbl mono">Shell</span></a>
     <a href="#work" data-rail-id="work"><span class="dot"></span><span class="lbl mono">Work</span></a>
+    <a href="#impact" data-rail-id="impact"><span class="dot"></span><span class="lbl mono">Impact</span></a>
     <a href="#projects" data-rail-id="projects"><span class="dot"></span><span class="lbl mono">Projects</span></a>
     <a href="#principles" data-rail-id="principles"><span class="dot"></span><span class="lbl mono">Principles</span></a>
     <a href="#about" data-rail-id="about"><span class="dot"></span><span class="lbl mono">About</span></a>
@@ -126,9 +127,9 @@
           <ul class="nav-list">
             <li><a class="nav-link nav-link--shell" href="#shell"><span class="nav-sigil">$</span>Shell</a></li>
             <li><a class="nav-link" href="#work">Work</a></li>
+            <li><a class="nav-link" href="#impact">Impact</a></li>
             <li><a class="nav-link" href="#projects">Projects</a></li>
             <li><a class="nav-link" href="#principles">Principles</a></li>
-            <li><a class="nav-link" href="#stack">Stack</a></li>
             <li><a class="nav-link" href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -143,6 +144,7 @@
           <div class="nav-panel" role="dialog" aria-label="Mobile navigation">
             <a class="nav-item" href="#shell"><span class="nav-sigil">$</span>Shell <span class="kbd">`</span></a>
             <a class="nav-item" href="#work">Work <span class="kbd">W</span></a>
+            <a class="nav-item" href="#impact">Impact <span class="kbd">I</span></a>
             <a class="nav-item" href="#projects">Projects <span class="kbd">P</span></a>
             <a class="nav-item" href="#principles">Principles <span class="kbd">N</span></a>
             <a class="nav-item" href="#about">About <span class="kbd">A</span></a>
@@ -191,12 +193,10 @@
           <p class="kicker reveal">
             <span class="status">
               <span class="status-dot"></span>
-              <span>Open to Summer 2026 internships</span>
+              <span>Available for Summer 2026 SWE Internships</span>
             </span>
-            <span class="status status-live" id="liveRF" aria-label="RealFiction live status">
-              <span class="status-dot rf-dot" data-rf-state="checking"></span>
-              <span class="rf-label mono">realfiction.live</span>
-              <span class="rf-meta mono dim" data-rf-meta>checking…</span>
+            <span class="status status-plain">
+              <span class="mono">Berkeley, CA · Texas Tech University</span>
             </span>
           </p>
 
@@ -206,20 +206,18 @@
           </h1>
 
           <p class="hero-roles reveal" aria-label="Focus areas">
-            <span>Systems</span><i aria-hidden="true">·</i>
-            <span>Infrastructure</span><i aria-hidden="true">·</i>
-            <span>Backend</span><i aria-hidden="true">·</i>
             <span>Distributed Systems</span><i aria-hidden="true">·</i>
-            <span>Cloud</span><i aria-hidden="true">·</i>
-            <span>Architecture</span>
+            <span>Full-Stack Platforms</span><i aria-hidden="true">·</i>
+            <span>Compiler Engineering</span>
           </p>
 
           <p class="lede reveal">
-            Systems-focused software engineer building <strong>backend platforms, cloud
-            infrastructure, and runtime tooling</strong>. CS at
-            <a class="ink" href="https://www.cs.ttu.edu/" target="_blank" rel="noreferrer">Texas Tech</a>
-            on an accelerated B.S./M.S. track (B.S. May 2027, Math minor, GPA 3.56). I work the layer
-            of the stack where correctness is visible — servers, runtimes, compilers, and distributed systems.
+            Systems-focused software engineer building <strong>distributed systems, full-stack
+            platforms, and compiler tooling</strong>. Currently pursuing an accelerated B.S./M.S. in
+            Computer Science at
+            <a class="ink" href="https://www.cs.ttu.edu/" target="_blank" rel="noreferrer">Texas Tech University</a>
+            — developing multiplayer infrastructure, real-time web applications, and programming
+            language technology.
           </p>
 
           <div class="hero-actions reveal">
@@ -511,11 +509,80 @@
       </div>
     </section>
 
+    <!-- IMPACT -->
+    <section id="impact" aria-label="Impact highlights">
+      <header class="section-title reveal">
+        <div>
+          <span class="eyebrow mono">02 — Impact</span>
+          <h2 class="display-sm">The 20-second version.</h2>
+        </div>
+        <p class="section-note">What each system actually delivers. Full architecture lives in each case study.</p>
+      </header>
+
+      <div class="impact-grid" data-stagger>
+        <article class="card impact-card reveal" data-case="realfiction" tabindex="0" role="button" aria-label="RealFiction impact — open case study">
+          <div class="card-inner">
+            <div class="impact-card-head">
+              <h3>RealFiction</h3>
+              <span class="impact-tag mono">Infrastructure</span>
+            </div>
+            <ul class="impact-list">
+              <li>Operated cloud-hosted multiplayer infrastructure on Oracle Cloud (OCI)</li>
+              <li>Administered multiple Ubuntu Linux servers in production</li>
+              <li>Debugged and tuned live, user-facing distributed systems</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card impact-card reveal" data-case="hearthaven" tabindex="0" role="button" aria-label="HeartHaven impact — open case study">
+          <div class="card-inner">
+            <div class="impact-card-head">
+              <h3>HeartHaven</h3>
+              <span class="impact-tag mono">Real-time platform</span>
+            </div>
+            <ul class="impact-list">
+              <li>Real-time multiplayer state synchronization</li>
+              <li>Persistent world state with authentication</li>
+              <li>Row-level-secured PostgreSQL architecture</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card impact-card reveal" data-case="unitedexams" tabindex="0" role="button" aria-label="UnitedExams impact — open case study">
+          <div class="card-inner">
+            <div class="impact-card-head">
+              <h3>UnitedExams</h3>
+              <span class="impact-tag mono">Full-stack</span>
+            </div>
+            <ul class="impact-list">
+              <li>Full-stack educational platform</li>
+              <li>Authentication and per-user authorization (RLS)</li>
+              <li>Adaptive practice and progress tracking</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card impact-card reveal" data-case="reallang" tabindex="0" role="button" aria-label="RealLang impact — open case study">
+          <div class="card-inner">
+            <div class="impact-card-head">
+              <h3>RealLang</h3>
+              <span class="impact-tag mono">Compiler</span>
+            </div>
+            <ul class="impact-list">
+              <li>Recursive-descent parser and AST</li>
+              <li>Structured, repairable diagnostics engine</li>
+              <li>C-backed code generation</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- PROJECTS -->
     <section id="projects" aria-label="All projects">
       <header class="section-title reveal">
         <div>
-          <span class="eyebrow mono">02 — Projects</span>
+          <span class="eyebrow mono">03 — Projects</span>
           <h2 class="display-sm">Everything else worth showing.</h2>
         </div>
         <p class="section-note">Filter by area or search across titles, stacks, and bullets.</p>
@@ -817,7 +884,7 @@
     <section id="principles" class="principles-section principles-pinned" aria-label="Engineering principles">
       <header class="section-title reveal">
         <div>
-          <span class="eyebrow mono">03 — Principles</span>
+          <span class="eyebrow mono">04 — Principles</span>
           <h2 class="display-sm">Six opinions, earned the hard way.</h2>
         </div>
         <p class="section-note">
@@ -900,7 +967,7 @@
     <section id="about" aria-label="About and education">
       <header class="section-title reveal">
         <div>
-          <span class="eyebrow mono">04 — About</span>
+          <span class="eyebrow mono">05 — About</span>
           <h2 class="display-sm">A short version, no buzzwords.</h2>
         </div>
       </header>
@@ -1014,7 +1081,7 @@
     <section id="stack" aria-label="Technical stack">
       <header class="section-title reveal">
         <div>
-          <span class="eyebrow mono">05 — Stack</span>
+          <span class="eyebrow mono">06 — Stack</span>
           <h2 class="display-sm">What I actually reach for.</h2>
         </div>
         <p class="section-note">Honest stack — listed by what I've shipped with, not what I've heard of.</p>
@@ -1085,7 +1152,7 @@
     <section id="contact" class="contact" aria-label="Contact">
       <header class="section-title reveal">
         <div>
-          <span class="eyebrow mono">06 — Contact</span>
+          <span class="eyebrow mono">07 — Contact</span>
           <h2 class="display-sm">Email is the fastest path.</h2>
         </div>
         <p class="section-note">Internship leads, code review, or just hello — I read everything.</p>

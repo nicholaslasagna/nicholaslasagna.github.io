@@ -777,10 +777,11 @@
         overlay.hidden = false;
         overlay.setAttribute('aria-hidden', 'false');
         lockPageScroll();
-        requestAnimationFrame(() => {
-          overlay.classList.add('on');
-          safeFocus($('.case-panel', overlay));
-        });
+        // Force a reflow so the opacity/transform transition reliably plays
+        // (more robust than rAF, which can be throttled when no frame paints).
+        void overlay.offsetWidth;
+        overlay.classList.add('on');
+        safeFocus($('.case-panel', overlay));
       } else {
         overlay.classList.remove('on');
         overlay.setAttribute('aria-hidden', 'true');
@@ -805,9 +806,21 @@
         setOpen(true, btn.getAttribute('data-case'));
         return;
       }
-      // Whole project card is clickable — but let real links/buttons do their thing
-      const card = t.closest('.project[data-case]');
+      // Whole project / impact card is clickable — but let real links/buttons do their thing
+      const card = t.closest('.project[data-case], .impact-card[data-case]');
       if (card && !t.closest('a, button')) {
+        setOpen(true, card.getAttribute('data-case'));
+      }
+    });
+
+    // Keyboard: Enter/Space on a role="button" impact card opens its case
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      const card = t.closest('.impact-card[data-case][role="button"]');
+      if (card && t === card) {
+        e.preventDefault();
         setOpen(true, card.getAttribute('data-case'));
       }
     });
@@ -1084,7 +1097,7 @@
   /* -------- keyboard shortcuts (single-letter nav like vim) -------- */
   function initKeyboardNav(palette) {
     const map = {
-      w: 'work', p: 'projects', n: 'principles', a: 'about', s: 'stack', c: 'contact', t: 'top',
+      w: 'work', i: 'impact', p: 'projects', n: 'principles', a: 'about', s: 'stack', c: 'contact', t: 'top',
     };
     document.addEventListener('keydown', e => {
       const inField = e.target instanceof Element && (e.target.matches('input, textarea') || e.target.isContentEditable);
