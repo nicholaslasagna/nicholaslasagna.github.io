@@ -111,6 +111,16 @@ button,input{ font:inherit; color:inherit; }
 hr{ border:0; }
 ul,ol{ padding:0; margin:0; list-style:none; }
 
+/* Shared scroll lock — driven by the ScrollLock manager (top set inline per-lock).
+   position:fixed prevents iOS scroll-bleed; the fixed header is unaffected. */
+body.is-scroll-locked{
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
 ::selection{
   background: var(--accent);
   color: var(--accent-ink);
@@ -1050,9 +1060,38 @@ section{
   background: color-mix(in srgb, var(--bg-elev) 70%, transparent);
 }
 
+/* Proof badges — capability signals (distinct from tech tags): accent dot + tint */
+.proof-badges{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+.proof-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  padding: 4px 11px 4px 9px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line-2));
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.proof-badge::before{
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+
 .feature-lede{
   color: var(--text-2);
-  margin: 0 0 16px;
+  margin: 16px 0 16px;
   max-width: 70ch;
   font-size: 15px;
 }
@@ -3330,6 +3369,50 @@ body.entrance-done .rail{ opacity: 1; }
   font-size: 15px;
   color: var(--text);
 }
+/* Compact tech line under the hero facts */
+.case-tech{
+  margin: 16px 0 0;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+}
+
+/* Two-column body: sticky section mini-nav + content (desktop) */
+.case-main{
+  display: grid;
+  grid-template-columns: 164px minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+}
+.case-nav{
+  position: sticky;
+  top: 4px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.case-nav-link{
+  appearance: none;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-left: 2px solid var(--line-2);
+  padding: 7px 12px;
+  cursor: pointer;
+  border-radius: 0 var(--r-xs) var(--r-xs) 0;
+  transition: color var(--t-2) var(--ease), border-color var(--t-2) var(--ease), background var(--t-2) var(--ease);
+}
+.case-nav-link:hover{ color: var(--text); }
+.case-nav-link.is-active{
+  color: var(--text);
+  border-left-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.case-body{ min-width: 0; }
 
 /* Sections */
 .case-section{
@@ -3338,6 +3421,59 @@ body.entrance-done .rail{ opacity: 1; }
   border-top: 1px solid var(--line);
 }
 .case-section:first-of-type{ border-top: 0; padding-top: 0; margin-top: 28px; }
+/* First body section sits flush under the hero (hero already has margin-bottom) */
+.case-body .case-section:first-of-type{ margin-top: 0; padding-top: 0; border-top: 0; }
+/* Problem statement — larger, primary-color lead paragraph */
+.case-section > p.case-lead{
+  font-size: 16px;
+  color: var(--text);
+  max-width: 66ch;
+  line-height: 1.65;
+}
+
+/* Tradeoffs — aqua-accented, distinct from the coral challenge cards */
+.tradeoffs{ display: flex; flex-direction: column; gap: 12px; }
+.tradeoff{
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--bg-sunk) 30%, transparent);
+}
+.tradeoff-mark{ color: var(--accent-2); font-size: 16px; line-height: 1.45; }
+.tradeoff-decision{ font-weight: 600; color: var(--text); margin-bottom: 4px; font-size: 14.5px; }
+.tradeoff p{ margin: 0; color: var(--text-2); font-size: 14px; line-height: 1.55; }
+
+/* Mini-nav collapses to a horizontal, sticky strip on narrow screens */
+@media (max-width: 760px){
+  .case-main{ grid-template-columns: 1fr; gap: 0; }
+  .case-nav{
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    flex-direction: row;
+    gap: 4px;
+    overflow-x: auto;
+    margin: 0 0 10px;
+    padding: 8px 0;
+    background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+  .case-nav::-webkit-scrollbar{ display: none; }
+  .case-nav-link{
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--r-xs);
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+  .case-nav-link.is-active{ border-left: 0; border-bottom-color: var(--accent); background: transparent; }
+}
 .case-h{
   font-family: var(--font-mono);
   font-size: 12px;

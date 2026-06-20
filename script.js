@@ -208,36 +208,42 @@
     sections.forEach(s => obs.observe(s));
   }
 
-  /* -------- mobile nav with iOS-safe scroll lock -------- */
-  // Position-fixed body trick — fully prevents iOS Safari scroll bleed.
-  let _lockedScrollY = 0;
-  let _scrollLocked = false;
-  function lockPageScroll() {
-    if (_scrollLocked) return;
-    _scrollLocked = true;
-    _lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    const sw = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${_lockedScrollY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
-    if (sw > 0) document.body.style.paddingRight = `${sw}px`;
-  }
-  function unlockPageScroll() {
-    if (!_scrollLocked) return;
-    _scrollLocked = false;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
-    window.scrollTo(0, _lockedScrollY);
-  }
+  /* ==========================================================================
+     SCROLL LOCK — one manager, multiple reasons (nav, palette, case, terminal).
+     Reason-counted so overlays never fight: the page only unlocks when the LAST
+     reason is released. iOS-safe (position:fixed body) and shift-free (scrollbar
+     compensation). Restores the exact scroll position on full unlock.
+     ========================================================================== */
+  const ScrollLock = (() => {
+    const reasons = new Set();
+    let scrollY = 0;
+    const lock = (reason) => {
+      if (!reason || reasons.has(reason)) return;
+      const wasEmpty = reasons.size === 0;
+      reasons.add(reason);
+      if (!wasEmpty) return; // already locked by another reason
+      scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.top = `-${scrollY}px`;
+      if (sbw > 0) document.body.style.paddingRight = `${sbw}px`;
+      document.body.classList.add('is-scroll-locked');
+    };
+    const unlock = (reason) => {
+      if (!reasons.has(reason)) return;
+      reasons.delete(reason);
+      if (reasons.size > 0) return; // other overlays still need the lock
+      document.body.classList.remove('is-scroll-locked');
+      document.body.style.top = '';
+      document.body.style.paddingRight = '';
+      // Restore instantly — `scroll-behavior: smooth` on <html> would otherwise
+      // animate the page back into place when an overlay closes.
+      try { window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' }); }
+      catch { window.scrollTo(0, scrollY); }
+    };
+    return { lock, unlock, get active() { return reasons.size > 0; } };
+  })();
 
+  /* -------- mobile nav -------- */
   function initMobileNav() {
     const nav = document.getElementById('navMobile');
     if (!nav) return;
@@ -247,13 +253,13 @@
     const setOpen = open => {
       nav.open = open;
       summary?.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) lockPageScroll(); else unlockPageScroll();
+      if (open) ScrollLock.lock('nav'); else ScrollLock.unlock('nav');
     };
 
     nav.addEventListener('toggle', () => {
       const open = nav.open;
       summary?.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) lockPageScroll(); else unlockPageScroll();
+      if (open) ScrollLock.lock('nav'); else ScrollLock.unlock('nav');
     });
 
     document.addEventListener('keydown', e => {
@@ -383,6 +389,26 @@
       status: 'Live in production',
       tag: 'Infrastructure',
       summary: 'A live, multi-node Java game backend on Oracle Cloud — proxy routing, persistent data, JVM tuning, and real on-call.',
+      problem: `Operating a multiplayer game network means several moving parts have to stay correct and responsive at once — proxy routing, multiple authoritative server processes, a database, and a cache — while real players are connected and any mistake is immediately visible.`,
+      constraints: [
+        `A single small cloud tenancy (Oracle Cloud, free-tier-class resources): CPU and memory budgets are real, so tuning matters more than scaling out.`,
+        `Region-threaded server runtimes (Folia / Purpur) forbid touching world state from arbitrary threads.`,
+        `User-facing uptime — changes have to be reversible because players notice downtime instantly.`
+      ],
+      tradeoffs: [
+        { decision: `Tune a few nodes hard instead of scaling horizontally`, why: `Inside one tenancy, careful JVM/GC and server-config tuning buys more headroom than machines I don't have.` },
+        { decision: `Velocity proxy in front of separate server processes`, why: `Isolating lobby / SMP / arcade as their own JVMs contains failures and lets one node restart without dropping the network — at the cost of cross-node state needing Redis.` },
+        { decision: `Folia region-threading over a simpler single-threaded server`, why: `More concurrency headroom, but it forces region-safe code and rules out convenient-but-unsafe plugin patterns.` }
+      ],
+      outcome: [
+        `A network that stays up across restarts and deploys, with node failures contained rather than global.`,
+        `A repeatable deploy + rollback workflow so config changes don't gamble uptime.`,
+        `Real experience debugging concurrency and routing issues under live, player-facing conditions.`
+      ],
+      proves: [
+        `I can stand up and operate real cloud infrastructure on Linux — not just write application code.`,
+        `I treat concurrency, failure isolation, and tail latency as first-order concerns.`
+      ],
       overview: [
         'RealFiction is a distributed multiplayer server platform I architected, deployed, and operate on Oracle Cloud Infrastructure (OCI) running Ubuntu Linux. It serves concurrent real-time multiplayer workloads with high availability and low latency.',
         'The interesting engineering is not the game — it is the seam between distributed services and a JVM runtime under real player load. A request fans out across a proxy, multiple authoritative server nodes, a relational store, and a cache, and every hop is a place tail latency can hide.'
@@ -431,6 +457,26 @@
       status: 'In active development',
       tag: 'Platform',
       summary: 'Not a website — a multiplayer application platform: live presence, companions, room decorating, and gardening, all cloud-persisted.',
+      problem: `A real-time multiplayer space means many clients mutate shared, persistent state at once. The hard part isn't drawing the world — it's keeping every client consistent while never trusting the client as the source of truth.`,
+      constraints: [
+        `Browser-only client (no native process) — rendering and networking both run in the page.`,
+        `Anyone can call the backend directly, so authorization has to live at the database, not just the UI.`,
+        `Rewards and state changes must be server-validated; a forged request can't grant itself anything.`
+      ],
+      tradeoffs: [
+        { decision: `Optimistic local updates, reconciled against Postgres`, why: `Actions feel instant, but it means writing reconciliation so authoritative server state always wins on conflict.` },
+        { decision: `Row-Level Security as the enforcement boundary`, why: `Security lives in the database where it can't be bypassed — at the cost of carefully designed policies per table.` },
+        { decision: `Phaser for the world + React/Next for the app shell`, why: `Best tool for each layer, but it needs a typed, one-directional bridge so the render loop and React state don't fight.` }
+      ],
+      outcome: [
+        `Live rooms where presence and shared state stay in sync across clients.`,
+        `A security model where reads and writes are constrained per-user at the data layer.`,
+        `Server-validated rewards and state so the client is never the authority.`
+      ],
+      proves: [
+        `I can design a full-stack real-time system with a credible security model — not a CRUD app.`,
+        `I reason about trust boundaries and data consistency, not just features.`
+      ],
       overview: [
         'HeartHaven is a real-time multiplayer web platform where players share a living space: a companion system, room decorating, gardening, and social interaction, all synchronized live and persisted to the cloud.',
         'The architecture problem is keeping many clients consistent in real time while every player mutates shared, persistent state — and doing it with browser-native rendering rather than a native client.'
@@ -476,6 +522,26 @@
       status: 'Research / in development',
       tag: 'Compilers',
       summary: 'A language designed to be generated and repaired reliably by LLMs: deterministic syntax, structured repairable diagnostics, C-backed execution.',
+      problem: `Code an LLM generates is only useful if it's reliably correct and fixable. A language whose errors are vague prose and whose syntax has many equivalent spellings makes that hard. RealLang asks what a language looks like when reliable generation and repair are the design goal.`,
+      constraints: [
+        `Generated programs have to actually run, so the compiler must be correct — not a sketch.`,
+        `Diagnostics need to be machine-applicable (structured), not just human-readable text.`,
+        `Syntax should be deterministic enough that the same intent yields the same code.`
+      ],
+      tradeoffs: [
+        { decision: `Lower to C instead of building a native backend`, why: `Leans on a mature, portable toolchain for real execution and lets me validate the generated C — at the cost of a C dependency in the pipeline.` },
+        { decision: `Deterministic syntax + a canonical formatter`, why: `Shrinks the model's decision space and keeps diffs meaningful, trading some human-friendly flexibility for repeatability.` },
+        { decision: `Hand-written recursive-descent front end`, why: `Full control over error recovery and structured diagnostics, at the cost of more code than a generated parser.` }
+      ],
+      outcome: [
+        `A working front-to-back pipeline: source → lexer → parser → typecheck → C codegen.`,
+        `Structured diagnostics designed to be applied as fixes, not just printed.`,
+        `Generated C that can be validated, hardening the compiler against silently-wrong output.`
+      ],
+      proves: [
+        `I can build a real compiler end to end and reason about correctness — not just use one.`,
+        `I can take an ambitious systems idea and make it concrete and testable.`
+      ],
       overview: [
         'RealLang is a programming language designed around a specific question: what would a language look like if its primary author were a model, not a human? The goal is reliable generation and automatic repair.',
         'Three ideas drive the design. Deterministic syntax: one canonical way to express a construct, so a model is not forced to choose between equivalent spellings. Repairable diagnostics: errors carry structured, machine-applicable fixes instead of prose. C-backed execution: the language lowers to C for predictable, native performance.'
@@ -501,7 +567,7 @@
       deployment: [],
       stack: {
         Languages: ['Rust', 'C'],
-        'Compiler': ['Lexer', 'Recursive-descent parser', 'AST', 'Codegen'],
+        'Compiler': ['Lexer', 'Recursive-descent parser', 'AST', 'Type checking', 'Codegen'],
         'Research': ['LLM reliability', 'Structured diagnostics', 'Deterministic syntax']
       },
       links: [
@@ -517,6 +583,24 @@
       status: 'Built',
       tag: 'Platform',
       summary: 'A practice-and-progress platform: adaptive practice, course organization, accounts, and a secure, row-level-secured backend.',
+      problem: `A study platform is only trustworthy if each user's data is truly their own and the flows hold up — sign-in, attempts, progress, and a leaderboard all touch the same data with different visibility rules.`,
+      constraints: [
+        `Per-user data isolation is mandatory — one account must never read another's attempts or settings.`,
+        `Auth has to gate protected routes, and the database has to enforce access independently of the UI.`,
+        `A leaderboard needs shared visibility while everything else stays private.`
+      ],
+      tradeoffs: [
+        { decision: `Supabase Auth + Postgres RLS over hand-rolled auth`, why: `Proven primitives and database-enforced access, at the cost of designing policies carefully per table.` },
+        { decision: `Server / database as the source of truth for progress and mastery`, why: `Keeps the client from being trusted with its own scores, at the cost of more backend modeling.` }
+      ],
+      outcome: [
+        `A complete product surface: auth, protected routes, quiz attempts, mastery / streaks, leaderboard, profile, and account settings.`,
+        `Per-user data ownership enforced at the database via Row-Level Security.`
+      ],
+      proves: [
+        `I can ship a complete, secure full-stack product — not just isolated features.`,
+        `I treat authorization and data ownership as core architecture.`
+      ],
       overview: [
         'UnitedExams is a full-stack educational platform for structured practice: organized courses, practice systems, progress tracking, and user accounts on a secure backend.',
         'The backend is the product. Content organization, progress modeling, and adaptive selection all live behind authenticated, row-level-secured APIs so a user only ever sees their own state.'
@@ -559,6 +643,24 @@
       status: 'Active',
       tag: 'Systems',
       summary: 'Performance-sensitive runtime tooling in Rust for a large modding project — memory safety and concurrency where being wrong hurts someone else’s machine.',
+      problem: `Tooling that runs close to a host process on other people's machines can't afford undefined behavior. The work is making low-level runtime interaction safe, explicit, and debuggable in a non-commercial modding context.`,
+      constraints: [
+        `Runs in environments I don't control, so failure has to be explicit — never silent corruption.`,
+        `Low-level boundaries with a host runtime: memory and lifetime mistakes are unacceptable.`,
+        `Non-commercial, community context — robustness and clarity matter more than feature count.`
+      ],
+      tradeoffs: [
+        { decision: `Rust over C / C++ for the runtime layer`, why: `The type system rules out whole classes of memory and concurrency bugs up front, at the cost of more deliberate design around boundaries.` },
+        { decision: `Fail loudly in dev, degrade gracefully in prod`, why: `Surfaces problems to me during development while staying recoverable for users, at the cost of extra error-handling plumbing.` }
+      ],
+      outcome: [
+        `Runtime tooling with explicit failure handling and safer boundaries than the C-style norm in this space.`,
+        `Hands-on debugging of concurrent, systems-level behavior.`
+      ],
+      proves: [
+        `I work comfortably at the systems level and choose tools for correctness, not familiarity.`,
+        `I take ownership of reliability in code that runs unsupervised.`
+      ],
       overview: [
         'Performance-sensitive runtime tooling written in Rust for a large-scale game modification project with active community usage. The work lives at the low level: concurrent execution and systems-level resource management.',
         'Rust over C++ was a deliberate call. This code runs close to a host process on machines I do not control, so memory safety and runtime correctness are preconditions, not features — the type system pays for itself in tooling that has to run unsupervised.'
@@ -594,6 +696,23 @@
       status: 'Built',
       tag: 'Tools',
       summary: 'Event-driven desktop automation with OCR pipelines, AI-assisted workflows, encrypted licensing, and safe OS interaction.',
+      problem: `Driving a desktop UI from what's on screen is unreliable by nature — OCR is noisy, layouts shift, and automation that acts on a wrong reading is dangerous. The work is making screen-driven automation predictable and safe.`,
+      constraints: [
+        `OCR input is imperfect; the system has to tolerate noise and ambiguous UI states.`,
+        `Automation touches the real OS, so actions need guardrails before anything is dispatched.`,
+        `Ships as a real desktop app — packaging, local config, and licensing all have to be handled.`
+      ],
+      tradeoffs: [
+        { decision: `Tolerant parsing over exact string / pixel matching`, why: `Holds up across inconsistent screens, at the cost of more careful interpretation logic.` },
+        { decision: `Guarded, validated automation steps`, why: `Predictable and recoverable behavior, at the cost of speed — it checks before it acts.` }
+      ],
+      outcome: [
+        `Reliable behavior across noisy OCR and shifting layouts.`,
+        `macOS packaging with encrypted local config, license / config handling, and hotkeys.`
+      ],
+      proves: [
+        `I can ship a real, packaged desktop tool and design for failure — not just the happy path.`
+      ],
       overview: [
         'RealChat is a high-performance Python desktop automation system integrating OCR pipelines and AI-assisted workflows: screen capture, text parsing, decision logic, and system-level automation — built for runtime safety.',
         'It ships as a real product, with an encrypted licensing and authentication layer handling secure environment variables and runtime validation.'
@@ -630,6 +749,24 @@
       status: 'Active',
       tag: 'Games',
       summary: 'Co-founded a studio; lead engine-level systems across two titles — Abandoned Horror (6v1v1 multiplayer horror) and Heroic Submission.',
+      problem: `Building original games over multiple years with a small distributed team means the engineering has to stay maintainable as scope grows — gameplay systems, engine-level code, and collaboration all have to hold together.`,
+      constraints: [
+        `A long-lived, multi-year codebase — maintainability compounds over time.`,
+        `Distributed collaborators — source control and clear ownership are essential.`,
+        `Engine-level work in UE4 / UE5 across original IP, not tutorials.`
+      ],
+      tradeoffs: [
+        { decision: `Invest in reusable gameplay systems early`, why: `Pays off across a multi-year project, at the cost of slower initial feature delivery.` },
+        { decision: `Git-based workflow with reviews for a small team`, why: `Keeps a distributed team's code coherent, at the cost of process overhead.` }
+      ],
+      outcome: [
+        `Multi-year ownership of engine-level gameplay systems across two original titles.`,
+        `A maintainable, source-controlled codebase shared across a distributed team.`
+      ],
+      proves: [
+        `I can own real systems over the long haul and keep code maintainable as it grows.`,
+        `I've shipped engineering in C++ / C# inside a serious engine, with team discipline.`
+      ],
       overview: [
         'I co-founded Imagicast Studios in 2021 and lead development across its titles. The flagship, Abandoned Horror, is an asymmetrical multiplayer horror game built around a 6v1v1 gameplay loop; Heroic Submission is a second original IP in development.',
         'My work is the engineering spine: core systems architecture from initial design through production deployment — state management, input handling, and runtime multiplayer logic in Unreal Engine 4/5.'
@@ -676,60 +813,93 @@
         </div>${arrow}`;
     }).join('');
     return `
-      <div class="case-section">
-        <h3 class="case-h">Architecture</h3>
-        <div class="arch" role="img" aria-label="Architecture diagram">${tiers}</div>
-        ${arch.caption ? `<p class="arch-caption mono dim">${esc(arch.caption)}</p>` : ''}
-      </div>`;
+      <div class="arch" role="img" aria-label="Architecture diagram">${tiers}</div>
+      ${arch.caption ? `<p class="arch-caption mono dim">${esc(arch.caption)}</p>` : ''}`;
   }
 
   function renderCase(d) {
+    /* ---- shared section renderers (return inner HTML only) ---- */
+    const paras = (arr) => (arr || []).map(p => `<p>${esc(p)}</p>`).join('');
+    const lead = (s) => `<p class="case-lead">${esc(s)}</p>`;
+    const bullets = (arr) => `<ul class="case-bullets">${(arr || []).map(b => `<li><span class="mono">→</span> ${esc(b)}</li>`).join('')}</ul>`;
+
+    const challengesInner = (arr) => `
+      <div class="challenges">
+        ${arr.map((c, i) => `
+          <div class="challenge">
+            <span class="challenge-n mono">${String(i + 1).padStart(2, '0')}</span>
+            <div class="challenge-body">
+              <div class="challenge-row"><span class="challenge-k mono">Problem</span><p>${esc(c.problem)}</p></div>
+              <div class="challenge-row"><span class="challenge-k mono">Approach</span><p>${esc(c.approach)}</p></div>
+              <div class="challenge-row"><span class="challenge-k mono">Outcome</span><p>${esc(c.outcome)}</p></div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+
+    const tradeoffsInner = (arr) => `
+      <div class="tradeoffs">
+        ${arr.map(t => `
+          <div class="tradeoff">
+            <span class="tradeoff-mark mono" aria-hidden="true">⇄</span>
+            <div>
+              <div class="tradeoff-decision">${esc(t.decision)}</div>
+              <p>${esc(t.why)}</p>
+            </div>
+          </div>`).join('')}
+      </div>`;
+
+    const stackInner = (stack) => `
+      <div class="case-stack">
+        ${Object.entries(stack).map(([group, items]) => `
+          <div class="case-stack-group">
+            <span class="mono uppercase tiny dim">${esc(group)}</span>
+            <div class="case-stack-chips">${items.map(t => `<span class="chip-static">${esc(t)}</span>`).join('')}</div>
+          </div>`).join('')}
+      </div>`;
+
+    /* ---- assemble ordered sections (only those with content) ---- */
+    const S = [];
+    if (d.overview && d.overview.length)      S.push(['overview',     'Overview',     paras(d.overview)]);
+    if (d.problem)                            S.push(['problem',      'Problem',      lead(d.problem)]);
+    if (d.constraints && d.constraints.length)S.push(['constraints',  'Constraints',  bullets(d.constraints)]);
+    if (d.arch && d.arch.tiers && d.arch.tiers.length) S.push(['architecture', 'Architecture', renderArch(d.arch)]);
+    if (d.challenges && d.challenges.length)  S.push(['challenges',   'Engineering challenges', challengesInner(d.challenges)]);
+    if (d.tradeoffs && d.tradeoffs.length)    S.push(['tradeoffs',    'Tradeoffs',    tradeoffsInner(d.tradeoffs)]);
+    if (d.outcome && d.outcome.length)        S.push(['outcome',      'Outcome',      bullets(d.outcome)]);
+    if (d.proves && d.proves.length)          S.push(['proves',       'What it proves', bullets(d.proves)]);
+    if (d.performance && d.performance.length)S.push(['performance',  'Performance',  bullets(d.performance)]);
+    if (d.deployment && d.deployment.length)  S.push(['deployment',   'Deployment',   bullets(d.deployment)]);
+    if (d.stack && Object.keys(d.stack).length) S.push(['stack',      'Stack',        stackInner(d.stack)]);
+
+    const nav = `
+      <nav class="case-nav" aria-label="Case study sections">
+        ${S.map((s, i) => `<button type="button" class="case-nav-link${i === 0 ? ' is-active' : ''}" data-target="cs-${s[0]}">${esc(s[1])}</button>`).join('')}
+      </nav>`;
+
+    const body = S.map(s => `
+      <section id="cs-${s[0]}" class="case-section" tabindex="-1">
+        <h3 class="case-h">${esc(s[1])}</h3>
+        ${s[2]}
+      </section>`).join('');
+
     const facts = [
       ['Role', d.role],
       ['Timeline', d.timeline],
       ['Status', d.status],
     ].filter(([, v]) => v);
-
     const factRow = `
       <div class="case-facts">
         ${facts.map(([k, v]) => `<div class="case-fact"><dt class="mono">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}
       </div>`;
 
-    const overview = (d.overview || []).map(p => `<p>${esc(p)}</p>`).join('');
-
-    const challenges = (d.challenges && d.challenges.length) ? `
-      <div class="case-section">
-        <h3 class="case-h">Engineering challenges</h3>
-        <div class="challenges">
-          ${d.challenges.map((c, i) => `
-            <div class="challenge">
-              <span class="challenge-n mono">${String(i + 1).padStart(2, '0')}</span>
-              <div class="challenge-body">
-                <div class="challenge-row"><span class="challenge-k mono">Problem</span><p>${esc(c.problem)}</p></div>
-                <div class="challenge-row"><span class="challenge-k mono">Approach</span><p>${esc(c.approach)}</p></div>
-                <div class="challenge-row"><span class="challenge-k mono">Outcome</span><p>${esc(c.outcome)}</p></div>
-              </div>
-            </div>`).join('')}
-        </div>
-      </div>` : '';
-
-    const bulletSection = (title, items) => (items && items.length) ? `
-      <div class="case-section">
-        <h3 class="case-h">${esc(title)}</h3>
-        <ul class="case-bullets">${items.map(b => `<li><span class="mono">→</span> ${esc(b)}</li>`).join('')}</ul>
-      </div>` : '';
-
-    const stack = (d.stack && Object.keys(d.stack).length) ? `
-      <div class="case-section">
-        <h3 class="case-h">Stack</h3>
-        <div class="case-stack">
-          ${Object.entries(d.stack).map(([group, items]) => `
-            <div class="case-stack-group">
-              <span class="mono uppercase tiny dim">${esc(group)}</span>
-              <div class="case-stack-chips">${items.map(t => `<span class="chip-static">${esc(t)}</span>`).join('')}</div>
-            </div>`).join('')}
-        </div>
-      </div>` : '';
+    // Compact tech summary line in the hero (flattened, de-duped, capped)
+    const techSummary = (() => {
+      if (!d.stack) return '';
+      const all = [];
+      Object.values(d.stack).forEach(arr => arr.forEach(t => { if (!all.includes(t)) all.push(t); }));
+      const shown = all.slice(0, 6);
+      return `<p class="case-tech mono dim">${shown.map(esc).join('  ·  ')}</p>`;
+    })();
 
     const links = (d.links && d.links.length) ? `
       <div class="case-links">
@@ -746,17 +916,15 @@
         <p class="case-subtitle">${esc(d.subtitle)}</p>
         <p class="case-summary">${esc(d.summary)}</p>
         ${factRow}
+        ${techSummary}
       </header>
-      <div class="case-section">
-        <h3 class="case-h">Overview</h3>
-        ${overview}
-      </div>
-      ${renderArch(d.arch)}
-      ${challenges}
-      ${bulletSection('Performance', d.performance)}
-      ${bulletSection('Deployment', d.deployment)}
-      ${stack}
-      ${links}`;
+      <div class="case-main">
+        ${nav}
+        <div class="case-body">
+          ${body}
+          ${links}
+        </div>
+      </div>`;
   }
 
   function initCases() {
@@ -766,6 +934,38 @@
     const closes = $$('[data-close="true"]', overlay);
     const focusables = 'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])';
     let prevFocus = null;
+    let caseObs = null;
+
+    /* ---- mini-nav: scoped scroll + active highlighting ---- */
+    const setActiveNav = (id) => {
+      $$('.case-nav-link', scroll).forEach(b =>
+        b.classList.toggle('is-active', b.getAttribute('data-target') === id));
+    };
+    const navScrollTo = (id) => {
+      const el = scroll.querySelector('#' + id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top - scroll.getBoundingClientRect().top + scroll.scrollTop - 10;
+      scroll.scrollTo({ top: Math.max(0, top), behavior: reduceMotion() ? 'auto' : 'smooth' });
+    };
+    const setupNavObserver = () => {
+      if (caseObs) { caseObs.disconnect(); caseObs = null; }
+      const sections = $$('.case-section', scroll);
+      if (!sections.length || typeof IntersectionObserver === 'undefined') return;
+      // The observer only triggers recomputation; selection is geometry-based so a
+      // section pinned to the top wins (avoids the "topmost intersecting" off-by-one).
+      const recompute = () => {
+        const cTop = scroll.getBoundingClientRect().top;
+        let activeId = sections[0].id;
+        for (const s of sections) {
+          if (s.getBoundingClientRect().top - cTop <= 120) activeId = s.id; else break;
+        }
+        setActiveNav(activeId);
+      };
+      caseObs = new IntersectionObserver(recompute, {
+        root: scroll, threshold: [0, 0.25, 0.5, 0.75, 1],
+      });
+      sections.forEach(s => caseObs.observe(s));
+    };
 
     const setOpen = (open, id) => {
       if (open) {
@@ -776,25 +976,36 @@
         scroll.scrollTop = 0;
         overlay.hidden = false;
         overlay.setAttribute('aria-hidden', 'false');
-        lockPageScroll();
+        ScrollLock.lock('case');
         // Force a reflow so the opacity/transform transition reliably plays
         // (more robust than rAF, which can be throttled when no frame paints).
         void overlay.offsetWidth;
         overlay.classList.add('on');
+        setupNavObserver();
         safeFocus($('.case-panel', overlay));
       } else {
         overlay.classList.remove('on');
         overlay.setAttribute('aria-hidden', 'true');
+        if (caseObs) { caseObs.disconnect(); caseObs = null; }
         const finish = () => {
           overlay.hidden = true;
           if (scroll) scroll.innerHTML = '';
-          unlockPageScroll();
+          ScrollLock.unlock('case');
           safeFocus(prevFocus);
         };
         if (reduceMotion()) finish();
         else setTimeout(finish, 240);
       }
     };
+
+    // Mini-nav clicks (delegated; scoped to the overlay's scroll area)
+    scroll.addEventListener('click', e => {
+      const link = e.target instanceof Element ? e.target.closest('.case-nav-link') : null;
+      if (!link) return;
+      const id = link.getAttribute('data-target');
+      setActiveNav(id);
+      navScrollTo(id);
+    });
 
     document.addEventListener('click', e => {
       const t = e.target;
@@ -973,7 +1184,7 @@
       if (open) {
         palette.hidden = false;
         palette.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+        ScrollLock.lock('palette');
         input.value = '';
         filtered = items.slice();
         selected = 0;
@@ -982,7 +1193,7 @@
       } else {
         palette.setAttribute('aria-hidden', 'true');
         palette.hidden = true;
-        document.body.style.overflow = '';
+        ScrollLock.unlock('palette');
       }
     };
 
@@ -1811,7 +2022,7 @@ no scheduled maintenance windows. occasional production fires.`);
       exit: {
         desc: 'close terminal',
         run: () => {
-          term.classList.remove('is-full');
+          term._setFull?.(false);
           newline();
           printInfo('terminal collapsed. press ` to focus again.');
         }
@@ -1962,20 +2173,29 @@ no scheduled maintenance windows. occasional production fires.`);
       }
     });
 
+    /* ---- fullscreen helper — single source of truth + scroll lock ---- */
+    const setFull = (on) => {
+      term.classList.toggle('is-full', on);
+      if (on) ScrollLock.lock('term'); else ScrollLock.unlock('term');
+    };
+
     /* ---- bar buttons ---- */
     expandBtn?.addEventListener('click', () => {
-      term.classList.toggle('is-full');
+      setFull(!term.classList.contains('is-full'));
       input.focus();
     });
     clearBtn?.addEventListener('click', () => { out.innerHTML = ''; input.focus(); });
     $$('.t-dot', term).forEach(btn => {
       btn.addEventListener('click', () => {
         const action = btn.getAttribute('data-action');
-        if (action === 'exit') { term.classList.remove('is-full'); }
-        if (action === 'expand') { term.classList.toggle('is-full'); input.focus(); }
-        if (action === 'minimize') { /* no-op for inline; fullscreen already toggles */ term.classList.remove('is-full'); }
+        if (action === 'exit') { setFull(false); }
+        if (action === 'expand') { setFull(!term.classList.contains('is-full')); input.focus(); }
+        if (action === 'minimize') { setFull(false); }
       });
     });
+
+    /* expose for commands that collapse the terminal */
+    term._setFull = setFull;
 
     /* ---- global focus shortcut: ` ---- */
     document.addEventListener('keydown', e => {
@@ -1986,7 +2206,7 @@ no scheduled maintenance windows. occasional production fires.`);
         window.__scrollToId?.('shell');
         setTimeout(() => input.focus(), 200);
       } else if (e.key === 'Escape' && term.classList.contains('is-full')) {
-        term.classList.remove('is-full');
+        setFull(false);
       }
     });
 
