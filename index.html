@@ -53,7 +53,7 @@
       "https://github.com/nicholaslasagna",
       "https://www.linkedin.com/in/nicholas-lasagna-798118277"
     ],
-    "knowsAbout":["Systems Programming","Backend Engineering","Cloud Infrastructure","Distributed Systems","Compilers","Software Architecture","Rust","Java","TypeScript","PostgreSQL","Oracle Cloud Infrastructure","Performance Engineering"]
+    "knowsAbout":["Systems Programming","Backend Engineering","Cloud Infrastructure","Distributed Systems","Compilers","Developer Tools","AI Tooling","Application Security","Software Architecture","Rust","Java","TypeScript","Python","PostgreSQL","Tauri","Performance Engineering"]
   }
   </script>
 </head>
@@ -287,10 +287,10 @@
                 <span class="now-pulse" aria-hidden="true"></span>
               </div>
               <ul class="now-list">
+                <li><span class="mono">Building</span> <strong>RealForge</strong> — a local-first AI engineering workbench</li>
                 <li><span class="mono">Designing</span> <strong>RealLang</strong> — an AI-native language &amp; compiler</li>
                 <li><span class="mono">Developing</span> <strong>HeartHaven</strong> — real-time multiplayer platform</li>
                 <li><span class="mono">Operating</span> <strong>RealFiction</strong> infra on Oracle Cloud / Ubuntu</li>
-                <li><span class="mono">Studying</span> grad-level CS on the accelerated BS/MS track</li>
               </ul>
             </div>
           </div>
@@ -381,9 +381,9 @@
       <header class="section-title reveal">
         <div>
           <span class="eyebrow mono">01 — Selected work</span>
-          <h2 class="display-sm">Three systems that show how I build.</h2>
+          <h2 class="display-sm">Four systems that show how I build.</h2>
         </div>
-        <p class="section-note">Infrastructure, a real-time platform, and a compiler. Each one opens a full case study with architecture.</p>
+        <p class="section-note">Infrastructure, a real-time platform, a compiler, and an AI engineering workbench. Each opens a full case study with architecture.</p>
       </header>
 
       <div class="featured-stack">
@@ -513,6 +513,52 @@
             </ul>
             <div class="feature-actions">
               <button class="btn primary open-case" type="button" data-case="reallang">
+                <span>Read case study</span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <a class="btn ghost" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">
+                <span>GitHub</span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature reveal" aria-labelledby="feat-realforge">
+          <div class="feature-rail">
+            <span class="mono uppercase tiny">004</span>
+            <span class="mono dim tiny">Developer Tools</span>
+            <span class="mono dim tiny">2025 — Active</span>
+          </div>
+          <div class="feature-body">
+            <div class="feature-head">
+              <h3 id="feat-realforge" class="feature-title">RealForge Workbench <span class="dim">— Local-First AI Engineering Workbench</span></h3>
+              <div class="feature-tags">
+                <span class="chip-static">React</span>
+                <span class="chip-static">TypeScript</span>
+                <span class="chip-static">Tauri</span>
+                <span class="chip-static">Python</span>
+                <span class="chip-static">Local AI</span>
+                <span class="chip-static">Security</span>
+              </div>
+            </div>
+            <div class="proof-badges" aria-label="What this proves">
+              <span class="proof-badge">Local-first</span>
+              <span class="proof-badge">Safety rails</span>
+              <span class="proof-badge">Developer tools</span>
+            </div>
+            <p class="feature-lede">
+              A desktop AI engineering workbench that connects to a user-configured local model,
+              stages safe dry-run previews, and keeps AI output inspectable, bounded, and
+              untrusted until validated.
+            </p>
+            <ul class="feature-bullets">
+              <li><span class="mono">→</span> React / TypeScript / Tauri desktop UI over a Python CLI backend, talking through a narrow command bridge.</li>
+              <li><span class="mono">→</span> Safe Preview dry-run planning, bounded session-only chat, and explicit approval gates before any local model request.</li>
+              <li><span class="mono">→</span> Provider readiness diagnostics with sanitized status — no secrets, paths, or model names in tracked files.</li>
+            </ul>
+            <div class="feature-actions">
+              <button class="btn primary open-case" type="button" data-case="realforge">
                 <span>Read case study</span>
                 <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
@@ -712,6 +758,37 @@
             </div>
             <div class="links" aria-label="Project links">
               <button class="link open-case" type="button" data-case="reallang">Case study →</button>
+              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card project" data-case="realforge" data-tags="tools web systems" aria-label="Project: RealForge Workbench">
+          <div class="card-inner">
+            <div class="proj-head">
+              <h3>RealForge Workbench <span class="proj-status mono">Active</span></h3>
+              <span class="proj-year mono">2025 → active</span>
+            </div>
+            <p>
+              Local-first desktop app for AI-assisted engineering: a React / Tauri UI over a
+              Python CLI backend, with safe dry-run previews, local provider diagnostics, and
+              explicit approval gates that keep AI output inspectable.
+            </p>
+            <ul class="impact" aria-label="Impact bullets">
+              <li>Bounded, session-only chat with no automatic file, tool, or workspace access.</li>
+              <li>Safe Preview dry-run planning — no commands run, no files modified.</li>
+              <li>Privacy by construction: no secrets, paths, or model names in tracked files.</li>
+            </ul>
+            <div class="meta" aria-label="Tech tags">
+              <span class="tag">React</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Tauri</span>
+              <span class="tag">Python</span>
+              <span class="tag">Local AI</span>
+              <span class="tag">Security</span>
+            </div>
+            <div class="links" aria-label="Project links">
+              <button class="link open-case" type="button" data-case="realforge">Case study →</button>
               <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
             </div>
           </div>
@@ -1155,12 +1232,12 @@
           <div class="card-inner">
             <span class="mono uppercase tiny dim">Frameworks &amp; engines</span>
             <ul class="stack-list">
+              <li><span class="stk-name">React · Tauri</span><span class="stk-note">RealForge desktop app</span></li>
               <li><span class="stk-name">Next.js</span><span class="stk-note">HeartHaven · UnitedExams</span></li>
               <li><span class="stk-name">Phaser</span><span class="stk-note">browser game runtime</span></li>
               <li><span class="stk-name">Unreal Engine 4/5</span><span class="stk-note">Imagicast titles</span></li>
-              <li><span class="stk-name">Unity · Blender</span><span class="stk-note">prototyping · assets</span></li>
               <li><span class="stk-name">Velocity · Folia</span><span class="stk-note">JVM proxies, region-threaded</span></li>
-              <li><span class="stk-name">Clickteam Fusion 2.5</span><span class="stk-note">rapid 2D prototypes</span></li>
+              <li><span class="stk-name">Unity · Blender</span><span class="stk-note">prototyping · assets</span></li>
             </ul>
           </div>
         </div>

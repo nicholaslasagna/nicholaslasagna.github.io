@@ -793,6 +793,66 @@
       links: [
         { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
       ]
+    },
+
+    realforge: {
+      title: 'RealForge Workbench',
+      subtitle: 'Local-First AI Engineering Workbench',
+      role: 'Independent Engineer & Designer',
+      timeline: '2025 → Active',
+      status: 'In active development',
+      tag: 'Developer Tools',
+      summary: `A desktop AI engineering workbench that connects to a user-configured local model, stages safe dry-run previews, and keeps AI output inspectable, bounded, and untrusted until validated.`,
+      overview: [
+        `RealForge Workbench is a local-first desktop interface for AI-assisted engineering. It separates chat from safe dry-run previews, treats model output as local_untrusted, and requires explicit approval before any local model request — so AI assistance stays inspectable instead of silently acting on your work.`,
+        `I iterated heavily on the product: cutting dashboard clutter, clarifying local-provider readiness, separating mock preview runtime from real local chat, and making it feel like a focused AI workbench rather than a control panel.`
+      ],
+      problem: `AI developer tools often hide too much state, over-trust model output, or assume a cloud provider. I wanted a workbench where local AI assistance is genuinely useful without silently gaining access to files, tools, shell commands, or persistent memory.`,
+      constraints: [
+        `Local-first: assume a user-configured local model server (OpenAI-compatible), not a cloud provider.`,
+        `Privacy by construction: no secrets, model names, private paths, or provider details in tracked public files.`,
+        `Chat must never gain automatic file, tool, or workspace access — model output is untrusted until validated.`
+      ],
+      arch: {
+        caption: `Local-first: the UI talks to a Python backend over a narrow bridge; model calls go to a user-configured local provider. Nothing influences the workspace without explicit approval.`,
+        tiers: [
+          { label: 'Desktop client', nodes: [{ name: 'React + TypeScript', note: 'chat-first UI' }, { name: 'Tauri shell', note: 'cross-platform desktop', primary: true }] },
+          { label: 'Bridge', nodes: [{ name: 'Narrow command bridge', note: 'no arbitrary execution', primary: true }] },
+          { label: 'Backend · Python CLI', nodes: [{ name: 'Workflows', note: 'deterministic' }, { name: 'Provider diagnostics', note: 'readiness · smoke checks' }, { name: 'Safe Preview', note: 'dry-run planner', primary: true }] },
+          { label: 'Safety layer', nodes: [{ name: 'Bounded context' }, { name: 'Session-only state' }, { name: 'local_untrusted', note: 'until validated', primary: true }, { name: 'Approval gates' }] },
+          { label: 'Local provider', nodes: [{ name: 'OpenAI-compatible local server', note: 'localhost', primary: true }] }
+        ]
+      },
+      challenges: [
+        { problem: `AI dev tools tend to over-trust model output and quietly reach for files, shells, and memory.`, approach: `Treat every model response as local_untrusted and gate any influence behind explicit approval; chat has no automatic file, tool, or workspace access.`, outcome: `AI assistance that stays inspectable — nothing touches the workspace without a human in the loop.` },
+        { problem: `Planning a task and executing it are very different risk levels.`, approach: `Built Safe Preview, a dry-run mode that stages task plans without running commands or modifying files.`, outcome: `You can see exactly what a task would do before anything happens.` },
+        { problem: `"Is the local model even reachable?" is half the battle with local providers.`, approach: `Provider readiness diagnostics distinguish preview runtime, local-provider configuration, and connection failures, with sanitized status that leaks no secrets, paths, or model names.`, outcome: `A clear, privacy-safe signal on whether the local model is actually ready.` }
+      ],
+      tradeoffs: [
+        { decision: `Local-first over cloud providers`, why: `Keeps data and the model on the user's machine and removes a trust dependency, at the cost of requiring a user-configured local model server.` },
+        { decision: `A narrow command bridge instead of broad execution`, why: `Shrinks the surface area and keeps behavior inspectable, at the cost of more deliberate plumbing for each capability.` },
+        { decision: `Session-only chat with no persistent memory`, why: `Nothing accumulates silently, at the cost of long-term-memory conveniences.` }
+      ],
+      outcome: [
+        `A cross-platform desktop workbench (React / TypeScript / Tauri + Python) with a chat-first workflow.`,
+        `Safe Preview dry-run planning, bounded session-only chat, and explicit approval gates before any local model request.`,
+        `Provider readiness diagnostics with sanitized status that separate preview runtime, local-provider config, and connection failures.`,
+        `Automated validation across React tests, Node tests, visual smoke tests, Tauri checks, audits, and privacy scans.`
+      ],
+      proves: [
+        `I can design a secure, local-first AI tool that balances usefulness against strict safety boundaries.`,
+        `I reason in terms of trust boundaries, inspectability, and least privilege — not just features.`,
+        `I can take a complex engineering system and shape it into a focused, understandable product.`
+      ],
+      stack: {
+        Desktop: ['React', 'TypeScript', 'Tauri'],
+        Backend: ['Python', 'CLI architecture', 'Provider diagnostics'],
+        'Safety & privacy': ['Bounded context', 'local_untrusted', 'Approval gates', 'Privacy scans'],
+        Quality: ['React tests', 'Node tests', 'Visual smoke tests', 'Tauri checks']
+      },
+      links: [
+        { label: 'GitHub', url: 'https://github.com/nicholaslasagna', primary: true }
+      ]
     }
   };
 
@@ -1380,7 +1440,7 @@ start somewhere:
   cat projects/realfiction.md
   cat projects/hearthaven.md
   cat projects/reallang.md
-  cat projects/unitedexams.md
+  cat projects/realforge.md
   cat principles.md
   ls projects/
   neofetch
@@ -1609,6 +1669,33 @@ links:
   https://github.com/nicholaslasagna
 `;
 
+    const REALFORGE = `realforge workbench — local-first ai engineering workbench [ 2025 → active ]
+
+stack: react · typescript · tauri · python · local ai · security
+
+a desktop app for ai-assisted engineering that connects to a
+user-configured local model, stages safe dry-run previews, and keeps
+ai output inspectable, bounded, and untrusted until validated.
+
+architecture:
+  react/tauri desktop ui → narrow command bridge → python cli backend
+  → safety layer (bounded context · session-only · local_untrusted
+    · approval gates) → openai-compatible local model server (localhost)
+
+highlights:
+  → safe preview: dry-run task planning with no commands run and no
+    files modified.
+  → bounded, session-only chat with no automatic file, tool, or
+    workspace access; model output treated as local_untrusted.
+  → provider readiness diagnostics with sanitized status — separates
+    preview runtime, local-provider config, and connection failures.
+  → privacy by construction: no secrets, paths, or model names in
+    tracked public files; automated privacy scans in ci.
+
+links:
+  https://github.com/nicholaslasagna
+`;
+
     const UNITED = `unitedexams — full-stack educational platform         [ 2025 ]
 
 stack: next.js · typescript · supabase · postgresql · rls
@@ -1689,6 +1776,7 @@ highlights:
           'realfiction.md':       f(REALFIC),
           'hearthaven.md':        f(HEARTHAVEN),
           'reallang.md':          f(REALLANG),
+          'realforge.md':         f(REALFORGE),
           'unitedexams.md':       f(UNITED),
           'rust-runtime.md':      f(RUSTRUNTIME),
           'imagicast.md':         f(IMAGICAST),
@@ -1955,8 +2043,8 @@ no scheduled maintenance windows. occasional production fires.`);
             ['uptime',  `${yrs} years (shipping since 2021)`],
             ['edu',     'texas tech — accel. bs/ms cs (\'27) · gpa 3.56'],
             ['stack',   'rust · java · typescript · python · c++ · x64 asm'],
-            ['active',  'reallang · hearthaven · realfiction · rust runtime'],
-            ['focus',   'systems · backend · infra · cloud · distributed · compilers'],
+            ['active',  'realforge · reallang · hearthaven · realfiction'],
+            ['focus',   'systems · backend · infra · devtools · compilers · ai tooling'],
             ['status',  'open to summer 2026 swe internships'],
           ];
 
