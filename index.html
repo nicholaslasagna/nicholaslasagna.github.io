@@ -9,20 +9,20 @@
   <meta name="description" content="Systems-focused software engineer — backend platforms, cloud infrastructure, distributed systems, and compilers. CS at Texas Tech (accelerated BS/MS). Open to Summer 2026 SWE internships." />
   <meta name="author" content="Nicholas Lasagna" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <link rel="canonical" href="https://www.nicholaslasagna.com/" />
+  <link rel="canonical" href="https://nicholaslasagna.com/" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Nicholas Lasagna — Systems & Software Engineer" />
   <meta property="og:description" content="Backend platforms, cloud infrastructure, distributed systems, and compilers. CS @ Texas Tech (accelerated BS/MS). Open to Summer 2026 SWE internships." />
-  <meta property="og:url" content="https://www.nicholaslasagna.com/" />
-  <meta property="og:image" content="https://www.nicholaslasagna.com/og.svg" />
+  <meta property="og:url" content="https://nicholaslasagna.com/" />
+  <meta property="og:image" content="https://nicholaslasagna.com/og.svg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Nicholas Lasagna — Systems & Software Engineer" />
   <meta name="twitter:description" content="Backend platforms, cloud infrastructure, distributed systems, and compilers. CS @ Texas Tech (accelerated BS/MS)." />
-  <meta name="twitter:image" content="https://www.nicholaslasagna.com/og.svg" />
+  <meta name="twitter:image" content="https://nicholaslasagna.com/og.svg" />
 
   <meta name="theme-color" content="#0a0c14" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f5f3ed" media="(prefers-color-scheme: light)">
@@ -43,8 +43,8 @@
     "@context":"https://schema.org",
     "@type":"Person",
     "name":"Nicholas Lasagna",
-    "url":"https://www.nicholaslasagna.com/",
-    "image":"https://www.nicholaslasagna.com/Images/Nicholas.png",
+    "url":"https://nicholaslasagna.com/",
+    "image":"https://nicholaslasagna.com/Images/Nicholas.png",
     "email":"mailto:nicholaslasagna@gmail.com",
     "jobTitle":"Software Engineer",
     "alumniOf":{"@type":"CollegeOrUniversity","name":"Texas Tech University"},
@@ -411,14 +411,14 @@
               <span class="proof-badge">Concurrency</span>
             </div>
             <p class="feature-lede">
-              Architected and operate a distributed multiplayer backend on Oracle Cloud
+              Architected and operate a live multi-server game platform on Oracle Cloud
               Infrastructure (Ubuntu Linux) — a Velocity proxy fanning out to authoritative
-              Java nodes over MariaDB and Redis, serving concurrent real-time workloads.
+              Java game nodes over MariaDB and Redis, run as player-facing infrastructure.
             </p>
             <ul class="feature-bullets">
               <li><span class="mono">→</span> Multi-node architecture: custom backend services, persistent player data, live production debugging.</li>
               <li><span class="mono">→</span> Networking, deployment pipelines, process monitoring, JVM tuning, runtime optimization.</li>
-              <li><span class="mono">→</span> Tail latency over mean as the player-experience KPI; every change behind a known-good baseline.</li>
+              <li><span class="mono">→</span> Performance and responsiveness treated as operational priorities; every change behind a known-good baseline.</li>
             </ul>
             <div class="feature-actions">
               <button class="btn primary open-case" type="button" data-case="realfiction">
@@ -579,7 +579,7 @@
           <span class="eyebrow mono">02 — Impact</span>
           <h2 class="display-sm">The 20-second version.</h2>
         </div>
-        <p class="section-note">What each system actually delivers. Full architecture lives in each case study.</p>
+        <p class="section-note">Four different kinds of engineering proof — infrastructure, real-time backend, full-stack product, and compilers. Full architecture lives in each case study.</p>
       </header>
 
       <div class="impact-grid" data-stagger>
@@ -682,13 +682,13 @@
               <span class="proj-year mono">2023 → live</span>
             </div>
             <p>
-              Distributed multiplayer backend on Oracle Cloud / Ubuntu. Velocity proxy,
-              authoritative Java nodes, MariaDB + Redis — architected, deployed, and operated end to end.
+              Distributed game-server platform on Oracle Cloud / Ubuntu. Velocity proxy,
+              authoritative Java game nodes, MariaDB + Redis — architected, deployed, and operated end to end.
             </p>
             <ul class="impact" aria-label="Impact bullets">
               <li>Multi-node architecture: custom backend services, persistent player data, live debugging.</li>
               <li>Networking, deployment pipelines, monitoring, JVM tuning, runtime optimization.</li>
-              <li>Tail latency over mean as the real player-experience KPI.</li>
+              <li>Performance and responsiveness treated as operational priorities.</li>
             </ul>
             <div class="meta" aria-label="Tech tags">
               <span class="tag">Java</span>
@@ -830,13 +830,13 @@
               <span class="proj-year mono">2024 → active</span>
             </div>
             <p>
-              Performance-sensitive Rust runtime tooling for a large-scale game modification
-              project with active community usage. Memory safety + concurrency under load.
+              Rust runtime and tooling work for a public, non-commercial modding project —
+              memory safety, explicit failure handling, and maintainable runtime boundaries.
             </p>
             <ul class="impact" aria-label="Impact bullets">
               <li>Debugged complex runtime behavior: concurrent execution, systems-level resource management.</li>
               <li>Memory safety and runtime correctness as preconditions, not features.</li>
-              <li>Loud in dev, graceful in prod — built for unsupervised use across many environments.</li>
+              <li>Fails loudly in development, degrades gracefully for users — compatibility as a design goal.</li>
             </ul>
             <div class="meta" aria-label="Tech tags">
               <span class="tag">Rust</span>
@@ -886,13 +886,13 @@
               <span class="proj-year mono">2023</span>
             </div>
             <p>
-              High-performance Python desktop automation system integrating OCR pipelines and
-              AI-assisted workflows. Event-driven, low-latency, safe by construction.
+              Python OCR desktop automation assistant designed to remain predictable under
+              noisy text, inconsistent UI layouts, and OS-level interaction.
             </p>
             <ul class="impact" aria-label="Impact bullets">
-              <li>Screen capture, text parsing, decision matrices, system-level automation with runtime safety.</li>
-              <li>Encrypted licensing + authentication: secure env variables, runtime validation.</li>
-              <li>Optimized low-latency execution and robust error handling around OS interaction.</li>
+              <li>OCR noise filtering and tolerant parsing across shifting screen layouts.</li>
+              <li>Guarded input dispatch — automation validates before it acts.</li>
+              <li>macOS packaging with encrypted local config and license/config validation.</li>
             </ul>
             <div class="meta" aria-label="Tech tags">
               <span class="tag">Python</span>
@@ -1122,19 +1122,19 @@
             <ol class="timeline">
               <li>
                 <span class="t-year mono">2026</span>
-                <span class="t-body">Designing <strong>RealLang</strong> — an AI-native language &amp; compiler. Continuing <strong>HeartHaven</strong>.</span>
+                <span class="t-body">Building <strong>RealForge</strong> (local-first AI workbench) and <strong>RealLang</strong> (AI-native language &amp; compiler). Continuing <strong>HeartHaven</strong>.</span>
               </li>
               <li>
                 <span class="t-year mono">2025</span>
-                <span class="t-body">Built <strong>UnitedExams</strong> and started <strong>HeartHaven</strong> (Next.js + Supabase). Rust runtime tooling for a large modding community.</span>
+                <span class="t-body">Built <strong>UnitedExams</strong> and started <strong>HeartHaven</strong> (Next.js + Supabase).</span>
               </li>
               <li>
                 <span class="t-year mono">2024</span>
-                <span class="t-body">Shipped <strong>RealChat</strong> (Python OCR + automation, encrypted licensing).</span>
+                <span class="t-body">Started <strong>Rust runtime tooling</strong> for a public, non-commercial modding project.</span>
               </li>
               <li>
                 <span class="t-year mono">2023</span>
-                <span class="t-body">Stood up <strong>RealFiction</strong> on Oracle Cloud / Ubuntu. Started CS at Texas Tech (accelerated BS/MS).</span>
+                <span class="t-body">Shipped <strong>RealChat</strong> (Python OCR + automation). Stood up <strong>RealFiction</strong> on Oracle Cloud / Ubuntu. Started CS at Texas Tech (accelerated BS/MS).</span>
               </li>
               <li>
                 <span class="t-year mono">2021</span>

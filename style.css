@@ -771,6 +771,10 @@ section{
 
 .kicker{
   margin: 0 0 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
 }
 .status{
   display:inline-flex;
@@ -3005,59 +3009,6 @@ body.entrance-done .rail{ opacity: 1; }
   vertical-align: -1px;
 }
 @keyframes typing-blink{ 50%{ opacity: 0; } }
-
-/* ==========================================================================
-   LIVE REALFICTION STATUS PILL — sits next to the internships pill.
-   Shows real HEAD-ping result with latency. Color shifts based on state.
-   ========================================================================== */
-.kicker{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-}
-.status-live{
-  /* Inherits .status base styles */
-  background: color-mix(in srgb, var(--bg-elev) 70%, transparent);
-}
-.rf-dot{
-  background: var(--muted-2);
-  box-shadow: none;
-  animation: none;
-  transition: background 280ms ease, box-shadow 280ms ease;
-}
-.rf-dot[data-rf-state="up"]{
-  background: #4ade80;
-  box-shadow: 0 0 0 0 rgba(74,222,128,0.55);
-  animation: pulse 2.4s var(--ease) infinite;
-}
-.rf-dot[data-rf-state="slow"]{
-  background: var(--accent);
-  animation: pulse-warm 2.4s var(--ease) infinite;
-}
-.rf-dot[data-rf-state="down"]{
-  background: #ff6b6b;
-}
-.rf-dot[data-rf-state="checking"]{
-  background: var(--muted);
-  animation: rf-flicker 1.2s ease-in-out infinite;
-}
-@keyframes rf-flicker{
-  50%{ opacity: 0.4; }
-}
-.rf-label{
-  font-size: 11px;
-  letter-spacing: 0.04em;
-}
-.rf-meta{
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  margin-left: 4px;
-}
-
-@media (max-width: 540px){
-  .status-live .rf-label{ display: none; }
-}
 
 /* ==========================================================================
    AUGMENTED CONTEXTUAL CURSOR (fine pointers only)

@@ -388,7 +388,7 @@
       timeline: '2023 → Live',
       status: 'Live in production',
       tag: 'Infrastructure',
-      summary: 'A live, multi-node Java game backend on Oracle Cloud — proxy routing, persistent data, JVM tuning, and real on-call.',
+      summary: 'A live, multi-node Java game-server platform on Oracle Cloud — proxy routing, persistent data, JVM tuning, and live operations.',
       problem: `Operating a multiplayer game network means several moving parts have to stay correct and responsive at once — proxy routing, multiple authoritative server processes, a database, and a cache — while real players are connected and any mistake is immediately visible.`,
       constraints: [
         `A single small cloud tenancy (Oracle Cloud, free-tier-class resources): CPU and memory budgets are real, so tuning matters more than scaling out.`,
@@ -425,7 +425,7 @@
       },
       challenges: [
         { problem: 'Region-threaded runtime (Folia) makes naive world access a crash, not a warning.', approach: 'Refactored plugin/service code to be region-safe — schedule work onto the owning region instead of touching shared state from arbitrary threads.', outcome: 'Eliminated a whole class of async world-access violations that only surfaced under load.' },
-        { problem: 'Tail latency spikes were invisible in averages.', approach: 'Treated p99, not mean, as the player-experience KPI; tuned JVM garbage collection and chunk/database pipelines around it.', outcome: 'Smoother frame pacing under concurrency; spikes became diagnosable instead of anecdotal.' },
+        { problem: 'Latency spikes hide inside averages — players feel the worst moment, not the mean.', approach: 'Treated tail latency and responsiveness as operational priorities; tuned JVM garbage collection and chunk/database pipelines with that in mind.', outcome: 'Latency spikes became diagnosable instead of anecdotal.' },
         { problem: 'A bad deploy on a live service is a felt outage.', approach: 'Every change ships behind a known-good baseline that can be restored in one command.', outcome: 'Confidence to iterate on production without gambling uptime.' }
       ],
       performance: [
@@ -642,7 +642,7 @@
       timeline: '2024 → Active',
       status: 'Active',
       tag: 'Systems',
-      summary: 'Performance-sensitive runtime tooling in Rust for a large modding project — memory safety and concurrency where being wrong hurts someone else’s machine.',
+      summary: 'Rust runtime and tooling work for a public, non-commercial modding project — memory safety and explicit failure handling where being wrong hurts someone else’s machine.',
       problem: `Tooling that runs close to a host process on other people's machines can't afford undefined behavior. The work is making low-level runtime interaction safe, explicit, and debuggable in a non-commercial modding context.`,
       constraints: [
         `Runs in environments I don't control, so failure has to be explicit — never silent corruption.`,
@@ -662,7 +662,7 @@
         `I take ownership of reliability in code that runs unsupervised.`
       ],
       overview: [
-        'Performance-sensitive runtime tooling written in Rust for a large-scale game modification project with active community usage. The work lives at the low level: concurrent execution and systems-level resource management.',
+        'Rust runtime and tooling work for a public, non-commercial game modding project with an active community. The work lives at the low level: runtime boundaries, compatibility, and systems-level resource management.',
         'Rust over C++ was a deliberate call. This code runs close to a host process on machines I do not control, so memory safety and runtime correctness are preconditions, not features — the type system pays for itself in tooling that has to run unsupervised.'
       ],
       arch: {
@@ -690,12 +690,12 @@
 
     realchat: {
       title: 'RealChat',
-      subtitle: 'High-performance Python Automation System',
+      subtitle: 'Python OCR Desktop Automation Assistant',
       role: 'Engineer',
       timeline: '2023',
       status: 'Built',
       tag: 'Tools',
-      summary: 'Event-driven desktop automation with OCR pipelines, AI-assisted workflows, encrypted licensing, and safe OS interaction.',
+      summary: 'A desktop OCR automation assistant built to stay predictable under noisy text and shifting UI layouts — guarded automation, encrypted local config, and license validation.',
       problem: `Driving a desktop UI from what's on screen is unreliable by nature — OCR is noisy, layouts shift, and automation that acts on a wrong reading is dangerous. The work is making screen-driven automation predictable and safe.`,
       constraints: [
         `OCR input is imperfect; the system has to tolerate noise and ambiguous UI states.`,
@@ -714,8 +714,8 @@
         `I can ship a real, packaged desktop tool and design for failure — not just the happy path.`
       ],
       overview: [
-        'RealChat is a high-performance Python desktop automation system integrating OCR pipelines and AI-assisted workflows: screen capture, text parsing, decision logic, and system-level automation — built for runtime safety.',
-        'It ships as a real product, with an encrypted licensing and authentication layer handling secure environment variables and runtime validation.'
+        'RealChat is a Python OCR desktop automation assistant: screen capture, OCR text parsing, decision logic, and guarded OS-level automation — designed to remain predictable under noisy text and inconsistent UI layouts.',
+        'It ships as a real packaged app, with encrypted local configuration and license/config validation.'
       ],
       arch: {
         caption: 'An event-driven loop: capture → recognize → decide → act, with safety checks before any OS interaction.',
@@ -730,7 +730,7 @@
         { problem: 'OCR on real screens is noisy and layouts shift.', approach: 'Robust filtering and tolerant parsing instead of brittle pixel/exact-string matching.', outcome: 'Predictable behavior across inconsistent UI states.' },
         { problem: 'Automating OS input is dangerous if it fires blindly.', approach: 'Safety checks gate every dispatch; the loop is event-driven and testable.', outcome: 'Automation stays predictable and recoverable.' }
       ],
-      performance: ['Low-latency execution path with robust error handling around OS interaction.'],
+      performance: ['Robust error handling around OS interaction — the automation validates before it acts.'],
       deployment: ['Packaged for macOS with app bundling, encrypted local config, and license-key validation.'],
       stack: {
         Languages: ['Python'],
@@ -1520,6 +1520,7 @@ systems & backend & compilers
   memory safety       ── rust runtime tooling
 
 frameworks & engines
+  react · tauri       ── realforge desktop app
   next.js             ── hearthaven, unitedexams
   phaser              ── browser game runtime
   unreal engine 4/5   ── imagicast titles
@@ -1534,7 +1535,7 @@ frameworks & engines
   github    github.com/nicholaslasagna
   linkedin  linkedin.com/in/nicholas-lasagna-798118277
   resume    /Resume.pdf
-  website   https://www.nicholaslasagna.com
+  website   https://nicholaslasagna.com
 
 shortcut: 'email' opens your mail client, 'resume' downloads the pdf.
 `;
@@ -1565,7 +1566,7 @@ highlights:
     persistent player data systems, and live production debugging.
   → configured advanced networking, permissions, deployment pipelines,
     process monitoring, jvm tuning, and runtime optimization.
-  → tail latency over mean as the actual player-experience kpi.
+  → performance and responsiveness treated as operational priorities.
   → every change shipped behind a known-good baseline.
 
 links:
@@ -1577,9 +1578,9 @@ links:
 
 stack: rust · memory safety · concurrency · low-level systems
 
-engineered performance-sensitive runtime tooling in rust for a large-scale
-game modification project with active community usage. debugged complex
-runtime behavior involving concurrent execution and systems-level
+rust runtime and tooling work for a public, non-commercial game modding
+project with an active community. debugged complex runtime behavior
+involving runtime boundaries, compatibility, and systems-level
 resource management.
 
 why rust over c++:
@@ -1588,10 +1589,9 @@ why rust over c++:
 
 highlights:
   → strict focus on memory safety, runtime correctness, and low-level
-    systems interaction to ensure stability under load.
-  → debugged complex concurrency behavior and explicit failure handling
-    across many user environments.
-  → loud-in-dev, graceful-in-prod for community-facing tooling.
+    systems interaction.
+  → explicit failure handling and maintainable runtime boundaries.
+  → fails loudly in development, degrades gracefully for users.
 
 links:
   https://github.com/nicholaslasagna
@@ -1714,21 +1714,19 @@ links:
   https://github.com/nicholaslasagna
 `;
 
-    const REALCHAT = `realchat — high-performance python automation system  [ 2023 ]
+    const REALCHAT = `realchat — python ocr desktop automation assistant   [ 2023 ]
 
-stack: python · event-driven systems · automation · ocr · tesseract · macos
+stack: python · ocr · tesseract · desktop automation · macos
 
-high-performance python desktop automation system integrating ocr
-pipelines and ai-assisted workflows. event-driven, low-latency, and
-safe by construction.
+python ocr desktop automation assistant designed to remain predictable
+under noisy text, inconsistent ui layouts, and os-level interaction.
 
 highlights:
-  → complex screen capture, text parsing, decision matrices, and
-    system-level automation with runtime safety.
-  → encrypted licensing and authentication: secure environment
-    variables, runtime validation.
-  → optimized low-latency execution and robust error handling for
-    safe operating system interaction.
+  → ocr noise filtering and tolerant parsing across shifting screen
+    layouts.
+  → guarded input dispatch — automation validates before it acts.
+  → macos packaging with encrypted local configuration and
+    license/config validation.
 
 links:
   https://github.com/nicholaslasagna
@@ -3013,51 +3011,6 @@ no scheduled maintenance windows. occasional production fires.`);
   }
 
   /* ==========================================================================
-     LIVE REALFICTION STATUS — real HEAD ping + latency, refreshed every 60s
-     ========================================================================== */
-  function initLiveRealFiction() {
-    const wrap = document.getElementById('liveRF');
-    if (!wrap) return;
-    const dot = wrap.querySelector('.rf-dot');
-    const meta = wrap.querySelector('[data-rf-meta]');
-
-    const setState = (state, text) => {
-      if (dot) dot.dataset.rfState = state;
-      if (meta) meta.textContent = text;
-    };
-
-    const ping = async () => {
-      setState('checking', 'pinging…');
-      const start = performance.now();
-      try {
-        // no-cors HEAD: we don't get the body, but the request resolves on success.
-        // Cache-busted so we measure live latency.
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), 8000);
-        await fetch(`https://realfiction.live/?_=${Date.now()}`, {
-          method: 'HEAD',
-          mode: 'no-cors',
-          cache: 'no-store',
-          signal: ctrl.signal,
-        });
-        clearTimeout(timer);
-        const ms = Math.round(performance.now() - start);
-        const slow = ms > 800;
-        setState(slow ? 'slow' : 'up', `${ms}ms · ${slow ? 'slow' : 'up'}`);
-      } catch (err) {
-        if (err?.name === 'AbortError') {
-          setState('down', 'timeout');
-        } else {
-          setState('down', 'unreachable');
-        }
-      }
-    };
-
-    ping();
-    setInterval(ping, 60_000);
-  }
-
-  /* ==========================================================================
      ANIMATED COUNTERS — count up to value when element enters viewport
      ========================================================================== */
   function animateCount(el, to, duration = 1400) {
@@ -3274,7 +3227,6 @@ no scheduled maintenance windows. occasional production fires.`);
     initCardInteractions();
 
     // Premium polish layer
-    initLiveRealFiction();
     initContextCursor();
     initWebVitals();
 
