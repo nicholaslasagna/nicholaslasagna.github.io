@@ -793,15 +793,15 @@ section{
 .status-dot{
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 0 0 rgba(74,222,128,0.6);
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
   animation: pulse 2.4s var(--ease) infinite;
   flex: 0 0 auto;
 }
 @keyframes pulse{
-  0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.55); }
-  70%  { box-shadow: 0 0 0 10px rgba(74,222,128,0); }
-  100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+  70%  { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
 }
 
 .hero-actions{
@@ -2000,13 +2000,13 @@ footer{
 .shell-section{ padding-top: clamp(40px, 6vw, 70px); }
 
 .term{
-  --term-bg: #0a0d14;
-  --term-bg-2: #06080e;
+  --term-bg: #0b0b0e;
+  --term-bg-2: #070709;
   --term-line: rgba(245,233,210,0.10);
   --term-text: #ece9e0;
   --term-muted: #8d8a82;
   --term-prompt: #ec4d6e;
-  --term-host: #4dd6cf;
+  --term-host: #c8c4ba;
   --term-user: #b8e3a3;
   --term-accent: #ec4d6e;
   --term-err: #ff7a7a;
