@@ -5,11 +5,11 @@
 
 /* ---------- Tokens ---------- */
 :root{
-  /* cool ink — slight navy undertone so the coral primary sings against it */
-  --bg:        #0a0c14;
-  --bg-elev:   #11131c;
-  --bg-elev-2: #161824;
-  --bg-sunk:   #07080e;
+  /* engineered near-black — neutral, no navy tint; the accent lives in content, not the canvas */
+  --bg:        #0b0b0e;
+  --bg-elev:   #131317;
+  --bg-elev-2: #191920;
+  --bg-sunk:   #070709;
 
   --text:      #ece9e0;
   --text-2:    #c8c4ba;
@@ -20,11 +20,11 @@
   --line-2:    rgba(236,233,224,0.14);
   --line-3:    rgba(236,233,224,0.22);
 
-  /* Electric coral-rose primary — distinct, designer, not AI-cliche.
-     Aqua secondary balances the warmth. Lavender used only for ambient depth. */
-  --accent:    #ec4d6e; /* coral-rose */
-  --accent-2:  #4dd6cf; /* cool aquamarine */
-  --accent-3:  #b8a4ff; /* lavender — atmospheric only */
+  /* One accent, precisely. Coral-rose is the single chromatic signal in the system;
+     the retired hues alias to it so the whole surface stays mono-with-one-accent. */
+  --accent:    #ec4d6e; /* coral-rose — the only accent */
+  --accent-2:  var(--accent); /* retired aqua → coral */
+  --accent-3:  var(--accent); /* retired lavender → coral */
   --accent-ink:#0a0a0b;
 
   --shadow:   0 1px 0 rgba(255,255,255,0.04) inset, 0 18px 48px rgba(0,0,0,0.42);
@@ -70,9 +70,9 @@
   --line-2:    rgba(20,19,15,0.16);
   --line-3:    rgba(20,19,15,0.24);
 
-  --accent:    #c91e58;       /* deep rose-coral */
-  --accent-2:  #1f8a7c;       /* deep teal — cool counter */
-  --accent-3:  #5b46c0;       /* deep violet — atmospheric only */
+  --accent:    #c91e58;       /* deep rose-coral — the only accent */
+  --accent-2:  var(--accent); /* retired teal → coral */
+  --accent-3:  var(--accent); /* retired violet → coral */
   --accent-ink:#fbfaf6;
 
   --shadow:   0 1px 0 rgba(255,255,255,0.6) inset, 0 12px 36px rgba(20,19,15,0.10);
@@ -133,24 +133,19 @@ body.is-scroll-locked{
   }
 }
 
-/* Background: deep base + subtle warm bloom */
+/* Engineered flat canvas — no colored bloom. A single, near-invisible neutral
+   lift at the top gives depth without a chromatic wash; the accent stays in content. */
 body::before{
   content:"";
   position:fixed;
-  inset:-20vh -20vw -50vh -20vw;
+  inset:0;
   pointer-events:none;
   z-index:0;
   background:
-    radial-gradient(60vw 60vh at 16% 8%,  color-mix(in srgb, var(--accent) 11%, transparent),   transparent 62%),
-    radial-gradient(56vw 56vh at 92% 24%, color-mix(in srgb, var(--accent-2) 7%, transparent),  transparent 60%),
-    radial-gradient(40vw 40vh at 68% 78%, color-mix(in srgb, var(--accent-3) 5%, transparent),  transparent 62%);
+    radial-gradient(120vw 72vh at 50% -12%,
+      color-mix(in srgb, var(--text) 3.5%, transparent), transparent 62%);
 }
-[data-theme="light"] body::before{
-  background:
-    radial-gradient(60vw 60vh at 16% 8%,  color-mix(in srgb, var(--accent) 7%, transparent),   transparent 62%),
-    radial-gradient(56vw 56vh at 92% 24%, color-mix(in srgb, var(--accent-2) 5%, transparent), transparent 60%),
-    radial-gradient(40vw 40vh at 68% 78%, color-mix(in srgb, var(--accent-3) 3%, transparent), transparent 62%);
-}
+[data-theme="light"] body::before{ background:none; }
 
 /* ==========================================================================
    ATMOSPHERE — drifting orbs that give the page calm, futuristic depth.
@@ -183,7 +178,7 @@ body::before{
       color-mix(in srgb, var(--accent) 80%, transparent) 0%,
       color-mix(in srgb, var(--accent) 30%, transparent) 45%,
       transparent 70%);
-  --opa: 0.42;
+  --opa: 0.15;
   --tx: 6vw; --ty: 4vh;
   animation-duration: 1600ms, 32s;
   animation-delay: 250ms, 0s;
@@ -196,7 +191,7 @@ body::before{
       color-mix(in srgb, var(--accent-2) 75%, transparent) 0%,
       color-mix(in srgb, var(--accent-2) 24%, transparent) 50%,
       transparent 72%);
-  --opa: 0.35;
+  --opa: 0.10;
   --tx: -5vw; --ty: -6vh;
   animation-duration: 1600ms, 44s;
   animation-delay: 320ms, 0s;
@@ -209,7 +204,7 @@ body::before{
       color-mix(in srgb, var(--accent-3) 62%, transparent) 0%,
       color-mix(in srgb, var(--accent-3) 18%, transparent) 50%,
       transparent 76%);
-  --opa: 0.22;
+  --opa: 0.07;
   --tx: 4vw; --ty: -3vh;
   animation-duration: 1600ms, 28s;
   animation-delay: 420ms, 0s;
@@ -226,9 +221,9 @@ body::before{
   filter: blur(80px) saturate(140%);
   mix-blend-mode: multiply;
 }
-[data-theme="light"] .orb-a{ --opa: 0.18; }
-[data-theme="light"] .orb-b{ --opa: 0.16; }
-[data-theme="light"] .orb-c{ --opa: 0.12; }
+[data-theme="light"] .orb-a{ --opa: 0.09; }
+[data-theme="light"] .orb-b{ --opa: 0.06; }
+[data-theme="light"] .orb-c{ --opa: 0.05; }
 
 @media (prefers-reduced-motion: reduce){
   .orb{
@@ -238,8 +233,8 @@ body::before{
 @media (max-width: 640px){
   /* Soften on small screens — keep depth, ease the GPU */
   .orb{ filter: blur(50px) saturate(110%); }
-  .orb-a{ width: 70vmin; height: 70vmin; --opa: 0.32; }
-  .orb-b{ width: 80vmin; height: 80vmin; --opa: 0.28; }
+  .orb-a{ width: 70vmin; height: 70vmin; --opa: 0.13; }
+  .orb-b{ width: 80vmin; height: 80vmin; --opa: 0.09; }
   .orb-c{ display: none; }
 }
 
@@ -741,9 +736,15 @@ section{
   align-items:flex-end;
   justify-content:space-between;
   gap: 24px;
-  margin-bottom: 38px;
+  /* Engineered "band" seam — every section opens on a hairline, the way the
+     Selected Work feature rows do. Consistent chrome = seamless flow. */
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
   flex-wrap:wrap;
 }
+/* Selected Work already seams via each .feature's own top rule — avoid a double line. */
+#work .section-title{ border-bottom: 0; padding-bottom: 0; margin-bottom: 38px; }
 .section-note{
   font-family: var(--font-mono);
   font-size: 12px;
