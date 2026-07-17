@@ -82,39 +82,6 @@
     setInterval(tick, 30 * 1000);
   }
 
-  /* -------- cursor spotlight -------- */
-  function initCursorGlow() {
-    const glow = $('.cursor-glow');
-    if (!glow) return;
-    if (matchMedia('(pointer: coarse)').matches) return; // skip on touch
-    if (reduceMotion()) return;
-
-    let raf = 0, tx = 50, ty = 30, mx = 50, my = 30;
-    const onMove = e => {
-      tx = (e.clientX / window.innerWidth) * 100;
-      ty = (e.clientY / window.innerHeight) * 100;
-      if (!raf) {
-        raf = requestAnimationFrame(loop);
-      }
-    };
-    const loop = () => {
-      mx += (tx - mx) * 0.18;
-      my += (ty - my) * 0.18;
-      glow.style.setProperty('--mx', `${mx}%`);
-      glow.style.setProperty('--my', `${my}%`);
-      if (Math.abs(tx - mx) > 0.05 || Math.abs(ty - my) > 0.05) {
-        raf = requestAnimationFrame(loop);
-      } else {
-        raf = 0;
-      }
-    };
-
-    window.addEventListener('mousemove', onMove, { passive: true });
-    window.addEventListener('mouseenter', () => glow.classList.add('on'));
-    window.addEventListener('mouseleave', () => glow.classList.remove('on'));
-    glow.classList.add('on');
-  }
-
   /* -------- magnetic buttons (subtle) -------- */
   function initMagnetic() {
     if (reduceMotion()) return;
@@ -2849,57 +2816,6 @@ no scheduled maintenance windows. occasional production fires.`);
   /* ==========================================================================
      CURSOR-FOLLOW CHIP — agency-style hover preview
      ========================================================================== */
-  function initCursorChip() {
-    const chip = document.getElementById('cursorChip');
-    if (!chip) return;
-    if (reduceMotion()) return;
-    if (matchMedia('(pointer: coarse)').matches) return;
-
-    const text = $('.cc-text', chip);
-    const targets = $$('.project, .feature, .stack-card');
-
-    let raf = 0, x = 0, y = 0, tx = 0, ty = 0, active = false;
-
-    const onMove = (e) => {
-      tx = e.clientX; ty = e.clientY;
-      if (!raf) raf = requestAnimationFrame(loop);
-    };
-    const loop = () => {
-      // Subtle lerp for buttery feel
-      x += (tx - x) * 0.32;
-      y += (ty - y) * 0.32;
-      chip.style.transform = `translate(calc(${x}px - 50%), calc(${y - 28}px - 50%)) scale(${active ? 1 : 0.7})`;
-      raf = 0;
-      if (active && (Math.abs(tx - x) > 0.2 || Math.abs(ty - y) > 0.2)) {
-        raf = requestAnimationFrame(loop);
-      }
-    };
-
-    const setActive = (label) => {
-      active = !!label;
-      if (label && text) text.textContent = label;
-      chip.classList.toggle('on', active);
-      if (active && !raf) raf = requestAnimationFrame(loop);
-    };
-
-    targets.forEach(el => {
-      const label = el.classList.contains('feature')
-        ? 'Read'
-        : el.classList.contains('stack-card')
-        ? '—'
-        : 'Open';
-
-      el.addEventListener('mouseenter', () => setActive(label));
-      el.addEventListener('mouseleave', () => setActive(false));
-      el.addEventListener('mousemove', onMove);
-    });
-
-    // If user moves outside any target, ensure we lerp the chip back to mouse
-    document.addEventListener('mousemove', e => {
-      tx = e.clientX; ty = e.clientY;
-    }, { passive: true });
-  }
-
   /* ==========================================================================
      SCROLL PROGRESS BAR — top edge, fills as you scroll
      ========================================================================== */
@@ -3029,54 +2945,6 @@ no scheduled maintenance windows. occasional production fires.`);
   }
 
   /* ==========================================================================
-     CONTEXTUAL CURSOR RING — additive polish on fine-pointer devices
-     ========================================================================== */
-  function initContextCursor() {
-    const cursor = document.getElementById('ctxCursor');
-    if (!cursor) return;
-    if (reduceMotion()) return;
-    if (matchMedia('(pointer: coarse)').matches) return;
-
-    let raf = 0, tx = -100, ty = -100, x = -100, y = -100;
-    const lerp = (a, b, t) => a + (b - a) * t;
-
-    const loop = () => {
-      x = lerp(x, tx, 0.22);
-      y = lerp(y, ty, 0.22);
-      cursor.style.transform = `translate(${x - 14}px, ${y - 14}px)`;
-      if (Math.abs(tx - x) > 0.15 || Math.abs(ty - y) > 0.15) {
-        raf = requestAnimationFrame(loop);
-      } else {
-        raf = 0;
-      }
-    };
-
-    document.addEventListener('mousemove', (e) => {
-      tx = e.clientX; ty = e.clientY;
-      cursor.classList.add('on');
-      if (!raf) raf = requestAnimationFrame(loop);
-    }, { passive: true });
-
-    document.addEventListener('mouseleave', () => cursor.classList.remove('on'));
-    document.addEventListener('mouseenter', () => cursor.classList.add('on'));
-
-    // Update state by what's under the pointer
-    document.addEventListener('mouseover', (e) => {
-      const t = e.target;
-      if (!(t instanceof Element)) return;
-      let state = '';
-      if (t.closest('a, button, .btn, [role="button"], summary, .chip, .nav-link, .nav-item, .term-mini, .t-dot, .term-input-line, .iconbtn, .palette-item')) {
-        state = 'click';
-      } else if (t.closest('.project, .feature, .stack-card, .card.activity, .now')) {
-        state = 'card';
-      } else if (t.closest('input, textarea, [contenteditable], .term-input, h1, h2, h3, p')) {
-        state = 'text';
-      }
-      cursor.dataset.state = state;
-    });
-  }
-
-  /* ==========================================================================
      CLICK-TO-SCATTER HERO HEADLINE — words spring outward and settle back
      ========================================================================== */
   function initHeroScatter() {
@@ -3199,7 +3067,6 @@ no scheduled maintenance windows. occasional production fires.`);
     initTheme();
     initYear();
     initLocalTime();
-    initCursorGlow();
     initMagnetic();
     initAnchorOffset();
     initActiveSection();
@@ -3217,17 +3084,12 @@ no scheduled maintenance windows. occasional production fires.`);
     initKeyboardNav(projects);
     initKonami();
 
-    // New: terminal, signature, github, pinned principles, cursor chip
     initTerminal();
     initTerminalGlow();
     initSignature();
     initGithubActivity();
     initPinnedPrinciples();
-    initCursorChip();
     initCardInteractions();
-
-    // Premium polish layer
-    initContextCursor();
     initWebVitals();
 
     consoleSignature();
