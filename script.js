@@ -1464,7 +1464,7 @@ compiler (reallang). my energy goes into the layer of the stack where
 the abstraction breaks: servers, runtimes, compilers, and distributed
 systems.
 
-looking for: summer 2026 swe internship.
+looking for: summer 2027 swe internship.
 strongest fits: systems, backend / platform, distributed services,
 cloud infrastructure, runtime / compilers, performance.
 `;
@@ -2000,7 +2000,7 @@ no scheduled maintenance windows. occasional production fires.`);
         }
       },
 
-      whoami: { desc: 'short bio', run: () => printText('nicholas lasagna — software engineer · texas tech \'27 · berkeley, ca.\nopen to summer 2026 swe internships.') },
+      whoami: { desc: 'short bio', run: () => printText('nicholas lasagna — software engineer · texas tech \'27 · berkeley, ca.\nopen to summer 2027 swe internships.') },
 
       fortune: {
         desc: 'a quote',
@@ -2043,7 +2043,7 @@ no scheduled maintenance windows. occasional production fires.`);
             ['stack',   'rust · java · typescript · python · c++ · x64 asm'],
             ['active',  'realforge · reallang · hearthaven · realfiction'],
             ['focus',   'systems · backend · infra · devtools · compilers · ai tooling'],
-            ['status',  'open to summer 2026 swe internships'],
+            ['status',  'open to summer 2027 swe internships'],
           ];
 
           const rowHtml = rows.map(([k, v]) => `<span class="k">${escape(k)}</span> <span class="v">${linkify(escape(v))}</span>`).join('\n');
