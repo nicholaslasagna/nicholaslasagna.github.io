@@ -765,11 +765,11 @@
       ],
       proves: [
         `I can own real systems over the long haul and keep code maintainable as it grows.`,
-        `I've shipped engineering in C++ / C# inside a serious engine, with team discipline.`
+        `I write production-quality C++ / C# inside a serious engine, with team discipline.`
       ],
       overview: [
-        'I co-founded Imagicast Studios in 2021 and lead development across its titles. The flagship, Abandoned Horror, is an asymmetrical multiplayer horror game built around a 6v1v1 gameplay loop; Heroic Submission is a second original IP in development.',
-        'My work is the engineering spine: core systems architecture from initial design through production deployment — state management, input handling, and runtime multiplayer logic in Unreal Engine 4/5.'
+        'I co-founded Imagicast Studios in 2021 and lead development across its titles. The flagship, Abandoned Horror, is an asymmetrical multiplayer horror game built around a 6v1v1 gameplay loop, currently in active development; Heroic Submission is a second original IP.',
+        'My work is the engineering spine: core systems architecture from initial design through ongoing multiplayer development — state management, input handling, and runtime multiplayer logic in Unreal Engine 4/5.'
       ],
       arch: {
         caption: 'Engine-level systems beneath gameplay: authoritative state, input, and replicated multiplayer logic.',
