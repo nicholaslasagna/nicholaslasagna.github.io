@@ -1717,7 +1717,7 @@ the kind of work that makes rust's borrow checker feel like a friend.
 
 stack: html · css · javascript · github pages · cloudflare
 
-this site. hand-written html / css / js with an interactive
+this site. AI & hand-written html / css / js with an interactive
 terminal-style repl, command history, project search, view transitions,
 and accessible mobile nav — no frameworks.
 
