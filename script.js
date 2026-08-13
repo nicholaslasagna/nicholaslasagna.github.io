@@ -2392,8 +2392,12 @@ no scheduled maintenance windows. occasional production fires.`);
   function eventLabel(e) {
     switch (e.type) {
       case 'PushEvent': {
+        // GitHub's public events feed no longer reports a commit count on pushes,
+        // so say nothing about the number rather than claiming a wrong one.
+        const runs = e.__pushes || 1;
+        if (runs > 1) return `pushed ${runs} times to`;
         const n = pushCount(e);
-        return `pushed ${n} commit${n === 1 ? '' : 's'} to`;
+        return n > 0 ? `pushed ${n} commit${n === 1 ? '' : 's'} to` : 'pushed to';
       }
       case 'CreateEvent':       return `created ${e.payload?.ref_type || 'something'} on`;
       case 'DeleteEvent':       return `deleted ${e.payload?.ref_type || 'something'} on`;
@@ -2424,7 +2428,10 @@ no scheduled maintenance windows. occasional production fires.`);
     const dow = startDay.getDay(); // 0..6 (Sun..Sat)
     if (dow !== 0) startDay.setDate(startDay.getDate() - dow);
 
-    const dayKey = (d) => d.toISOString().slice(0, 10);
+    // Local-date key. toISOString() is UTC, which shifts the day for UTC+ visitors
+    // and would misalign every cell against the API's date strings.
+    const dayKey = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     const cellByDay = new Map();
     heatmap.innerHTML = '';
 
@@ -2450,7 +2457,7 @@ no scheduled maintenance windows. occasional production fires.`);
       NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4
     };
     try {
-      const r = await fetch(`https://github-contributions-api.deno.dev/${GITHUB_USER}.json?flat=true`, { mode: 'cors' });
+      const r = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USER}?y=last`, { mode: 'cors' });
       if (r.ok) {
         const data = await r.json();
         if (Array.isArray(data?.contributions)) {
@@ -2477,6 +2484,10 @@ no scheduled maintenance windows. occasional production fires.`);
               el.title = `${day.date}: 0 contributions`;
             }
           }
+          // The API reports its own last-year total; trust it over the summed days,
+          // which can miss cells outside the rendered 52-week window.
+          const reported = +data?.total?.lastYear;
+          if (Number.isFinite(reported) && reported > 0) contribTotal = reported;
           contribFromGraph = true;
         }
       }
@@ -2491,10 +2502,10 @@ no scheduled maintenance windows. occasional production fires.`);
       if (r.ok) {
         let raw = await r.json();
         if (!Array.isArray(raw)) raw = [];
-        events = raw.filter(e => {
-          if (e.type === 'PushEvent') return pushCount(e) > 0;
-          return ['CreateEvent','PullRequestEvent','IssuesEvent','ReleaseEvent','ForkEvent','PublicEvent','CommitCommentEvent'].includes(e.type);
-        });
+        events = raw.filter(e =>
+          e.type === 'PushEvent' ||
+          ['CreateEvent','PullRequestEvent','IssuesEvent','ReleaseEvent','ForkEvent','PublicEvent','CommitCommentEvent'].includes(e.type)
+        );
       }
     } catch {}
 
@@ -2504,7 +2515,8 @@ no scheduled maintenance windows. occasional production fires.`);
       for (const e of events) {
         if (e.type === 'PushEvent') {
           const k = (e.created_at || '').slice(0, 10);
-          if (k) counts[k] = (counts[k] || 0) + pushCount(e);
+          // A push with no reported commit count still counts as one day of activity.
+          if (k) counts[k] = (counts[k] || 0) + Math.max(1, pushCount(e));
         } else {
           const k = (e.created_at || '').slice(0, 10);
           if (k) counts[k] = (counts[k] || 0) + 1;
@@ -2528,24 +2540,21 @@ no scheduled maintenance windows. occasional production fires.`);
     /* ---- status line — count animates up when section enters viewport ---- */
     if (status) {
       if (contribFromGraph) {
-        status.innerHTML = `<span data-count>0</span> contributions in the last year · refreshed <span>just now</span>`;
+        // Render the real number immediately — if the observer never fires, the
+        // count must still be correct rather than stuck at zero.
+        status.innerHTML = `<span data-count>${contribTotal.toLocaleString()}</span> contributions in the last year · refreshed <span>just now</span>`;
         const counter = status.querySelector('[data-count]');
-        if (counter) {
-          // Start animation when the activity card scrolls into view
-          if ('IntersectionObserver' in window) {
-            const obs = new IntersectionObserver(entries => {
-              for (const e of entries) {
-                if (e.isIntersecting) {
-                  animateCount(counter, contribTotal, 1600);
-                  obs.disconnect();
-                  break;
-                }
+        if (counter && 'IntersectionObserver' in window && !reduceMotion()) {
+          const obs = new IntersectionObserver(entries => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                animateCount(counter, contribTotal, 1600);
+                obs.disconnect();
+                break;
               }
-            }, { threshold: 0.4 });
-            obs.observe(root);
-          } else {
-            counter.textContent = contribTotal.toLocaleString();
-          }
+            }
+          }, { threshold: 0.2 });
+          obs.observe(root);
         }
       } else if (events.length) {
         status.innerHTML = `${events.length} recent public event${events.length === 1 ? '' : 's'} · live counts unavailable`;
@@ -2562,7 +2571,21 @@ no scheduled maintenance windows. occasional production fires.`);
       feed.appendChild(li);
       return;
     }
-    events.slice(0, 6).forEach(e => {
+    // Collapse same-day pushes to the same repo — a run of identical lines reads as a bug,
+    // but keeping days separate preserves the shape of recent activity.
+    const onDay = (e) => (e.created_at || '').slice(0, 10);
+    const grouped = [];
+    for (const e of events) {
+      const prev = grouped[grouped.length - 1];
+      if (prev && prev.type === 'PushEvent' && e.type === 'PushEvent' &&
+          prev.repo?.name === e.repo?.name && onDay(prev) === onDay(e)) {
+        prev.__pushes = (prev.__pushes || 1) + 1;
+        continue;
+      }
+      grouped.push(e);
+    }
+
+    grouped.slice(0, 6).forEach(e => {
       const li = document.createElement('li');
       const when = e.created_at ? relTime(new Date(e.created_at)) : '—';
       const repo = e.repo?.name || 'somewhere';
