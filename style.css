@@ -2835,35 +2835,6 @@ body.entrance-done .rail{ opacity: 1; }
   .reveal-words{ cursor: default; }
 }
 
-/* ==========================================================================
-   FOOTER WEB-VITALS BAR
-   ========================================================================== */
-.foot-vitals{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--line);
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.foot-vitals > span{
-  display: inline-flex;
-  gap: 6px;
-  color: var(--muted-2);
-}
-.foot-vitals > span > .dim{ color: var(--muted-2); }
-.foot-vitals[data-good="true"] > span > strong{ color: var(--text-2); }
-.foot-vitals strong{
-  font-weight: 500;
-  color: var(--text-2);
-  font-family: var(--font-mono);
-  text-transform: none;
-  letter-spacing: 0;
-}
-.foot-vitals[data-poor] strong{ color: var(--accent); }
 
 /* ==========================================================================
    HERO AVAILABILITY — neutral location pill (no pulse, recruiter-clear)

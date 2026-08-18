@@ -1717,7 +1717,7 @@ the kind of work that makes rust's borrow checker feel like a friend.
 
 stack: html · css · javascript · github pages · cloudflare
 
-this site. AI & hand-written html / css / js with an interactive
+this site. plain html / css / js with an interactive
 terminal-style repl, command history, project search, view transitions,
 and accessible mobile nav — no frameworks.
 
@@ -2002,7 +2002,7 @@ no scheduled maintenance windows. occasional production fires.`);
 
           const rows = [
             ['user',    'nicholas@portfolio'],
-            ['os',      'nicholaslasagna.com (static, hand-written)'],
+            ['os',      'nicholaslasagna.com (static, no build step)'],
             ['kernel',  'inter / instrument-serif / jetbrains-mono'],
             ['shell',   'js (esm, no deps)'],
             ['uptime',  `${yrs} years (shipping since 2021)`],
@@ -3008,78 +3008,6 @@ no scheduled maintenance windows. occasional production fires.`);
     h1.setAttribute('tabindex', '-1');
   }
 
-  /* ==========================================================================
-     LIVE WEB VITALS — real PerformanceObserver values, shown in mono
-     ========================================================================== */
-  function initWebVitals() {
-    const fcpEl = document.querySelector('[data-perf-fcp]');
-    const lcpEl = document.querySelector('[data-perf-lcp]');
-    const clsEl = document.querySelector('[data-perf-cls]');
-    const bytesEl = document.querySelector('[data-perf-bytes]');
-    if (!fcpEl && !lcpEl && !clsEl && !bytesEl) return;
-
-    const setVal = (el, label, val, unit = 'ms') => {
-      if (!el) return;
-      el.innerHTML = `${label} <strong>${val}${unit}</strong>`;
-    };
-
-    // FCP
-    try {
-      const obs = new PerformanceObserver(list => {
-        for (const e of list.getEntries()) {
-          if (e.name === 'first-contentful-paint') {
-            setVal(fcpEl, 'fcp', Math.round(e.startTime));
-            obs.disconnect();
-          }
-        }
-      });
-      obs.observe({ type: 'paint', buffered: true });
-    } catch {}
-
-    // LCP
-    try {
-      let lastLcp = 0;
-      const obs = new PerformanceObserver(list => {
-        const entries = list.getEntries();
-        const last = entries[entries.length - 1];
-        if (last) lastLcp = Math.round(last.startTime);
-        setVal(lcpEl, 'lcp', lastLcp);
-      });
-      obs.observe({ type: 'largest-contentful-paint', buffered: true });
-      // Final LCP measure once page is idle
-      setTimeout(() => {
-        try { obs.takeRecords(); } catch {}
-        if (lastLcp) setVal(lcpEl, 'lcp', lastLcp);
-      }, 4000);
-    } catch {}
-
-    // CLS
-    try {
-      let cls = 0;
-      const obs = new PerformanceObserver(list => {
-        for (const e of list.getEntries()) {
-          if (!e.hadRecentInput) cls += e.value;
-        }
-        setVal(clsEl, 'cls', cls.toFixed(3), '');
-      });
-      obs.observe({ type: 'layout-shift', buffered: true });
-    } catch {}
-
-    // JS bytes (sum encoded transfer size of own scripts)
-    try {
-      const obs = new PerformanceObserver(list => {
-        let total = 0;
-        for (const e of list.getEntries()) {
-          if (e.initiatorType === 'script' && (e.name.endsWith('.js') || e.name.includes('script.js'))) {
-            // Prefer encodedBodySize (compressed), fall back to transferSize
-            total += e.encodedBodySize || e.transferSize || 0;
-          }
-        }
-        if (total) setVal(bytesEl, 'js', Math.round(total / 1024), 'kb');
-      });
-      obs.observe({ type: 'resource', buffered: true });
-    } catch {}
-  }
 
   /* -------- boot -------- */
   function boot() {
@@ -3113,7 +3041,6 @@ no scheduled maintenance windows. occasional production fires.`);
     initGithubActivity();
     initPinnedPrinciples();
     initCardInteractions();
-    initWebVitals();
 
     consoleSignature();
   }
