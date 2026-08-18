@@ -30,29 +30,22 @@
   /* -------- theme -------- */
   function initTheme() {
     const btn = $('#themeBtn');
-    const sysTheme = () => window.matchMedia?.('(prefers-color-scheme: light)')?.matches ? 'light' : 'dark';
     const get = () => { try { return localStorage.getItem('theme'); } catch { return null; } };
     const set = v => { try { localStorage.setItem('theme', v); } catch {} };
+    const meta = document.querySelector('meta[name="theme-color"]');
 
     const apply = t => {
-      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-      else document.documentElement.removeAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', t);
+      meta?.setAttribute('content', t === 'dark' ? '#0b0b0e' : '#f3f0ea');
       btn?.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
       btn?.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
     };
 
-    const stored = get();
-    apply(stored || sysTheme());
-
-    const mq = window.matchMedia?.('(prefers-color-scheme: light)');
-    if (mq && !stored) {
-      const onSys = () => apply(sysTheme());
-      mq.addEventListener?.('change', onSys);
-      mq.addListener?.(onSys);
-    }
+    // Paper is the brand default; the system preference does not override it.
+    apply(get() === 'dark' ? 'dark' : 'light');
 
     btn?.addEventListener('click', () => {
-      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
       const next = cur === 'light' ? 'dark' : 'light';
       apply(next); set(next);
       toast(`${next === 'dark' ? 'Dark' : 'Light'} mode`);

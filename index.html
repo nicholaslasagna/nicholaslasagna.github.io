@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -24,8 +24,14 @@
   <meta name="twitter:description" content="Backend platforms, cloud infrastructure, distributed systems, and compilers. CS @ Texas Tech (accelerated BS/MS)." />
   <meta name="twitter:image" content="https://nicholaslasagna.com/og.svg" />
 
-  <meta name="theme-color" content="#0b0b0e" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f5f3ed" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#f3f0ea">
+  <script>
+    /* Apply a stored theme before first paint so the surface never flashes. */
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
 
   <link rel="icon" href="Images/favicon.ico" sizes="any">
   <link rel="icon" href="icon.svg" type="image/svg+xml">

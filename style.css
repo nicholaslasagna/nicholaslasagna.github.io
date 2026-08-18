@@ -32,11 +32,11 @@
   /* Focus ring — derived from the live accent so it always matches the brand */
   --ring:     0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent);
 
-  --r-xs: 6px;
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --r-xl: 28px;
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 8px;
+  --r-xl: 10px;
 
   --container: 1200px;
   --gutter: clamp(18px, 4vw, 32px);
@@ -56,24 +56,24 @@
 }
 
 [data-theme="light"]{
-  --bg:        #f5f3ed;
-  --bg-elev:   #fbfaf6;
-  --bg-elev-2: #efece4;
-  --bg-sunk:   #ecebe3;
+  --bg:        #f3f0ea;
+  --bg-elev:   #ffffff;
+  --bg-elev-2: #edeae3;
+  --bg-sunk:   #e8e4dc;
 
-  --text:      #14130f;
-  --text-2:    #2c2a25;
-  --muted:     #6b685f;
-  --muted-2:   #97938a;
+  --text:      #131210;
+  --text-2:    #3a3833;
+  --muted:     #6a6760;
+  --muted-2:   #9a968e;
 
-  --line:      rgba(20,19,15,0.10);
-  --line-2:    rgba(20,19,15,0.16);
-  --line-3:    rgba(20,19,15,0.24);
+  --line:      rgba(19,18,16,0.10);
+  --line-2:    rgba(19,18,16,0.16);
+  --line-3:    rgba(19,18,16,0.26);
 
-  --accent:    #c91e58;       /* deep rose-coral — the only accent */
-  --accent-2:  var(--accent); /* retired teal → coral */
-  --accent-3:  var(--accent); /* retired violet → coral */
-  --accent-ink:#fbfaf6;
+  --accent:    #c91e58;       /* coral-rose, deepened for contrast on paper */
+  --accent-2:  var(--accent);
+  --accent-3:  var(--accent);
+  --accent-ink:#ffffff;
 
   --shadow:   0 1px 0 rgba(255,255,255,0.6) inset, 0 12px 36px rgba(20,19,15,0.10);
   --shadow-2: 0 1px 0 rgba(255,255,255,0.6) inset, 0 22px 60px rgba(20,19,15,0.14);
@@ -408,7 +408,7 @@ em{ font-style: italic; }
   color: var(--text);
   background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
   border: 1px solid var(--line-2);
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   cursor: pointer;
   user-select:none;
   white-space:nowrap;
@@ -862,7 +862,7 @@ section{
   color: var(--text-2);
   padding: 4px 8px;
   border: 1px solid var(--line-2);
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   background: color-mix(in srgb, var(--bg-elev) 70%, transparent);
 }
 
@@ -882,7 +882,7 @@ section{
   letter-spacing: 0.02em;
   color: var(--text);
   padding: 4px 11px 4px 9px;
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line-2));
   background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
@@ -972,7 +972,7 @@ section{
   justify-content:flex-end;
   padding: 4px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   background: color-mix(in srgb, var(--bg-elev) 60%, transparent);
 }
 .chip{
@@ -982,7 +982,7 @@ section{
   color: var(--muted);
   background: transparent;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   cursor: pointer;
   transition: color var(--t-2) var(--ease), background var(--t-2) var(--ease);
 }
@@ -1418,7 +1418,7 @@ footer{
   color: var(--muted);
   background: transparent;
   border: 1px solid var(--line-2);
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   padding: 6px 12px;
   cursor: pointer;
   transition: color var(--t-2) var(--ease), border-color var(--t-2) var(--ease);
@@ -1615,7 +1615,7 @@ footer{
   padding: 10px 16px;
   background: var(--bg-elev);
   border: 1px solid var(--line-2);
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--text);
@@ -1815,6 +1815,7 @@ footer{
 
   position: relative;
   background: var(--term-bg);
+  color: var(--term-text);
   border: 1px solid var(--term-line);
   border-radius: var(--r-md);
   box-shadow:
@@ -2831,7 +2832,7 @@ body.entrance-done .rail{ opacity: 1; }
   text-transform: uppercase;
   color: var(--accent);
   padding: 3px 8px;
-  border-radius: 999px;
+  border-radius: var(--r-sm);
   border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
