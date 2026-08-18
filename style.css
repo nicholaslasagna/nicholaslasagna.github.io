@@ -222,8 +222,6 @@ body::before{
     transition-duration:0.001ms !important;
     scroll-behavior:auto !important;
   }
-  .marquee-track{ animation:none !important; }
-  .cursor-blink{ animation:none !important; }
 }
 
 /* ---------- Type ---------- */
@@ -268,18 +266,6 @@ body::before{
 .accent{
   color: var(--accent);
 }
-.cursor-blink{
-  display:inline-block;
-  width:0.5ch;
-  margin-left:0.04em;
-  animation: blink 1.05s steps(1) infinite;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-style:normal;
-  font-size:0.78em;
-  vertical-align:0.06em;
-}
-@keyframes blink{ 50%{ opacity:0; } }
 
 .lede{
   font-size: clamp(15px, 1.2vw, 17px);
@@ -632,14 +618,7 @@ section{
   width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
-  animation: pulse 2.4s var(--ease) infinite;
   flex: 0 0 auto;
-}
-@keyframes pulse{
-  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
-  70%  { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 0%, transparent); }
-  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
 }
 
 .hero-actions{
@@ -749,13 +728,6 @@ section{
   width:6px; height:6px;
   border-radius:50%;
   background: var(--accent);
-  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent);
-  animation: pulse-warm 2.4s var(--ease) infinite;
-}
-@keyframes pulse-warm{
-  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
-  70%  { box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 0%, transparent); }
-  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
 }
 .now-list{
   display:flex;
@@ -783,27 +755,21 @@ section{
   padding: 14px 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  overflow: hidden;
   font-family: var(--font-display);
   font-size: clamp(20px, 2.6vw, 32px);
   font-style: italic;
   color: var(--text-2);
-  white-space: nowrap;
-  mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  text-align: center;
 }
 .marquee-track{
-  display:inline-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: baseline;
-  gap: 14px;
-  animation: marquee 60s linear infinite;
+  gap: 10px 14px;
 }
 .marquee-track > span{ flex: 0 0 auto; }
 .marquee-track > .dot{ color: var(--accent); }
-@keyframes marquee{
-  from{ transform: translateX(0); }
-  to  { transform: translateX(-50%); }
-}
 
 /* ---------- Cards ---------- */
 .card{
@@ -2407,11 +2373,6 @@ body.entrance-done .reveal-words .w > span,
 }
 
 /* Cursor blink doesn't get the word treatment */
-.reveal-words .cursor-blink{
-  display: inline-block;
-  opacity: 1;
-  transform: none;
-}
 
 /* ==========================================================================
    PINNED PRINCIPLES — desktop showpiece
@@ -2535,11 +2496,6 @@ body.entrance-done .reveal-words .w > span,
 .pin-hint::after{
   content: "↓";
   font-size: 12px;
-  animation: pin-hint-bob 1.6s ease-in-out infinite;
-}
-@keyframes pin-hint-bob{
-  0%,100%{ transform: translateY(0); opacity: 1; }
-  50%    { transform: translateY(3px); opacity: 0.6; }
 }
 .principles-pinned.pin-done .pin-hint{ opacity: 0.0; transition: opacity 220ms; }
 
@@ -3339,9 +3295,4 @@ body.crt::after{
     rgba(0,0,0,0) 4px
   );
   mix-blend-mode: multiply;
-  animation: crt-flicker 1.6s steps(2) infinite;
-}
-@keyframes crt-flicker{
-  0%,100%{ opacity:1; }
-  50%{ opacity:0.92; }
 }

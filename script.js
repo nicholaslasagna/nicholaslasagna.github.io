@@ -1717,7 +1717,7 @@ the kind of work that makes rust's borrow checker feel like a friend.
 
 stack: html · css · javascript · github pages · cloudflare
 
-this site. plain html / css / js with an interactive
+this site. ai & hand-written html / css / js with an interactive
 terminal-style repl, command history, project search, view transitions,
 and accessible mobile nav — no frameworks.
 
@@ -2002,7 +2002,7 @@ no scheduled maintenance windows. occasional production fires.`);
 
           const rows = [
             ['user',    'nicholas@portfolio'],
-            ['os',      'nicholaslasagna.com (static, no build step)'],
+            ['os',      'nicholaslasagna.com (static, hand-written)'],
             ['kernel',  'inter / instrument-serif / jetbrains-mono'],
             ['shell',   'js (esm, no deps)'],
             ['uptime',  `${yrs} years (shipping since 2021)`],
@@ -2679,7 +2679,7 @@ no scheduled maintenance windows. occasional production fires.`);
       let idx = 0;
 
       // Walk children: split text nodes into per-word spans, leave element
-      // children (em, span.cursor-blink) alone but still wrap their text content.
+      // children (em) alone but still wrap their text content.
       const wrapText = (text, startIdx) => {
         const frag = document.createDocumentFragment();
         const parts = text.split(/(\s+)/);
@@ -2712,7 +2712,6 @@ no scheduled maintenance windows. occasional production fires.`);
             kid.replaceWith(frag);
           } else if (kid.nodeType === Node.ELEMENT_NODE) {
             // Skip the cursor blink — it shouldn't animate as a word
-            if (kid.classList?.contains('cursor-blink')) continue;
             walk(kid);
           }
         }
