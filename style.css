@@ -595,24 +595,21 @@ section{
 .hero-main{ min-width:0; }
 
 .kicker{
-  margin: 0 0 28px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
   align-items: center;
-}
-.status{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding: 6px 14px 6px 12px;
+  gap: 8px 10px;
+  margin: 0 0 26px;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--text-2);
-  background: color-mix(in srgb, var(--bg-elev) 80%, transparent);
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.kicker span{ color: var(--muted); }
+.kicker .kicker-avail{ color: var(--text-2); }
+.kicker i{
+  color: var(--accent);
+  font-style: normal;
 }
 .status-dot{
   width: 8px; height: 8px;
@@ -2795,10 +2792,6 @@ body.entrance-done .rail{ opacity: 1; }
 /* ==========================================================================
    HERO AVAILABILITY — neutral location pill (no pulse, recruiter-clear)
    ========================================================================== */
-.status-plain{
-  color: var(--text-2);
-}
-.status-plain .mono{ font-size: 12px; letter-spacing: 0.02em; }
 
 /* ==========================================================================
    IMPACT — skimmable, recruiter-first highlights grid
