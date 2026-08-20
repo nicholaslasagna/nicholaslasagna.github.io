@@ -1,1342 +1,508 @@
 <!doctype html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="color-scheme" content="dark light" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
 
-  <title>Nicholas Lasagna — Systems & Software Engineer</title>
-  <meta name="description" content="Systems-focused software engineer — backend platforms, cloud infrastructure, distributed systems, and compilers. CS at Texas Tech (accelerated BS/MS). Open to Summer 2027 SWE internships." />
-  <meta name="author" content="Nicholas Lasagna" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
-  <link rel="canonical" href="https://nicholaslasagna.com/" />
+  <title>Nicholas Lasagna — Systems Engineer</title>
+  <meta name="description" content="Nicholas Lasagna builds multiplayer infrastructure, developer tools, and compilers. Texas Tech CS accelerated BS/MS student seeking Summer 2027 software engineering internships.">
+  <meta name="author" content="Nicholas Lasagna">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://nicholaslasagna.com/">
 
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Nicholas Lasagna — Systems & Software Engineer" />
-  <meta property="og:description" content="Backend platforms, cloud infrastructure, distributed systems, and compilers. CS @ Texas Tech (accelerated BS/MS). Open to Summer 2027 SWE internships." />
-  <meta property="og:url" content="https://nicholaslasagna.com/" />
-  <meta property="og:image" content="https://nicholaslasagna.com/og.svg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nicholas Lasagna — Systems Engineer">
+  <meta property="og:description" content="Multiplayer infrastructure, developer tools, and compilers—built with ownership beyond the demo.">
+  <meta property="og:url" content="https://nicholaslasagna.com/">
+  <meta property="og:image" content="https://nicholaslasagna.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nicholas Lasagna, Systems Engineer — multiplayer infrastructure, developer tools, and compilers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nicholas Lasagna — Systems Engineer">
+  <meta name="twitter:description" content="Multiplayer infrastructure, developer tools, and compilers—built with ownership beyond the demo.">
+  <meta name="twitter:image" content="https://nicholaslasagna.com/og.png">
+  <meta name="twitter:image:alt" content="Nicholas Lasagna, Systems Engineer — multiplayer infrastructure, developer tools, and compilers">
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Nicholas Lasagna — Systems & Software Engineer" />
-  <meta name="twitter:description" content="Backend platforms, cloud infrastructure, distributed systems, and compilers. CS @ Texas Tech (accelerated BS/MS)." />
-  <meta name="twitter:image" content="https://nicholaslasagna.com/og.svg" />
-
-  <meta name="theme-color" content="#f3f0ea">
+  <meta name="theme-color" content="#f3f0e8">
   <script>
-    /* Apply a stored theme before first paint so the surface never flashes. */
     try {
-      var t = localStorage.getItem('theme');
-      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-    } catch (e) {}
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        document.documentElement.dataset.theme = savedTheme;
+      }
+    } catch (_) {}
   </script>
 
   <link rel="icon" href="Images/favicon.ico" sizes="any">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="Images/favicon.png">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="Images/Nicholas.png" fetchpriority="high">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css" />
+  <link rel="preload" as="image" href="Images/Nicholas.webp" type="image/webp" fetchpriority="high">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
   <script type="application/ld+json">
   {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"Nicholas Lasagna",
-    "url":"https://nicholaslasagna.com/",
-    "image":"https://nicholaslasagna.com/Images/Nicholas.png",
-    "email":"mailto:nicholaslasagna@gmail.com",
-    "jobTitle":"Software Engineer",
-    "alumniOf":{"@type":"CollegeOrUniversity","name":"Texas Tech University"},
-    "address":{"@type":"PostalAddress","addressLocality":"Berkeley","addressRegion":"CA","addressCountry":"US"},
-    "sameAs":[
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nicholas Lasagna",
+    "url": "https://nicholaslasagna.com/",
+    "image": "https://nicholaslasagna.com/Images/Nicholas.png",
+    "email": "mailto:nicholaslasagna@gmail.com",
+    "jobTitle": "Co-Founder & Lead Developer",
+    "description": "Computer Science student focused on multiplayer systems, infrastructure, compilers, and developer tools.",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "Texas Tech University"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Berkeley",
+      "addressRegion": "CA",
+      "addressCountry": "US"
+    },
+    "sameAs": [
       "https://github.com/nicholaslasagna",
       "https://www.linkedin.com/in/nicholas-lasagna-798118277"
     ],
-    "knowsAbout":["Systems Programming","Backend Engineering","Cloud Infrastructure","Distributed Systems","Compilers","Developer Tools","AI Tooling","Application Security","Software Architecture","Rust","Java","TypeScript","Python","PostgreSQL","Tauri","Performance Engineering"]
+    "knowsAbout": [
+      "Systems Programming",
+      "Multiplayer Infrastructure",
+      "Linux",
+      "Compilers",
+      "Developer Tools",
+      "Java",
+      "Rust",
+      "TypeScript",
+      "C++",
+      "PostgreSQL"
+    ]
   }
   </script>
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="scroll-line" aria-hidden="true"><span id="scrollLine"></span></div>
 
-  <!-- Page-load entrance curtain -->
-  <div class="entrance" id="entrance" aria-hidden="true">
-    <div class="entrance-inner">
-      <svg class="entrance-mark" viewBox="0 0 36 36" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3.5" y="3.5" width="29" height="29" rx="6"/>
-        <path d="M11 25V11l14 14V11"/>
-      </svg>
-      <span class="entrance-name">Nicholas&nbsp;Lasagna</span>
-    </div>
-  </div>
+  <header class="site-header" id="siteHeader">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="#top" aria-label="Nicholas Lasagna, home">
+        <span class="wordmark-mark" aria-hidden="true">NL</span>
+        <span class="wordmark-copy">
+          <strong>Nicholas Lasagna</strong>
+          <small>Systems engineer</small>
+        </span>
+      </a>
 
-  <!-- Fine grain texture -->
-  <div class="grain" aria-hidden="true"></div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-controls="siteNav" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
 
-  <!-- Top scroll-progress bar (above fixed header) -->
-  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
-  <!-- Right-edge section progress rail -->
-  <aside class="rail" id="rail" aria-label="Section progress">
-    <a href="#shell" data-rail-id="shell"><span class="dot"></span><span class="lbl mono">Shell</span></a>
-    <a href="#work" data-rail-id="work"><span class="dot"></span><span class="lbl mono">Work</span></a>
-    <a href="#impact" data-rail-id="impact"><span class="dot"></span><span class="lbl mono">Impact</span></a>
-    <a href="#projects" data-rail-id="projects"><span class="dot"></span><span class="lbl mono">Projects</span></a>
-    <a href="#principles" data-rail-id="principles"><span class="dot"></span><span class="lbl mono">Principles</span></a>
-    <a href="#about" data-rail-id="about"><span class="dot"></span><span class="lbl mono">About</span></a>
-    <a href="#stack" data-rail-id="stack"><span class="dot"></span><span class="lbl mono">Stack</span></a>
-    <a href="#contact" data-rail-id="contact"><span class="dot"></span><span class="lbl mono">Contact</span></a>
-  </aside>
-
-  <header class="site-header" role="banner">
-    <div class="container">
-      <div class="nav">
-        <a class="brand" href="#top" aria-label="Nicholas Lasagna, home">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 36 36" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3.5" y="3.5" width="29" height="29" rx="6"/>
-              <path d="M11 25V11l14 14V11"/>
-            </svg>
-          </span>
-          <span class="brand-text">
-            <strong class="brand-name">Nicholas Lasagna</strong>
-            <span class="brand-subtitle">Systems Engineer · Texas Tech CS · Accel. BS/MS</span>
-          </span>
-        </a>
-
-        <nav class="nav-primary" aria-label="Site sections">
-          <ul class="nav-list">
-            <li><a class="nav-link nav-link--shell" href="#shell"><span class="nav-sigil">$</span>Shell</a></li>
-            <li><a class="nav-link" href="#work">Work</a></li>
-            <li><a class="nav-link" href="#impact">Impact</a></li>
-            <li><a class="nav-link" href="#projects">Projects</a></li>
-            <li><a class="nav-link" href="#principles">Principles</a></li>
-            <li><a class="nav-link" href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-
-        <details class="nav-mobile" id="navMobile">
-          <summary class="btn ghost nav-toggle" aria-label="Open menu">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="label">Menu</span>
-          </summary>
-          <div class="nav-panel" role="dialog" aria-label="Mobile navigation">
-            <a class="nav-item" href="#shell"><span class="nav-sigil">$</span>Shell <span class="kbd">`</span></a>
-            <a class="nav-item" href="#work">Work <span class="kbd">W</span></a>
-            <a class="nav-item" href="#impact">Impact <span class="kbd">I</span></a>
-            <a class="nav-item" href="#projects">Projects <span class="kbd">P</span></a>
-            <a class="nav-item" href="#principles">Principles <span class="kbd">N</span></a>
-            <a class="nav-item" href="#about">About <span class="kbd">A</span></a>
-            <a class="nav-item" href="#stack">Stack <span class="kbd">S</span></a>
-            <a class="nav-item" href="#contact">Contact <span class="kbd">C</span></a>
-            <div class="nav-panel-actions">
-              <a class="btn primary" href="mailto:nicholaslasagna@gmail.com">Email</a>
-              <a class="btn" href="Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-              <a class="btn ghost" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub</a>
-            </div>
-          </div>
-        </details>
-
-        <div class="nav-actions" aria-label="Header actions">
-          <button class="kbd-btn" id="cmdkBtn" type="button" aria-label="Open command palette">
-            <span class="kbd-text">Quick nav</span>
-            <kbd class="kbd-keys"><span>⌘</span><span>K</span></kbd>
-          </button>
-          <button class="btn ghost icon-only" id="themeBtn" type="button" aria-label="Toggle theme" aria-pressed="false">
-            <svg class="icon sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M12 3v2M12 19v2M4.22 4.22l1.41 1.41M18.36 18.36l1.41 1.41M3 12h2M19 12h2M4.22 19.78l1.41-1.41M18.36 5.64l1.41-1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            <svg class="icon moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M20 14.5A8 8 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <a class="btn primary" href="mailto:nicholaslasagna@gmail.com" aria-label="Email Nicholas">
-            <span>Email</span>
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-      </div>
+      <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+        <a href="Resume.pdf" target="_blank" rel="noreferrer">Resume <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark theme">
+          <span class="theme-dot" aria-hidden="true"></span>
+          <span id="themeLabel">Dark</span>
+        </button>
+        <a class="nav-contact" href="mailto:nicholaslasagna@gmail.com">Let’s talk</a>
+      </nav>
     </div>
   </header>
 
-  <main id="main" class="container" tabindex="-1">
-    <a id="top" class="sr-only" aria-hidden="true"></a>
+  <main id="main" tabindex="-1">
+    <section class="hero wrap" id="top" aria-labelledby="heroTitle">
+      <div class="hero-status reveal">
+        <span class="availability"><i aria-hidden="true"></i> Available for Summer 2027 SWE internships</span>
+        <span>Berkeley, California <span aria-hidden="true">↔</span> Lubbock, Texas</span>
+      </div>
 
-    <!-- HERO -->
-    <section class="hero" aria-label="Introduction">
       <div class="hero-grid">
-        <div class="hero-main">
-          <p class="kicker reveal">
-            <span class="kicker-avail">Available for Summer 2027 SWE Internships</span><i aria-hidden="true">·</i>
-            <span>Berkeley, CA</span><i aria-hidden="true">·</i>
-            <span>Texas Tech University</span>
-          </p>
-
-          <h1 class="display reveal-words" data-reveal-words>
-            I write software where
-            <em class="accent">the details matter</em>
+        <div class="hero-copy">
+          <p class="overline reveal">Systems engineering · Multiplayer · Tooling</p>
+          <h1 id="heroTitle" class="reveal">
+            I build multiplayer systems <span>and the tools behind them.</span>
           </h1>
-
-          <p class="hero-roles reveal" aria-label="Focus areas">
-            <span>Distributed Systems</span><i aria-hidden="true">·</i>
-            <span>Full-Stack Platforms</span><i aria-hidden="true">·</i>
-            <span>Compiler Engineering</span>
+          <p class="hero-intro reveal">
+            I’m Nicholas, a Computer Science student in Texas Tech’s accelerated BS/MS program.
+            Since 2021, I’ve led engine systems at Imagicast Studios; since 2023, I’ve operated a
+            live, multi-server Minecraft network on Oracle Cloud.
           </p>
-
-          <p class="lede reveal">
-            Systems-focused software engineer building <strong>distributed systems, full-stack
-            platforms, and compiler tooling</strong>. Currently pursuing an accelerated B.S./M.S. in
-            Computer Science at
-            <a class="ink" href="https://www.cs.ttu.edu/" target="_blank" rel="noreferrer">Texas Tech University</a>
-            — developing multiplayer infrastructure, real-time web applications, and programming
-            language technology.
-          </p>
-
           <div class="hero-actions reveal">
-            <a class="btn primary lg" href="#work">
-              <span>See selected work</span>
-              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <a class="btn lg" href="Resume.pdf" target="_blank" rel="noreferrer">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M14 3H6v18h12V7l-4-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                <path d="M14 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              </svg>
-              <span>Resume</span>
-            </a>
-            <a class="btn ghost lg" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">
-              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2.2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5Z"/>
-              </svg>
-              <span>GitHub</span>
-            </a>
+            <a class="button button-primary" href="#work">See the work <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="Resume.pdf" target="_blank" rel="noreferrer">Open résumé <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+            <a class="text-link" href="mailto:nicholaslasagna@gmail.com">Email me <span aria-hidden="true">↗</span></a>
           </div>
-
-          <dl class="hero-meta reveal" aria-label="Quick facts">
-            <div class="meta-item">
-              <dt>Program</dt>
-              <dd>Accel. BS/MS<span class="dim">Texas Tech · CS</span></dd>
-            </div>
-            <div class="meta-item">
-              <dt>GPA</dt>
-              <dd>3.56<span class="dim">/ 4.00 · Math minor</span></dd>
-            </div>
-            <div class="meta-item">
-              <dt>Seeking</dt>
-              <dd>Summer '27<span class="dim">SWE internship</span></dd>
-            </div>
-            <div class="meta-item">
-              <dt>Local time</dt>
-              <dd><span data-local-time>—</span><span class="dim">Berkeley, CA</span></dd>
-            </div>
-          </dl>
         </div>
 
-        <aside class="hero-aside" aria-label="Headshot and links">
-          <figure class="portrait reveal">
-            <img
-              src="Images/Nicholas.png"
-              alt="Portrait of Nicholas Lasagna"
-              width="400"
-              height="585"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
-            <figcaption>
-              <span class="mono">N. Lasagna · 2026</span>
-            </figcaption>
-          </figure>
+        <figure class="portrait reveal">
+          <div class="portrait-field" aria-hidden="true">
+            <span class="portrait-index">01 / 01</span>
+            <span class="portrait-axis portrait-axis-x"></span>
+            <span class="portrait-axis portrait-axis-y"></span>
+          </div>
+          <picture>
+            <source srcset="Images/Nicholas.webp" type="image/webp">
+            <img src="Images/Nicholas.png" alt="Portrait of Nicholas Lasagna in a suit and tie" width="400" height="585" loading="eager" decoding="async" fetchpriority="high">
+          </picture>
+          <figcaption>
+            <span>Nicholas Lasagna</span>
+            <span>Berkeley, CA · <span data-local-time>—</span></span>
+          </figcaption>
+        </figure>
+      </div>
 
-          <div class="card now reveal">
-            <div class="card-inner">
-              <div class="now-head">
-                <span class="mono uppercase tiny">Now</span>
-                <span class="now-pulse" aria-hidden="true"></span>
+      <dl class="proof-strip reveal" aria-label="Career highlights">
+        <div>
+          <dt>2021 — now</dt>
+          <dd><strong>Co-founder &amp; Lead Developer</strong><span>Imagicast Studios</span></dd>
+        </div>
+        <div>
+          <dt>2023 — live</dt>
+          <dd><strong>Java multiplayer infrastructure</strong><span>Oracle Cloud · Ubuntu</span></dd>
+        </div>
+        <div>
+          <dt>May 2027</dt>
+          <dd><strong>B.S. Computer Science</strong><span>Accelerated BS/MS · Math minor</span></dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="work section-shell" id="work" aria-labelledby="workTitle">
+      <div class="wrap">
+        <header class="section-heading reveal">
+          <div class="section-number">01</div>
+          <div>
+            <p class="overline">Selected work</p>
+            <h2 id="workTitle">Selected engineering work.</h2>
+          </div>
+          <p class="section-intro">
+            Three projects at different layers: live infrastructure, multiplayer engine systems, and compiler tooling.
+          </p>
+        </header>
+
+        <div class="case-list">
+          <article class="case-study reveal" id="realfiction" aria-labelledby="realfictionTitle">
+            <header class="case-header">
+              <div class="case-id">
+                <span class="case-number">01.1</span>
+                <span class="status status-live"><i aria-hidden="true"></i> Live</span>
               </div>
-              <ul class="now-list">
-                <li><span class="mono">Building</span> <strong>RealForge</strong> — a local-first AI engineering workbench</li>
-                <li><span class="mono">Designing</span> <strong>RealLang</strong> — an AI-native language &amp; compiler</li>
-                <li><span class="mono">Developing</span> <strong>HeartHaven</strong> — real-time multiplayer platform</li>
-                <li><span class="mono">Operating</span> <strong>RealFiction</strong> infra on Oracle Cloud / Ubuntu</li>
-              </ul>
-            </div>
-          </div>
-        </aside>
-      </div>
-
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-          <span>Rust</span><span class="dot">·</span>
-          <span>Java</span><span class="dot">·</span>
-          <span>TypeScript</span><span class="dot">·</span>
-          <span>Next.js</span><span class="dot">·</span>
-          <span>PostgreSQL</span><span class="dot">·</span>
-          <span>Supabase</span><span class="dot">·</span>
-          <span>Oracle Cloud</span><span class="dot">·</span>
-          <span>Linux</span><span class="dot">·</span>
-          <span>Python</span><span class="dot">·</span>
-          <span>C / C++</span><span class="dot">·</span>
-          <span>Compilers</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- TERMINAL -->
-    <section id="shell" class="shell-section" aria-label="Interactive terminal">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">~/ — shell</span>
-          <h2 class="display-sm">Or just <em>shell in</em>.</h2>
-        </div>
-        <p class="section-note">
-          A real REPL — not a video, not a screenshot. Try
-          <code class="kbd-inline">help</code>,
-          <code class="kbd-inline">ls projects/</code>, or
-          <code class="kbd-inline">cat projects/reallang.md</code>.
-          Press <code class="kbd-inline">`</code> anywhere to focus.
-        </p>
-      </header>
-
-      <div class="term reveal" id="term" data-terminal>
-        <div class="term-bar">
-          <div class="term-traffic" aria-hidden="true">
-            <span class="t-dot t-r" data-action="exit" title="close"></span>
-            <span class="t-dot t-y" data-action="minimize" title="minimize"></span>
-            <span class="t-dot t-g" data-action="expand" title="expand"></span>
-          </div>
-          <div class="term-title mono">nicholas@portfolio: <span class="term-cwd" data-cwd>~</span></div>
-          <div class="term-bar-actions">
-            <button class="term-mini" type="button" id="termClear" aria-label="Clear terminal">clear</button>
-            <button class="term-mini" type="button" id="termExpand" aria-label="Toggle full-screen">expand</button>
-          </div>
-        </div>
-        <div class="term-body" id="termBody">
-          <div class="term-output" id="termOutput" role="log" aria-live="polite" aria-label="Terminal output"></div>
-          <form class="term-input-line" id="termForm">
-            <span class="term-prompt mono" aria-hidden="true">
-              <span class="term-user">nicholas</span><span class="term-at">@</span><span class="term-host">portfolio</span><span class="term-colon">:</span><span class="term-path" data-cwd>~</span><span class="term-sigil">$</span>
-            </span>
-            <input
-              class="term-input mono"
-              id="termInput"
-              type="text"
-              spellcheck="false"
-              autocapitalize="off"
-              autocomplete="off"
-              autocorrect="off"
-              aria-label="Terminal command"
-              placeholder="type 'help' to start"
-            />
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- SELECTED WORK -->
-    <section id="work" class="featured" aria-label="Selected work">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">Selected work</span>
-          <h2 class="display-sm">Four systems, in depth.</h2>
-        </div>
-        <p class="section-note">Infrastructure, a real-time platform, a compiler, and an AI engineering workbench. Each opens a full case study with architecture.</p>
-      </header>
-
-      <div class="featured-stack">
-        <article class="feature reveal" aria-labelledby="feat-realfiction">
-          <div class="feature-rail">
-            <span class="mono uppercase tiny">001</span>
-            <span class="mono dim tiny">Infrastructure</span>
-            <span class="mono dim tiny">2023 — Live</span>
-          </div>
-          <div class="feature-body">
-            <div class="feature-head">
-              <h3 id="feat-realfiction" class="feature-title">RealFiction <span class="dim">— Distributed Multiplayer Server Infrastructure</span></h3>
-              <div class="feature-tags">
-                <span class="chip-static">Java</span>
-                <span class="chip-static">Distributed Systems</span>
-                <span class="chip-static">Oracle Cloud (OCI)</span>
-                <span class="chip-static">Ubuntu</span>
-                <span class="chip-static">JVM tuning</span>
-                <span class="chip-static">Live ops</span>
+              <div class="case-name">
+                <p class="overline">Player-facing Minecraft network</p>
+                <h3 id="realfictionTitle">RealFiction</h3>
               </div>
-            </div>
-            <div class="proof-badges" aria-label="What this proves">
-              <span class="proof-badge">Infrastructure</span>
-              <span class="proof-badge">Live ops</span>
-              <span class="proof-badge">Concurrency</span>
-            </div>
-            <p class="feature-lede">
-              Architected and operate a live multi-server game platform on Oracle Cloud
-              Infrastructure (Ubuntu Linux) — a Velocity proxy fanning out to authoritative
-              Java game nodes over MariaDB and Redis, run as player-facing infrastructure.
-            </p>
-            <ul class="feature-bullets">
-              <li><span class="mono">→</span> Multi-node architecture: custom backend services, persistent player data, live production debugging.</li>
-              <li><span class="mono">→</span> Networking, deployment pipelines, process monitoring, JVM tuning, runtime optimization.</li>
-              <li><span class="mono">→</span> Performance and responsiveness treated as operational priorities; every change behind a known-good baseline.</li>
-            </ul>
-            <div class="feature-actions">
-              <button class="btn primary open-case" type="button" data-case="realfiction">
-                <span>Read case study</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <a class="btn ghost" href="https://realfiction.live" target="_blank" rel="noreferrer">
-                <span>realfiction.live</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
+              <div class="case-date">2023 — present</div>
+            </header>
 
-        <article class="feature reveal" aria-labelledby="feat-hearthaven">
-          <div class="feature-rail">
-            <span class="mono uppercase tiny">002</span>
-            <span class="mono dim tiny">Platform</span>
-            <span class="mono dim tiny">2025 — In dev</span>
-          </div>
-          <div class="feature-body">
-            <div class="feature-head">
-              <h3 id="feat-hearthaven" class="feature-title">HeartHaven <span class="dim">— Real-time Multiplayer Web Platform</span></h3>
-              <div class="feature-tags">
-                <span class="chip-static">Next.js</span>
-                <span class="chip-static">TypeScript</span>
-                <span class="chip-static">Phaser</span>
-                <span class="chip-static">Supabase</span>
-                <span class="chip-static">PostgreSQL</span>
-                <span class="chip-static">Realtime · RLS</span>
-              </div>
-            </div>
-            <div class="proof-badges" aria-label="What this proves">
-              <span class="proof-badge">Real-time sync</span>
-              <span class="proof-badge">Security · RLS</span>
-              <span class="proof-badge">Full-stack</span>
-            </div>
-            <p class="feature-lede">
-              A multiplayer application platform — not a website. Live presence, a companion
-              system, room decorating, and gardening, rendered with Phaser and synchronized in
-              real time over a row-level-secured Postgres.
-            </p>
-            <ul class="feature-bullets">
-              <li><span class="mono">→</span> Optimistic local updates reconciled against an authoritative Postgres; presence + broadcast keep rooms in sync.</li>
-              <li><span class="mono">→</span> A typed bridge between Phaser's render loop and React/Next — one direction of truth, no tearing.</li>
-              <li><span class="mono">→</span> Row-Level Security enforces per-user access at the database; least-privilege by construction.</li>
-            </ul>
-            <div class="feature-actions">
-              <button class="btn primary open-case" type="button" data-case="hearthaven">
-                <span>Read case study</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <a class="btn ghost" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">
-                <span>GitHub</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
+            <div class="case-grid">
+              <div class="case-copy">
+                <p class="case-lede">
+                  A multi-server Java network running on Oracle Cloud and Ubuntu. I architected it,
+                  deployed it, and operate it while real players are connected.
+                </p>
 
-        <article class="feature reveal" aria-labelledby="feat-reallang">
-          <div class="feature-rail">
-            <span class="mono uppercase tiny">003</span>
-            <span class="mono dim tiny">Compilers</span>
-            <span class="mono dim tiny">2025 — R&amp;D</span>
-          </div>
-          <div class="feature-body">
-            <div class="feature-head">
-              <h3 id="feat-reallang" class="feature-title">RealLang <span class="dim">— An AI-native Programming Language</span></h3>
-              <div class="feature-tags">
-                <span class="chip-static">Rust</span>
-                <span class="chip-static">C backend</span>
-                <span class="chip-static">Compiler design</span>
-                <span class="chip-static">Parsing</span>
-                <span class="chip-static">LLM reliability</span>
-              </div>
-            </div>
-            <div class="proof-badges" aria-label="What this proves">
-              <span class="proof-badge">Compiler correctness</span>
-              <span class="proof-badge">Runtime tooling</span>
-              <span class="proof-badge">Systems</span>
-            </div>
-            <p class="feature-lede">
-              A language designed to be generated and repaired reliably by models: deterministic
-              syntax that shrinks ambiguity, structured diagnostics that carry machine-applicable
-              fixes, and C-backed lowering for native execution.
-            </p>
-            <ul class="feature-bullets">
-              <li><span class="mono">→</span> Deterministic syntax + canonical formatter to make model output repeatable.</li>
-              <li><span class="mono">→</span> Repairable diagnostics: errors are structured records with suggested edits — a repair API, not a dead end.</li>
-              <li><span class="mono">→</span> Recursive-descent front end lowering to C for predictable, native performance.</li>
-            </ul>
-            <div class="feature-actions">
-              <button class="btn primary open-case" type="button" data-case="reallang">
-                <span>Read case study</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <a class="btn ghost" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">
-                <span>GitHub</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
+                <div class="ownership">
+                  <h4>What I own</h4>
+                  <ul role="list">
+                    <li>Network architecture and Linux administration</li>
+                    <li>Deployment, process monitoring, and rollback</li>
+                    <li>JVM tuning and live runtime debugging</li>
+                    <li>Persistent player services across server nodes</li>
+                  </ul>
+                </div>
 
-        <article class="feature reveal" aria-labelledby="feat-realforge">
-          <div class="feature-rail">
-            <span class="mono uppercase tiny">004</span>
-            <span class="mono dim tiny">Developer Tools</span>
-            <span class="mono dim tiny">2025 — Active</span>
-          </div>
-          <div class="feature-body">
-            <div class="feature-head">
-              <h3 id="feat-realforge" class="feature-title">RealForge Workbench <span class="dim">— Local-First AI Engineering Workbench</span></h3>
-              <div class="feature-tags">
-                <span class="chip-static">React</span>
-                <span class="chip-static">TypeScript</span>
-                <span class="chip-static">Tauri</span>
-                <span class="chip-static">Python</span>
-                <span class="chip-static">Local AI</span>
-                <span class="chip-static">Security</span>
-              </div>
-            </div>
-            <div class="proof-badges" aria-label="What this proves">
-              <span class="proof-badge">Local-first</span>
-              <span class="proof-badge">Safety rails</span>
-              <span class="proof-badge">Developer tools</span>
-            </div>
-            <p class="feature-lede">
-              A desktop AI engineering workbench that connects to a user-configured local model,
-              stages safe dry-run previews, and keeps AI output inspectable, bounded, and
-              untrusted until validated.
-            </p>
-            <ul class="feature-bullets">
-              <li><span class="mono">→</span> React / TypeScript / Tauri desktop UI over a Python CLI backend, talking through a narrow command bridge.</li>
-              <li><span class="mono">→</span> Safe Preview dry-run planning, bounded session-only chat, and explicit approval gates before any local model request.</li>
-              <li><span class="mono">→</span> Provider readiness diagnostics with sanitized status — no secrets, paths, or model names in tracked files.</li>
-            </ul>
-            <div class="feature-actions">
-              <button class="btn primary open-case" type="button" data-case="realforge">
-                <span>Read case study</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <a class="btn ghost" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">
-                <span>GitHub</span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- IMPACT -->
-    <section id="impact" aria-label="Impact highlights">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">Impact</span>
-          <h2 class="display-sm">At a glance.</h2>
-        </div>
-        <p class="section-note">Infrastructure, real-time backend, full-stack product, and compilers. Full architecture lives in each case study.</p>
-      </header>
-
-      <div class="impact-grid" data-stagger>
-        <article class="card impact-card reveal" data-case="realfiction" tabindex="0" role="button" aria-label="RealFiction impact — open case study">
-          <div class="card-inner">
-            <div class="impact-card-head">
-              <h3>RealFiction</h3>
-              <span class="impact-tag mono">Infrastructure</span>
-            </div>
-            <ul class="impact-list">
-              <li>Operated cloud-hosted multiplayer infrastructure on Oracle Cloud (OCI)</li>
-              <li>Administered multiple Ubuntu Linux servers in production</li>
-              <li>Debugged and tuned live, user-facing distributed systems</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="card impact-card reveal" data-case="hearthaven" tabindex="0" role="button" aria-label="HeartHaven impact — open case study">
-          <div class="card-inner">
-            <div class="impact-card-head">
-              <h3>HeartHaven</h3>
-              <span class="impact-tag mono">Real-time platform</span>
-            </div>
-            <ul class="impact-list">
-              <li>Real-time multiplayer state synchronization</li>
-              <li>Persistent world state with authentication</li>
-              <li>Row-level-secured PostgreSQL architecture</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="card impact-card reveal" data-case="unitedexams" tabindex="0" role="button" aria-label="UnitedExams impact — open case study">
-          <div class="card-inner">
-            <div class="impact-card-head">
-              <h3>UnitedExams</h3>
-              <span class="impact-tag mono">Full-stack</span>
-            </div>
-            <ul class="impact-list">
-              <li>Full-stack educational platform</li>
-              <li>Authentication and per-user authorization (RLS)</li>
-              <li>Adaptive practice and progress tracking</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="card impact-card reveal" data-case="reallang" tabindex="0" role="button" aria-label="RealLang impact — open case study">
-          <div class="card-inner">
-            <div class="impact-card-head">
-              <h3>RealLang</h3>
-              <span class="impact-tag mono">Compiler</span>
-            </div>
-            <ul class="impact-list">
-              <li>Recursive-descent parser and AST</li>
-              <li>Structured, repairable diagnostics engine</li>
-              <li>C-backed code generation</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" aria-label="All projects">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">Projects</span>
-          <h2 class="display-sm">Everything else.</h2>
-        </div>
-        <p class="section-note">Filter by area or search across titles, stacks, and bullets.</p>
-      </header>
-
-      <div class="projects-controls reveal" role="region" aria-label="Project filters">
-        <div class="search" role="search">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-          <label class="sr-only" for="projectSearch">Search projects</label>
-          <input id="projectSearch" type="text" placeholder="Search projects, languages, ideas…" aria-label="Search projects" autocomplete="off" />
-          <kbd class="kbd-inline">/</kbd>
-        </div>
-
-        <div class="chips" aria-label="Tag filters">
-          <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
-          <button class="chip" type="button" data-filter="systems" aria-pressed="false">Systems</button>
-          <button class="chip" type="button" data-filter="infra" aria-pressed="false">Infrastructure</button>
-          <button class="chip" type="button" data-filter="web" aria-pressed="false">Web</button>
-          <button class="chip" type="button" data-filter="compilers" aria-pressed="false">Compilers</button>
-          <button class="chip" type="button" data-filter="tools" aria-pressed="false">Tools</button>
-          <button class="chip" type="button" data-filter="games" aria-pressed="false">Games</button>
-        </div>
-      </div>
-
-      <div class="projects-grid" id="projectsGrid" data-stagger>
-
-        <article class="card project" data-case="realfiction" data-tags="infra systems games" aria-label="Project: RealFiction">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>RealFiction <span class="proj-status mono">Live</span></h3>
-              <span class="proj-year mono">2023 → live</span>
-            </div>
-            <p>
-              Distributed game-server platform on Oracle Cloud / Ubuntu. Velocity proxy,
-              authoritative Java game nodes, MariaDB + Redis — architected, deployed, and operated end to end.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Multi-node architecture: custom backend services, persistent player data, live debugging.</li>
-              <li>Networking, deployment pipelines, monitoring, JVM tuning, runtime optimization.</li>
-              <li>Performance and responsiveness treated as operational priorities.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">Java</span>
-              <span class="tag">Distributed Systems</span>
-              <span class="tag">OCI</span>
-              <span class="tag">Ubuntu</span>
-              <span class="tag">JVM tuning</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="realfiction">Case study →</button>
-              <a class="link" href="https://realfiction.live" target="_blank" rel="noreferrer">Website ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-case="hearthaven" data-tags="web platform games systems" aria-label="Project: HeartHaven">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>HeartHaven <span class="proj-status mono">In&nbsp;Dev</span></h3>
-              <span class="proj-year mono">2025 → in development</span>
-            </div>
-            <p>
-              A real-time multiplayer web platform — companion system, room decorating, and
-              gardening — rendered with Phaser and synchronized live over a row-level-secured Postgres.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Optimistic updates reconciled against authoritative Postgres; presence + broadcast sync.</li>
-              <li>Typed bridge between Phaser's render loop and React/Next — one direction of truth.</li>
-              <li>Row-Level Security enforces per-user access at the database.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">Next.js</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">Phaser</span>
-              <span class="tag">Supabase</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">RLS</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="hearthaven">Case study →</button>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-case="reallang" data-tags="compilers systems tools" aria-label="Project: RealLang">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>RealLang <span class="proj-status mono">R&amp;D</span></h3>
-              <span class="proj-year mono">2025 → research</span>
-            </div>
-            <p>
-              An AI-native programming language: deterministic syntax, structured
-              repairable diagnostics, and C-backed execution. Compiler engineering meets LLM-reliability research.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Deterministic syntax + canonical formatter to make model generation repeatable.</li>
-              <li>Repairable diagnostics: errors are structured records with machine-applicable fixes.</li>
-              <li>Recursive-descent front end lowering to C for native performance.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">Rust</span>
-              <span class="tag">C backend</span>
-              <span class="tag">Compiler design</span>
-              <span class="tag">Parsing</span>
-              <span class="tag">LLM reliability</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="reallang">Case study →</button>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-case="realforge" data-tags="tools web systems" aria-label="Project: RealForge Workbench">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>RealForge Workbench <span class="proj-status mono">Active</span></h3>
-              <span class="proj-year mono">2025 → active</span>
-            </div>
-            <p>
-              Local-first desktop app for AI-assisted engineering: a React / Tauri UI over a
-              Python CLI backend, with safe dry-run previews, local provider diagnostics, and
-              explicit approval gates that keep AI output inspectable.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Bounded, session-only chat with no automatic file, tool, or workspace access.</li>
-              <li>Safe Preview dry-run planning — no commands run, no files modified.</li>
-              <li>Privacy by construction: no secrets, paths, or model names in tracked files.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">React</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">Tauri</span>
-              <span class="tag">Python</span>
-              <span class="tag">Local AI</span>
-              <span class="tag">Security</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="realforge">Case study →</button>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-case="unitedexams" data-tags="web platform tools" aria-label="Project: UnitedExams">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>UnitedExams</h3>
-              <span class="proj-year mono">2025</span>
-            </div>
-            <p>
-              Full-stack educational platform: adaptive practice, course organization, accounts, and
-              progress tracking on a secure, row-level-secured backend.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Adaptive selection chooses the next item from weak areas by per-topic mastery.</li>
-              <li>Supabase Auth + protected routes; RLS enforces per-user data ownership.</li>
-              <li>Schema, policies, and migrations versioned together.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">Next.js</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">Supabase</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">RLS</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="unitedexams">Case study →</button>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-case="rust" data-tags="systems tools" aria-label="Project: Rust Runtime Tooling">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>Rust Runtime Tooling <span class="proj-status mono">Active</span></h3>
-              <span class="proj-year mono">2024 → active</span>
-            </div>
-            <p>
-              Rust runtime and tooling work for a public, non-commercial modding project —
-              memory safety, explicit failure handling, and maintainable runtime boundaries.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Debugged complex runtime behavior: concurrent execution, systems-level resource management.</li>
-              <li>Memory safety and runtime correctness as preconditions, not features.</li>
-              <li>Fails loudly in development, degrades gracefully for users — compatibility as a design goal.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">Rust</span>
-              <span class="tag">Memory safety</span>
-              <span class="tag">Concurrency</span>
-              <span class="tag">Low-level</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="rust">Case study →</button>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-case="imagicast" data-tags="games systems" aria-label="Project: Imagicast Studios">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>Imagicast Studios <span class="proj-status mono">Active</span></h3>
-              <span class="proj-year mono">2021 → present</span>
-            </div>
-            <p>
-              Co-founded a game studio; lead engine-level systems across two titles —
-              <em>Abandoned Horror</em> (6v1v1 multiplayer horror) and <em>Heroic Submission</em>.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Core systems architecture from initial design through production deployment.</li>
-              <li>State management, input handling, runtime multiplayer logic in Unreal Engine 4/5.</li>
-              <li>Git-based distributed workflows; correctness, maintainability, and delivery in balance.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">Unreal Engine 4/5</span>
-              <span class="tag">C++</span>
-              <span class="tag">C#</span>
-              <span class="tag">Multiplayer</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="imagicast">Case study →</button>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">Profile ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-case="realchat" data-tags="tools systems" aria-label="Project: RealChat">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>RealChat</h3>
-              <span class="proj-year mono">2023</span>
-            </div>
-            <p>
-              Python OCR desktop automation assistant designed to remain predictable under
-              noisy text, inconsistent UI layouts, and OS-level interaction.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>OCR noise filtering and tolerant parsing across shifting screen layouts.</li>
-              <li>Guarded input dispatch — automation validates before it acts.</li>
-              <li>macOS packaging with encrypted local config and license/config validation.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">Python</span>
-              <span class="tag">OCR</span>
-              <span class="tag">Event-Driven</span>
-              <span class="tag">Automation</span>
-              <span class="tag">macOS</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <button class="link open-case" type="button" data-case="realchat">Case study →</button>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-tags="web tools" aria-label="Project: Interactive Portfolio Shell">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>Interactive Portfolio Shell</h3>
-              <span class="proj-year mono">2026</span>
-            </div>
-            <p>
-              This site. AI &amp; hand-written HTML / CSS / JS with an interactive terminal-style REPL,
-              command history, theme toggle, project search, and accessible mobile nav — no frameworks.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>Real REPL with virtual filesystem (<code class="mono">cat projects/reallang.md</code>).</li>
-              <li>Command palette (⌘K) and full keyboard navigation.</li>
-              <li>Deployed via GitHub Pages with Cloudflare-managed custom domain.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">A11y</span>
-              <span class="tag">GitHub Pages</span>
-              <span class="tag">Cloudflare</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <a class="link" href="#shell">Try the shell ↓</a>
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">Source ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card project" data-tags="systems tools" aria-label="Project: Low-level CS & Systems">
-          <div class="card-inner">
-            <div class="proj-head">
-              <h3>Low-level CS &amp; Systems</h3>
-              <span class="proj-year mono">Ongoing</span>
-            </div>
-            <p>
-              Texas Tech CS coursework: Computer Architecture, Theory of Automata, Software
-              Engineering, Data Structures &amp; Algorithms, Systems &amp; Assembly, and graduate-level
-              work via the accelerated BS/MS program.
-            </p>
-            <ul class="impact" aria-label="Impact bullets">
-              <li>x64 Assembly + architecture: registers, memory, calling conventions, instruction-level behavior.</li>
-              <li>C / C++ systems study: pointers, memory layout, compilation, OS fundamentals.</li>
-              <li>Theory: grammars, automata, recursive descent, shift-reduce, analysis of algorithms.</li>
-            </ul>
-            <div class="meta" aria-label="Tech tags">
-              <span class="tag">C</span>
-              <span class="tag">x64 Assembly</span>
-              <span class="tag">Architecture</span>
-              <span class="tag">Automata</span>
-              <span class="tag">Algorithms</span>
-              <span class="tag">Math minor</span>
-            </div>
-            <div class="links" aria-label="Project links">
-              <a class="link" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">Profile ↗</a>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div id="noResults" class="no-results" hidden>
-        <span class="mono">grep: </span>no projects match your search or filter.
-      </div>
-    </section>
-
-    <!-- PRINCIPLES -->
-    <section id="principles" class="principles-section principles-pinned" aria-label="Engineering principles">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">Principles</span>
-          <h2 class="display-sm">How I approach the work.</h2>
-        </div>
-      </header>
-
-      <div class="pin-container" id="pinContainer">
-        <div class="pin-stage">
-          <div class="pin-meta" aria-hidden="true">
-            <span class="pin-cur mono">01</span>
-            <span class="pin-of mono">/ 06</span>
-          </div>
-
-      <ol class="principles">
-        <li class="reveal">
-          <span class="p-num mono">01</span>
-          <h3 class="p-title">Tail latency, not mean.</h3>
-          <p class="p-body">
-            "Average response time looks fine" is the most expensive sentence in production.
-            The user feels p99, not p50. If your p99 is broken, your service is broken — the rest of the histogram is just decoration.
-          </p>
-        </li>
-
-        <li class="reveal">
-          <span class="p-num mono">02</span>
-          <h3 class="p-title">Rust over C++ when getting it wrong can hurt someone else's machine.</h3>
-          <p class="p-body">
-            Memory safety isn't a "feature" when your code runs close to a host process for a public community.
-            That's why my <a href="#projects" class="ink">runtime tooling</a> is Rust — the type system pays for itself in tooling that has to run unsupervised.
-          </p>
-        </li>
-
-        <li class="reveal">
-          <span class="p-num mono">03</span>
-          <h3 class="p-title">Region-safe, not threadsafe-by-luck.</h3>
-          <p class="p-body">
-            "It's been fine for six months" is a coin landing heads. Folia made me write code that's correct because
-            the model says so, not because the test happened to pass. That habit transfers everywhere.
-          </p>
-        </li>
-
-        <li class="reveal">
-          <span class="p-num mono">04</span>
-          <h3 class="p-title">Read the source before guessing the bug.</h3>
-          <p class="p-body">
-            Stack Overflow is a starting point; the runtime's source is where the answer actually lives.
-            Five extra minutes in <code class="mono">grep</code> beats two days arguing with intuition.
-          </p>
-        </li>
-
-        <li class="reveal">
-          <span class="p-num mono">05</span>
-          <h3 class="p-title">Ship behind a known-good baseline.</h3>
-          <p class="p-body">
-            Production is sacred. Every change should be reversible in one command, and every release
-            should compare cleanly against a baseline you trust. If you can't roll back, you can't ship fast.
-          </p>
-        </li>
-
-        <li class="reveal">
-          <span class="p-num mono">06</span>
-          <h3 class="p-title">Tooling is product.</h3>
-          <p class="p-body">
-            The CLI you build for yourself sets the velocity for everything else.
-            Five hours invested in good tooling pays back the rest of the project — and beats heroics later.
-          </p>
-        </li>
-      </ol>
-
-          <div class="pin-bar" aria-hidden="true">
-            <span class="pin-bar-fill" id="pinBarFill"></span>
-          </div>
-          <div class="pin-hint mono" aria-hidden="true">scroll</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT + EDUCATION -->
-    <section id="about" aria-label="About and education">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">About</span>
-          <h2 class="display-sm">Background.</h2>
-        </div>
-      </header>
-
-      <div class="about-grid">
-        <article class="card about reveal">
-          <div class="card-inner">
-            <p>
-              I'm a systems-focused engineer drawn to the layer where the abstraction breaks. In the
-              last year I've built and operated a distributed multiplayer backend on Oracle Cloud
-              (<strong>RealFiction</strong>), a real-time multiplayer web platform
-              (<strong>HeartHaven</strong>), and an AI-native programming language with its own
-              compiler (<strong>RealLang</strong>) — distributed systems, full-stack platforms, and
-              compiler engineering, side by side.
-            </p>
-            <p>
-              I started early: I co-founded <strong>Imagicast Studios</strong> in 2021 and have
-              shipped engine-level systems in Unreal Engine 4/5 ever since — state management, input
-              handling, runtime multiplayer logic — which is where I learned what production actually
-              costs. Now I'm at Texas Tech on an <strong>accelerated B.S./M.S. track</strong>
-              (B.S. May 2027, Math minor, GPA 3.56), taking graduate coursework as an undergrad.
-            </p>
-            <p>
-              I'm looking for a <strong>Summer 2027 SWE internship</strong> on a team that ships
-              real systems and trusts new engineers with hard problems.
-            </p>
-          </div>
-        </article>
-
-        <aside class="card edu reveal" aria-label="Education and timeline">
-          <div class="card-inner">
-            <span class="mono uppercase tiny">Education</span>
-            <div class="edu-row">
-              <div>
-                <strong class="edu-school">Texas Tech University</strong>
-                <div class="edu-meta">B.S. Computer Science · Minor: Mathematics</div>
-                <div class="edu-meta">
-                  <span class="proj-status mono" style="margin-left:0">Accel. BS/MS</span>
-                  graduate coursework during undergrad
+                <div class="case-actions">
+                  <a class="button button-dark" href="https://realfiction.live" target="_blank" rel="noreferrer">Visit live network <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
                 </div>
               </div>
-              <div class="edu-side">
-                <div><span class="mono">GPA</span> 3.56 / 4.00</div>
-                <div><span class="mono">Grad</span> B.S. May 2027</div>
+
+              <div class="system-map system-map-infra" role="img" aria-label="RealFiction system map: players connect through a Velocity proxy to separate Java game nodes backed by MariaDB and Redis">
+                <div class="map-label">Request path / simplified</div>
+                <div class="map-row map-row-single">
+                  <span class="map-node map-node-soft">Players</span>
+                </div>
+                <span class="map-connector" aria-hidden="true"></span>
+                <div class="map-row map-row-single">
+                  <span class="map-node map-node-primary">Velocity</span>
+                </div>
+                <span class="map-connector" aria-hidden="true"></span>
+                <div class="map-row map-row-wide">
+                  <span class="map-node">Lobby</span>
+                  <span class="map-node">SMP</span>
+                  <span class="map-node">Arcade</span>
+                  <span class="map-node">Java nodes</span>
+                </div>
+                <span class="map-connector" aria-hidden="true"></span>
+                <div class="map-row">
+                  <span class="map-node map-node-data">MariaDB</span>
+                  <span class="map-node map-node-data">Redis</span>
+                </div>
+                <p class="map-note">Separate processes keep the network operable node by node; shared state crosses explicit data boundaries.</p>
               </div>
             </div>
 
-            <hr class="sep" />
-            <span class="mono uppercase tiny">Relevant coursework</span>
-            <div class="edu-courses">
-              Computer Architecture · Theory of Automata · Software Engineering ·
-              Data Structures &amp; Algorithms · Analysis of Algorithms · Systems &amp; Assembly ·
-              Engineering Statistics · Differential Equations
+            <details class="engineering-notes">
+              <summary>Engineering notes <span aria-hidden="true">+</span></summary>
+              <div class="notes-grid">
+                <div><h4>Constraint</h4><p>Several Java processes share player state inside a small cloud tenancy. CPU, memory, and restart time all matter.</p></div>
+                <div><h4>Decision</h4><p>Put distinct game nodes behind Velocity, with MariaDB and Redis handling persistent and cross-node state.</p></div>
+                <div><h4>Lesson</h4><p>When players are already connected, rollback, visibility, and JVM behavior are product concerns—not cleanup work.</p></div>
+              </div>
+            </details>
+
+            <footer class="case-stack"><span>Java</span><span>Velocity</span><span>Oracle Cloud</span><span>Ubuntu</span><span>MariaDB</span><span>Redis</span></footer>
+          </article>
+
+          <article class="case-study reveal" id="imagicast" aria-labelledby="imagicastTitle">
+            <header class="case-header">
+              <div class="case-id">
+                <span class="case-number">01.2</span>
+                <span class="status"><i aria-hidden="true"></i> In development</span>
+              </div>
+              <div class="case-name">
+                <p class="overline">Multiplayer engine systems</p>
+                <h3 id="imagicastTitle">Imagicast Studios</h3>
+              </div>
+              <div class="case-date">2021 — present</div>
+            </header>
+
+            <div class="case-grid case-grid-reverse">
+              <div class="case-copy">
+                <p class="case-lede">
+                  I co-founded Imagicast in 2021 and lead development of <em>Abandoned Horror</em>,
+                  an in-development 6v1v1 multiplayer game built in Unreal Engine 4/5.
+                </p>
+
+                <div class="ownership">
+                  <h4>What I own</h4>
+                  <ul role="list">
+                    <li>Distinct multiplayer roles inside a 6v1v1 loop</li>
+                    <li>Runtime multiplayer and gameplay state</li>
+                    <li>Input handling and engine-level systems</li>
+                    <li>Distributed Git workflows across an evolving codebase</li>
+                  </ul>
+                </div>
+
+                <div class="case-actions">
+                  <a class="button button-dark" href="Resume.pdf" target="_blank" rel="noreferrer">View experience <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+                </div>
+              </div>
+
+              <div class="system-map system-map-game" role="img" aria-label="Abandoned Horror uses a six versus one versus one asymmetrical multiplayer loop with distinct roles, shared rules, and runtime state">
+                <div class="map-label">Core game constraint</div>
+                <div class="versus-mark">
+                  <span>6</span><i>v</i><span>1</span><i>v</i><span>1</span>
+                </div>
+                <div class="game-layer">
+                  <span>Distinct roles</span>
+                  <span>Shared rules</span>
+                  <span>Runtime state</span>
+                </div>
+                <p class="map-note">Different player roles, one coherent authoritative gameplay loop.</p>
+              </div>
             </div>
 
-            <hr class="sep" />
-            <span class="mono uppercase tiny">Timeline</span>
-            <ol class="timeline">
-              <li>
-                <span class="t-year mono">2026</span>
-                <span class="t-body">Building <strong>RealForge</strong> (local-first AI workbench) and <strong>RealLang</strong> (AI-native language &amp; compiler). Continuing <strong>HeartHaven</strong>.</span>
-              </li>
-              <li>
-                <span class="t-year mono">2025</span>
-                <span class="t-body">Built <strong>UnitedExams</strong> and started <strong>HeartHaven</strong> (Next.js + Supabase).</span>
-              </li>
-              <li>
-                <span class="t-year mono">2024</span>
-                <span class="t-body">Started <strong>Rust runtime tooling</strong> for a public, non-commercial modding project.</span>
-              </li>
-              <li>
-                <span class="t-year mono">2023</span>
-                <span class="t-body">Shipped <strong>RealChat</strong> (Python OCR + automation). Stood up <strong>RealFiction</strong> on Oracle Cloud / Ubuntu. Started CS at Texas Tech (accelerated BS/MS).</span>
-              </li>
-              <li>
-                <span class="t-year mono">2021</span>
-                <span class="t-body">Co-founded <strong>Imagicast Studios</strong>. First production code in UE4/5 on <em>Abandoned Horror</em>.</span>
-              </li>
-            </ol>
+            <details class="engineering-notes">
+              <summary>Engineering notes <span aria-hidden="true">+</span></summary>
+              <div class="notes-grid">
+                <div><h4>Constraint</h4><p>Three asymmetric sides need distinct mechanics without splintering the shared multiplayer ruleset.</p></div>
+                <div><h4>Work</h4><p>State management, input, and runtime multiplayer logic in a codebase that has kept evolving since 2021.</p></div>
+                <div><h4>Growth</h4><p>Long-term ownership taught me to weigh a fast feature against the system that still has to carry it years later.</p></div>
+              </div>
+            </details>
+
+            <footer class="case-stack"><span>Unreal Engine 4/5</span><span>C++</span><span>C#</span><span>Multiplayer</span><span>Git</span></footer>
+          </article>
+
+          <article class="case-study reveal" id="reallang" aria-labelledby="reallangTitle">
+            <header class="case-header">
+              <div class="case-id">
+                <span class="case-number">01.3</span>
+                <span class="status"><i aria-hidden="true"></i> Active experiment</span>
+              </div>
+              <div class="case-name">
+                <p class="overline">Compiler tooling</p>
+                <h3 id="reallangTitle">RealLang</h3>
+              </div>
+              <div class="case-date">2025 — present</div>
+            </header>
+
+            <div class="case-grid">
+              <div class="case-copy">
+                <p class="case-lede">
+                  A working language and compiler-front-end experiment built around a practical question:
+                  can compiler errors be precise enough for both people and software to act on?
+                </p>
+
+                <div class="ownership">
+                  <h4>What I built</h4>
+                  <ul role="list">
+                    <li>Lexer, recursive-descent parser, and typed syntax tree</li>
+                    <li>Type checking across the compiler pipeline</li>
+                    <li>Structured diagnostics designed for programmatic repair</li>
+                    <li>A testable path from source text to checked program</li>
+                  </ul>
+                </div>
+
+                <p class="case-proof-note">Private research project · code walkthrough available on request</p>
+              </div>
+
+              <div class="system-map system-map-compiler" role="img" aria-label="RealLang compiler pipeline: source becomes tokens, syntax tree, checked program, and structured diagnostics">
+                <div class="map-label">Compiler path / current</div>
+                <ol class="compiler-flow" role="list">
+                  <li><span>01</span><strong>Source</strong></li>
+                  <li><span>02</span><strong>Lexer</strong></li>
+                  <li><span>03</span><strong>Parser</strong></li>
+                  <li><span>04</span><strong>Type check</strong></li>
+                  <li class="compiler-output"><span>05</span><strong>Structured diagnostics</strong></li>
+                </ol>
+                  <p class="map-note">Diagnostics carry a location, cause, and repair-oriented structure—not only a line of prose.</p>
+              </div>
+            </div>
+
+            <details class="engineering-notes">
+              <summary>Engineering notes <span aria-hidden="true">+</span></summary>
+              <div class="notes-grid">
+                <div><h4>Question</h4><p>Traditional diagnostics explain a failure to a person. What changes when a tool also needs to apply the repair?</p></div>
+                <div><h4>Decision</h4><p>Represent diagnostics as structured records, then keep the front end explicit enough to recover and continue checking.</p></div>
+                <div><h4>Current edge</h4><p>The compiler works end to end through type checking; the experiment now lives in the quality of its error recovery and fixes.</p></div>
+              </div>
+            </details>
+
+            <footer class="case-stack"><span>Rust</span><span>Parsing</span><span>Type systems</span><span>Diagnostics</span><span>Compiler design</span></footer>
+          </article>
+        </div>
+
+        <section class="more-work reveal" aria-labelledby="moreWorkTitle">
+          <div class="more-work-head">
+            <p class="overline">Also building</p>
+            <h3 id="moreWorkTitle">Additional projects.</h3>
           </div>
-        </aside>
+          <div class="project-index">
+            <article>
+              <span class="project-index-number">A</span>
+              <div><h4>RealForge Workbench</h4><p>A desktop workbench that connects to a user-run local model. I’m building its dry-run preview and approval boundaries.</p></div>
+              <div class="project-meta"><span>React · Tauri · Python</span><span>Active</span></div>
+            </article>
+            <article>
+              <span class="project-index-number">B</span>
+              <div><h4>HeartHaven</h4><p>A browser multiplayer space with shared rooms, companions, and gardening. Player state persists in Postgres behind per-user policies.</p></div>
+              <div class="project-meta"><span>Next.js · Supabase</span><span>In development</span></div>
+            </article>
+            <article>
+              <span class="project-index-number">C</span>
+              <div><h4>Runtime tooling</h4><p>Rust tooling for a public, non-commercial game mod, focused on runtime compatibility and explicit failure handling.</p></div>
+              <div class="project-meta"><span>Rust · Concurrency</span><span>Active</span></div>
+            </article>
+            <article>
+              <span class="project-index-number">D</span>
+              <div><h4>UnitedExams</h4><p>A practice app that chooses questions from weak topics and keeps each user’s attempts and progress private with Row-Level Security.</p></div>
+              <div class="project-meta"><span>Next.js · PostgreSQL</span><span>Built 2025</span></div>
+            </article>
+          </div>
+        </section>
       </div>
+    </section>
 
-      <!-- Live GitHub activity -->
-      <div class="card activity reveal" id="activity" aria-label="Recent GitHub activity" data-activity>
-        <div class="card-inner">
-          <div class="activity-head">
-            <div>
-              <span class="mono uppercase tiny dim">Live · github</span>
-              <h3 class="activity-title">Recent activity</h3>
+    <section class="experience section-shell" id="experience" aria-labelledby="experienceTitle">
+      <div class="wrap">
+        <header class="section-heading reveal">
+          <div class="section-number">02</div>
+          <div>
+            <p class="overline">Experience &amp; education</p>
+            <h2 id="experienceTitle">Experience and education.</h2>
+          </div>
+        </header>
+
+        <div class="experience-grid">
+          <article class="experience-card reveal">
+            <div class="experience-date">2021 — present</div>
+            <div class="experience-role">
+              <p class="overline">Experience</p>
+              <h3>Co-founder &amp; Lead Developer</h3>
+              <p class="experience-org">Imagicast Studios · Berkeley, CA</p>
             </div>
-            <div class="activity-legend mono dim">
-              <span>less</span>
-              <span class="legend-cells" aria-hidden="true">
-                <i class="lc lc-0"></i><i class="lc lc-1"></i><i class="lc lc-2"></i><i class="lc lc-3"></i><i class="lc lc-4"></i>
-              </span>
-              <span>more</span>
-            </div>
-          </div>
-          <div class="activity-body">
-            <div class="activity-heatmap" id="heatmap" aria-label="52-week activity heatmap"></div>
-            <ul class="activity-feed" id="feed" aria-label="Recent events"></ul>
-          </div>
-          <div class="activity-foot mono dim">
-            <span data-feed-status>fetching from <code>api.github.com/users/nicholaslasagna</code>…</span>
-            <a class="ink" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">github.com/nicholaslasagna ↗</a>
-          </div>
+            <ul role="list">
+              <li>Lead core systems architecture for <em>Abandoned Horror</em>, an in-development asymmetrical multiplayer game.</li>
+              <li>Build engine-level gameplay state, input handling, and runtime multiplayer logic in Unreal Engine 4/5.</li>
+              <li>Coordinate a distributed development workflow while balancing maintainability with feature delivery.</li>
+            </ul>
+          </article>
+
+          <article class="education-card reveal">
+            <div class="education-mark" aria-hidden="true">TTU</div>
+            <p class="overline">Education</p>
+            <h3>Texas Tech University</h3>
+            <p class="degree">B.S. Computer Science · Mathematics minor</p>
+            <dl>
+              <div><dt>Program</dt><dd>Accelerated BS/MS</dd></div>
+              <div><dt>B.S. expected</dt><dd>May 2027</dd></div>
+              <div><dt>GPA</dt><dd>3.565 / 4.00</dd></div>
+            </dl>
+            <p class="coursework"><strong>Selected coursework</strong> Computer Architecture, Theory of Automata, Data Structures &amp; Algorithms, Analysis of Algorithms, Systems &amp; Assembly.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- STACK -->
-    <section id="stack" aria-label="Technical stack">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">Stack</span>
-          <h2 class="display-sm">What I reach for.</h2>
+    <section class="about section-shell" id="about" aria-labelledby="aboutTitle">
+      <div class="wrap about-grid">
+        <header class="about-heading reveal">
+          <div class="section-number">03</div>
+          <p class="overline">A short version</p>
+          <h2 id="aboutTitle">How I got here.</h2>
+        </header>
+        <div class="about-copy reveal">
+          <p>
+            I started in game development, where state, latency, and failure are immediately visible to the person on the other side of the screen. Since co-founding Imagicast in 2021, I’ve expanded from gameplay systems into infrastructure, languages, and developer tools.
+          </p>
+          <p>
+            I like understanding where state lives, what happens when a dependency disappears, how a change gets rolled back, and whether the next engineer can tell what the system is doing.
+          </p>
+          <p>
+            I’m looking for a Summer 2027 software engineering internship on a team that ships real systems and gives early-career engineers meaningful problems to own.
+          </p>
         </div>
-        <p class="section-note">Listed by what I've shipped with.</p>
-      </header>
-
-      <div class="stack-grid">
-        <div class="card stack-card reveal">
-          <div class="card-inner">
-            <span class="mono uppercase tiny dim">Languages</span>
-            <ul class="stack-list">
-              <li><span class="stk-name">Python</span><span class="stk-note">automation, OCR</span></li>
-              <li><span class="stk-name">Java</span><span class="stk-note">backends, JVM tuning</span></li>
-              <li><span class="stk-name">Rust</span><span class="stk-note">runtime, tooling</span></li>
-              <li><span class="stk-name">C++ / C</span><span class="stk-note">UE5, low-level</span></li>
-              <li><span class="stk-name">C#</span><span class="stk-note">UE / Unity</span></li>
-              <li><span class="stk-name">x64 Assembly</span><span class="stk-note">architecture coursework</span></li>
-              <li><span class="stk-name">JavaScript / TS</span><span class="stk-note">Next.js, web</span></li>
-              <li><span class="stk-name">SQL · HTML/CSS</span><span class="stk-note">schema, RLS · structure</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card stack-card reveal">
-          <div class="card-inner">
-            <span class="mono uppercase tiny dim">Infrastructure &amp; cloud</span>
-            <ul class="stack-list">
-              <li><span class="stk-name">Linux (Ubuntu)</span><span class="stk-note">daily driver, prod</span></li>
-              <li><span class="stk-name">Oracle Cloud (OCI)</span><span class="stk-note">RealFiction host</span></li>
-              <li><span class="stk-name">Docker</span><span class="stk-note">isolation, deploy</span></li>
-              <li><span class="stk-name">Git</span><span class="stk-note">distributed workflow</span></li>
-              <li><span class="stk-name">REST APIs · CI/CD</span><span class="stk-note">design, pipelines</span></li>
-              <li><span class="stk-name">Cloudflare</span><span class="stk-note">DNS, edge</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card stack-card reveal">
-          <div class="card-inner">
-            <span class="mono uppercase tiny dim">Systems · backend · compilers</span>
-            <ul class="stack-list">
-              <li><span class="stk-name">Distributed Systems</span><span class="stk-note">multi-node, real-time</span></li>
-              <li><span class="stk-name">Runtime Debugging</span><span class="stk-note">JVM tuning, monitoring</span></li>
-              <li><span class="stk-name">PostgreSQL · Supabase</span><span class="stk-note">schema, RLS, realtime</span></li>
-              <li><span class="stk-name">Compiler design</span><span class="stk-note">RealLang · parsing · codegen</span></li>
-              <li><span class="stk-name">Memory safety</span><span class="stk-note">Rust runtime tooling</span></li>
-              <li><span class="stk-name">REST / API design</span><span class="stk-note">auth, RLS boundaries</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card stack-card reveal">
-          <div class="card-inner">
-            <span class="mono uppercase tiny dim">Frameworks &amp; engines</span>
-            <ul class="stack-list">
-              <li><span class="stk-name">React · Tauri</span><span class="stk-note">RealForge desktop app</span></li>
-              <li><span class="stk-name">Next.js</span><span class="stk-note">HeartHaven · UnitedExams</span></li>
-              <li><span class="stk-name">Phaser</span><span class="stk-note">browser game runtime</span></li>
-              <li><span class="stk-name">Unreal Engine 4/5</span><span class="stk-note">Imagicast titles</span></li>
-              <li><span class="stk-name">Velocity · Folia</span><span class="stk-note">JVM proxies, region-threaded</span></li>
-              <li><span class="stk-name">Unity · Blender</span><span class="stk-note">prototyping · assets</span></li>
-            </ul>
-          </div>
-        </div>
+        <aside class="working-notes reveal" aria-label="How Nicholas works">
+          <p class="overline">Working notes</p>
+          <ol role="list">
+            <li><span>01</span><p><strong>Make failure legible.</strong> Logs, diagnostics, and rollback paths are part of the interface.</p></li>
+            <li><span>02</span><p><strong>Keep authority explicit.</strong> Shared state needs one clear owner and visible boundaries.</p></li>
+            <li><span>03</span><p><strong>Stay for operations.</strong> A system teaches you the most after other people begin relying on it.</p></li>
+          </ol>
+        </aside>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="contact" aria-label="Contact">
-      <header class="section-title reveal">
-        <div>
-          <span class="eyebrow mono">Contact</span>
-          <h2 class="display-sm">Email is the fastest path.</h2>
+    <section class="contact section-shell" id="contact" aria-labelledby="contactTitle">
+      <div class="wrap contact-inner reveal">
+        <p class="overline">Summer 2027 · Let’s build something durable</p>
+        <h2 id="contactTitle">If the work has to hold up beyond the demo, I’d like to help.</h2>
+        <div class="contact-actions">
+          <a class="button button-light" href="mailto:nicholaslasagna@gmail.com">nicholaslasagna@gmail.com <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/nicholas-lasagna-798118277" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+          <a href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+          <a href="Resume.pdf" target="_blank" rel="noreferrer">Résumé <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
         </div>
-        <p class="section-note">Internship leads, code review, or just hello.</p>
-      </header>
-
-      <div class="contact-grid">
-        <article class="card contact-main reveal">
-          <div class="card-inner">
-            <a class="contact-cta" href="mailto:nicholaslasagna@gmail.com" aria-label="Email Nicholas Lasagna">
-              <span class="mono uppercase tiny dim">Reach me</span>
-              <span class="contact-email">nicholaslasagna@gmail.com</span>
-              <span class="contact-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </a>
-
-            <div class="contact-list" aria-label="Other links">
-              <a class="contact-row" href="https://github.com/nicholaslasagna" target="_blank" rel="noreferrer">
-                <span class="contact-key mono">GitHub</span>
-                <span class="contact-val">github.com/nicholaslasagna</span>
-              </a>
-              <a class="contact-row" href="https://www.linkedin.com/in/nicholas-lasagna-798118277" target="_blank" rel="noreferrer">
-                <span class="contact-key mono">LinkedIn</span>
-                <span class="contact-val">/in/nicholas-lasagna-798118277</span>
-              </a>
-              <a class="contact-row" href="Resume.pdf" target="_blank" rel="noreferrer">
-                <span class="contact-key mono">Resume</span>
-                <span class="contact-val">Resume.pdf · PDF ↗</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <aside class="card availability reveal">
-          <div class="card-inner">
-            <div class="avail-head">
-              <span class="status-dot"></span>
-              <span class="mono uppercase tiny">Availability</span>
-            </div>
-            <p class="avail-body">
-              Open to <strong>Summer 2027 SWE internships</strong>. Strongest fits: systems,
-              runtime / tooling, distributed services, performance, infrastructure, backend / platform,
-              and game tech.
-            </p>
-            <div class="avail-meta">
-              <div><span class="mono dim">Based</span> Berkeley, CA / Bay Area</div>
-              <div><span class="mono dim">School</span> Texas Tech University</div>
-              <div><span class="mono dim">Open to</span> on-site, hybrid, or remote</div>
-              <!-- Re-enable if confirmed: <div><span class="mono dim">Auth</span> US work authorization</div> -->
-            </div>
-          </div>
-        </aside>
       </div>
     </section>
   </main>
 
-  <footer role="contentinfo">
-    <div class="container foot">
-      <div class="foot-left">
-        <div class="foot-sig" aria-label="Nicholas Lasagna">
-          <span class="sig-name">Nicholas Lasagna</span>
-          <svg class="sig-underline" viewBox="0 0 240 8" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M 3 5 Q 50 1 100 4 T 200 3 Q 220 4 237 4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" pathLength="1"/>
-          </svg>
-        </div>
-        <div class="foot-meta mono dim">
-          © <span id="year"></span> · Nicholas Lasagna · <span class="dim">/usr/local/bin/portfolio</span><br>
-          AI &amp; hand-written HTML, CSS, JS · GitHub Pages
-        </div>
-      </div>
-      <div class="foot-right">
-        <a href="#work">Work</a>
-        <a href="#projects">Projects</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <button class="foot-top" id="footTop" type="button" aria-label="Scroll to top">
-          ↑ Top
-        </button>
-      </div>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="year">2026</span> Nicholas Lasagna</p>
+      <p>Plain HTML, CSS &amp; JavaScript · No analytics</p>
+      <a href="#top">Back to top ↑</a>
     </div>
   </footer>
-
-  <!-- Case-study overlay (content injected from CASES data) -->
-  <div class="case" id="case" aria-hidden="true" hidden>
-    <div class="case-backdrop" data-close="true"></div>
-    <div class="case-panel" role="dialog" aria-modal="true" aria-labelledby="caseTitle" tabindex="-1">
-      <div class="case-bar">
-        <span class="case-bar-kicker mono">case study</span>
-        <button class="iconbtn" type="button" data-close="true" aria-label="Close case study">
-          <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-      <div class="case-scroll" id="caseScroll"></div>
-    </div>
-  </div>
-
-  <!-- Command palette -->
-  <div class="palette" id="palette" aria-hidden="true" hidden>
-    <div class="palette-backdrop" data-close="true"></div>
-    <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
-      <div class="palette-input-wrap">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
-          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/>
-          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-        <input type="text" id="paletteInput" placeholder="Jump to a section, copy email, open GitHub…" autocomplete="off" />
-        <kbd class="kbd-inline">esc</kbd>
-      </div>
-      <div class="palette-list" id="paletteList" role="listbox" aria-label="Commands"></div>
-      <div class="palette-foot mono dim">
-        <span><kbd class="kbd-inline">↑↓</kbd> navigate</span>
-        <span><kbd class="kbd-inline">↵</kbd> select</span>
-        <span><kbd class="kbd-inline">esc</kbd> close</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
 
   <script src="script.js" defer></script>
 </body>
