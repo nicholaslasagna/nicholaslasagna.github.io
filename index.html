@@ -180,235 +180,187 @@
         <header class="section-heading reveal">
           <div class="section-number">01</div>
           <div>
-            <p class="overline">Selected work</p>
-            <h2 id="workTitle">Selected engineering work.</h2>
+            <p class="overline">Selected projects</p>
+            <h2 id="workTitle">The work, up front.</h2>
           </div>
           <p class="section-intro">
-            Three projects at different layers: live infrastructure, multiplayer engine systems, and compiler tooling.
+            Seven projects across live infrastructure, multiplayer systems, compiler tooling, and full-stack products.
+            Hover a card or open its Facts control.
           </p>
         </header>
 
-        <div class="case-list">
-          <article class="case-study reveal" id="realfiction" aria-labelledby="realfictionTitle">
-            <header class="case-header">
-              <div class="case-id">
-                <span class="case-number">01.1</span>
-                <span class="status status-live"><i aria-hidden="true"></i> Live</span>
-              </div>
-              <div class="case-name">
-                <p class="overline">Player-facing Minecraft network</p>
-                <h3 id="realfictionTitle">RealFiction</h3>
-              </div>
-              <div class="case-date">2023 — present</div>
-            </header>
-
-            <div class="case-grid">
-              <div class="case-copy">
-                <p class="case-lede">
-                  A multi-server Java network running on Oracle Cloud and Ubuntu. I architected it,
-                  deployed it, and operate it while real players are connected.
-                </p>
-
-                <div class="ownership">
-                  <h4>What I own</h4>
-                  <ul role="list">
-                    <li>Network architecture and Linux administration</li>
-                    <li>Deployment, process monitoring, and rollback</li>
-                    <li>JVM tuning and live runtime debugging</li>
-                    <li>Persistent player services across server nodes</li>
-                  </ul>
-                </div>
-
-                <div class="case-actions">
-                  <a class="button button-dark" href="https://realfiction.live" target="_blank" rel="noreferrer">Visit live network <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
-                </div>
-              </div>
-
-              <div class="system-map system-map-infra" role="img" aria-label="RealFiction system map: players connect through a Velocity proxy to separate Java game nodes backed by MariaDB and Redis">
-                <div class="map-label">Request path / simplified</div>
-                <div class="map-row map-row-single">
-                  <span class="map-node map-node-soft">Players</span>
-                </div>
-                <span class="map-connector" aria-hidden="true"></span>
-                <div class="map-row map-row-single">
-                  <span class="map-node map-node-primary">Velocity</span>
-                </div>
-                <span class="map-connector" aria-hidden="true"></span>
-                <div class="map-row map-row-wide">
-                  <span class="map-node">Lobby</span>
-                  <span class="map-node">SMP</span>
-                  <span class="map-node">Arcade</span>
-                  <span class="map-node">Java nodes</span>
-                </div>
-                <span class="map-connector" aria-hidden="true"></span>
-                <div class="map-row">
-                  <span class="map-node map-node-data">MariaDB</span>
-                  <span class="map-node map-node-data">Redis</span>
-                </div>
-                <p class="map-note">Separate processes keep the network operable node by node; shared state crosses explicit data boundaries.</p>
+        <div class="project-gallery">
+          <article class="project-card reveal" id="realfiction" aria-labelledby="realfictionTitle">
+            <div class="project-media">
+              <img src="Images/projects/realfiction.webp" alt="RealFiction website showing its Minecraft world, server address, and player status" width="1600" height="870" loading="lazy" decoding="async">
+              <button class="project-facts-toggle" type="button" aria-expanded="false" aria-controls="facts-realfiction">Facts <span aria-hidden="true">+</span></button>
+              <div class="project-facts" id="facts-realfiction">
+                <ul>
+                  <li>I architect and operate the network under real player load.</li>
+                  <li>Velocity routes players across separate Java game nodes.</li>
+                  <li>Monitoring, JVM tuning, and live debugging keep persistent services running.</li>
+                </ul>
               </div>
             </div>
-
-            <details class="engineering-notes">
-              <summary>Engineering notes <span aria-hidden="true">+</span></summary>
-              <div class="notes-grid">
-                <div><h4>Constraint</h4><p>Several Java processes share player state inside a small cloud tenancy. CPU, memory, and restart time all matter.</p></div>
-                <div><h4>Decision</h4><p>Put distinct game nodes behind Velocity, with MariaDB and Redis handling persistent and cross-node state.</p></div>
-                <div><h4>Lesson</h4><p>When players are already connected, rollback, visibility, and JVM behavior are product concerns—not cleanup work.</p></div>
-              </div>
-            </details>
-
-            <footer class="case-stack"><span>Java</span><span>Velocity</span><span>Oracle Cloud</span><span>Ubuntu</span><span>MariaDB</span><span>Redis</span></footer>
-          </article>
-
-          <article class="case-study reveal" id="imagicast" aria-labelledby="imagicastTitle">
-            <header class="case-header">
-              <div class="case-id">
-                <span class="case-number">01.2</span>
-                <span class="status"><i aria-hidden="true"></i> In development</span>
-              </div>
-              <div class="case-name">
-                <p class="overline">Multiplayer engine systems</p>
-                <h3 id="imagicastTitle">Imagicast Studios</h3>
-              </div>
-              <div class="case-date">2021 — present</div>
-            </header>
-
-            <div class="case-grid case-grid-reverse">
-              <div class="case-copy">
-                <p class="case-lede">
-                  I co-founded Imagicast in 2021 and lead development of <em>Abandoned Horror</em>,
-                  an in-development 6v1v1 multiplayer game built in Unreal Engine 4/5.
-                </p>
-
-                <div class="ownership">
-                  <h4>What I own</h4>
-                  <ul role="list">
-                    <li>Distinct multiplayer roles inside a 6v1v1 loop</li>
-                    <li>Runtime multiplayer and gameplay state</li>
-                    <li>Input handling and engine-level systems</li>
-                    <li>Distributed Git workflows across an evolving codebase</li>
-                  </ul>
-                </div>
-
-                <div class="case-actions">
-                  <a class="button button-dark" href="Resume.pdf" target="_blank" rel="noreferrer">View experience <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
-                </div>
-              </div>
-
-              <div class="system-map system-map-game" role="img" aria-label="Abandoned Horror uses a six versus one versus one asymmetrical multiplayer loop with distinct roles, shared rules, and runtime state">
-                <div class="map-label">Core game constraint</div>
-                <div class="versus-mark">
-                  <span>6</span><i>v</i><span>1</span><i>v</i><span>1</span>
-                </div>
-                <div class="game-layer">
-                  <span>Distinct roles</span>
-                  <span>Shared rules</span>
-                  <span>Runtime state</span>
-                </div>
-                <p class="map-note">Different player roles, one coherent authoritative gameplay loop.</p>
+            <div class="project-body">
+              <p class="project-kicker"><span class="project-status project-status-live">Live</span> 2023 — present</p>
+              <h3 id="realfictionTitle">RealFiction</h3>
+              <p class="project-summary">I architect and operate this multi-server Java network on Oracle Cloud and Ubuntu.</p>
+              <div class="project-footer">
+                <p class="project-tech">Java · Velocity · Oracle Cloud · Linux</p>
+                <a class="project-action" href="https://realfiction.live" target="_blank" rel="noreferrer">Open live site <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
               </div>
             </div>
-
-            <details class="engineering-notes">
-              <summary>Engineering notes <span aria-hidden="true">+</span></summary>
-              <div class="notes-grid">
-                <div><h4>Constraint</h4><p>Three asymmetric sides need distinct mechanics without splintering the shared multiplayer ruleset.</p></div>
-                <div><h4>Work</h4><p>State management, input, and runtime multiplayer logic in a codebase that has kept evolving since 2021.</p></div>
-                <div><h4>Growth</h4><p>Long-term ownership taught me to weigh a fast feature against the system that still has to carry it years later.</p></div>
-              </div>
-            </details>
-
-            <footer class="case-stack"><span>Unreal Engine 4/5</span><span>C++</span><span>C#</span><span>Multiplayer</span><span>Git</span></footer>
           </article>
 
-          <article class="case-study reveal" id="reallang" aria-labelledby="reallangTitle">
-            <header class="case-header">
-              <div class="case-id">
-                <span class="case-number">01.3</span>
-                <span class="status"><i aria-hidden="true"></i> Active experiment</span>
+          <article class="project-card reveal" id="imagicast" aria-labelledby="imagicastTitle">
+            <div class="project-media">
+              <img src="Images/projects/imagicast-studios.webp" alt="Imagicast Studios website introducing its independent multiplayer game work" width="1600" height="920" loading="lazy" decoding="async">
+              <button class="project-facts-toggle" type="button" aria-expanded="false" aria-controls="facts-imagicast">Facts <span aria-hidden="true">+</span></button>
+              <div class="project-facts" id="facts-imagicast">
+                <ul>
+                  <li>I co-founded the studio and have led development since 2021.</li>
+                  <li><em>Abandoned Horror</em> is an in-development 6v1v1 multiplayer game.</li>
+                  <li>I own gameplay state, input handling, and runtime multiplayer systems.</li>
+                </ul>
               </div>
-              <div class="case-name">
-                <p class="overline">Compiler tooling</p>
+            </div>
+            <div class="project-body">
+              <p class="project-kicker"><span class="project-status">In development</span> 2021 — present</p>
+              <h3 id="imagicastTitle">Imagicast Studios / Abandoned Horror</h3>
+              <p class="project-summary">As co-founder and lead developer, I own core multiplayer systems for a 6v1v1 Unreal title.</p>
+              <div class="project-footer">
+                <p class="project-tech">Unreal Engine 4/5 · C++ · C# · Multiplayer</p>
+                <a class="project-action" href="#experience">See leadership experience <span aria-hidden="true">↓</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card project-card--wide reveal" id="reallang" aria-labelledby="reallangTitle">
+            <div class="project-media project-media--reallang">
+              <img src="Images/projects/reallang.webp" alt="RealLang demo showing source code, compiler diagnostics, generated C, editor tooling, and passing tests" width="1600" height="1091" loading="lazy" decoding="async">
+              <button class="project-facts-toggle" type="button" aria-expanded="false" aria-controls="facts-reallang">Facts <span aria-hidden="true">+</span></button>
+              <div class="project-facts" id="facts-reallang">
+                <ul>
+                  <li>I built the lexer, parser, type checker, and structured diagnostic pipeline.</li>
+                  <li>Errors carry precise locations and repair-oriented hints for people and tooling.</li>
+                  <li>The current demo includes deterministic C output, editor integration, and automated tests.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-body project-body--wide">
+              <div>
+                <p class="project-kicker"><span class="project-status">Prototype</span> Compiler tooling</p>
                 <h3 id="reallangTitle">RealLang</h3>
               </div>
-              <div class="case-date">2025 — present</div>
-            </header>
-
-            <div class="case-grid">
-              <div class="case-copy">
-                <p class="case-lede">
-                  A working language and compiler-front-end experiment built around a practical question:
-                  can compiler errors be precise enough for both people and software to act on?
-                </p>
-
-                <div class="ownership">
-                  <h4>What I built</h4>
-                  <ul role="list">
-                    <li>Lexer, recursive-descent parser, and typed syntax tree</li>
-                    <li>Type checking across the compiler pipeline</li>
-                    <li>Structured diagnostics designed for programmatic repair</li>
-                    <li>A testable path from source text to checked program</li>
-                  </ul>
-                </div>
-
-                <p class="case-proof-note">Private research project · code walkthrough available on request</p>
-              </div>
-
-              <div class="system-map system-map-compiler" role="img" aria-label="RealLang compiler pipeline: source becomes tokens, syntax tree, checked program, and structured diagnostics">
-                <div class="map-label">Compiler path / current</div>
-                <ol class="compiler-flow" role="list">
-                  <li><span>01</span><strong>Source</strong></li>
-                  <li><span>02</span><strong>Lexer</strong></li>
-                  <li><span>03</span><strong>Parser</strong></li>
-                  <li><span>04</span><strong>Type check</strong></li>
-                  <li class="compiler-output"><span>05</span><strong>Structured diagnostics</strong></li>
-                </ol>
-                  <p class="map-note">Diagnostics carry a location, cause, and repair-oriented structure—not only a line of prose.</p>
+              <p class="project-summary">I built its lexer, parser, type checker, repair-oriented diagnostics, C codegen, and editor tooling.</p>
+              <div class="project-footer">
+                <p class="project-tech">Rust · Type systems · C codegen · LSP</p>
+                <span class="project-availability">Private code walkthrough available</span>
               </div>
             </div>
+          </article>
 
-            <details class="engineering-notes">
-              <summary>Engineering notes <span aria-hidden="true">+</span></summary>
-              <div class="notes-grid">
-                <div><h4>Question</h4><p>Traditional diagnostics explain a failure to a person. What changes when a tool also needs to apply the repair?</p></div>
-                <div><h4>Decision</h4><p>Represent diagnostics as structured records, then keep the front end explicit enough to recover and continue checking.</p></div>
-                <div><h4>Current edge</h4><p>The compiler works end to end through type checking; the experiment now lives in the quality of its error recovery and fixes.</p></div>
+          <article class="project-card reveal" id="hearthaven" aria-labelledby="hearthavenTitle">
+            <div class="project-media">
+              <img src="Images/projects/hearthaven.webp" alt="HeartHaven browser game showing a decorated shared room and companion needs" width="1600" height="991" loading="lazy" decoding="async">
+              <button class="project-facts-toggle" type="button" aria-expanded="false" aria-controls="facts-hearthaven">Facts <span aria-hidden="true">+</span></button>
+              <div class="project-facts" id="facts-hearthaven">
+                <ul>
+                  <li>Authentication and player state persist across sessions.</li>
+                  <li>Shared rooms and companions synchronize for browser-based multiplayer.</li>
+                  <li>PostgreSQL Row-Level Security isolates each user’s inventory and progression.</li>
+                </ul>
               </div>
-            </details>
+            </div>
+            <div class="project-body">
+              <p class="project-kicker"><span class="project-status">In development</span> Social multiplayer</p>
+              <h3 id="hearthavenTitle">HeartHaven</h3>
+              <p class="project-summary">I built real-time shared rooms and companions; RLS keeps each player’s state isolated.</p>
+              <div class="project-footer">
+                <p class="project-tech">Next.js · TypeScript · Supabase · PostgreSQL</p>
+                <span class="project-availability">Private demo available</span>
+              </div>
+            </div>
+          </article>
 
-            <footer class="case-stack"><span>Rust</span><span>Parsing</span><span>Type systems</span><span>Diagnostics</span><span>Compiler design</span></footer>
+          <article class="project-card reveal" id="realforge" aria-labelledby="realforgeTitle">
+            <div class="project-media">
+              <img src="Images/projects/realforge.webp" alt="RealForge Markets workspace showing simulated positions, watchlists, activity, and research" width="1600" height="979" loading="lazy" decoding="async">
+              <button class="project-facts-toggle" type="button" aria-expanded="false" aria-controls="facts-realforge">Facts <span aria-hidden="true">+</span></button>
+              <div class="project-facts" id="facts-realforge">
+                <ul>
+                  <li>The workbench connects to a user-configured local model.</li>
+                  <li>The shown workspace uses simulated positions, watchlists, and strategy research.</li>
+                  <li>Dry-run previews and approval boundaries keep model output inspectable.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-body">
+              <p class="project-kicker"><span class="project-status">Prototype</span> Local-first tooling</p>
+              <h3 id="realforgeTitle">RealForge / Markets</h3>
+              <p class="project-summary">I’m building a local-model workbench for simulated-market research, with dry runs and approval gates keeping actions inspectable.</p>
+              <div class="project-footer">
+                <p class="project-tech">TypeScript · Local models · Safety tooling</p>
+                <span class="project-availability">Private architecture walkthrough available</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" id="unitedexams" aria-labelledby="unitedExamsTitle">
+            <div class="project-media">
+              <img src="Images/projects/united-exams.webp" alt="United Exams website presenting course hubs for quizzes, simulations, homework, and notes" width="1600" height="867" loading="lazy" decoding="async">
+              <button class="project-facts-toggle" type="button" aria-expanded="false" aria-controls="facts-united-exams">Facts <span aria-hidden="true">+</span></button>
+              <div class="project-facts" id="facts-united-exams">
+                <ul>
+                  <li>Study material is organized around the classes a student is actually taking.</li>
+                  <li>Adaptive question selection targets weaker topics.</li>
+                  <li>Row-Level Security keeps attempts and progress private to each user.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-body">
+              <p class="project-kicker"><span class="project-status">Prototype</span> Built 2025</p>
+              <h3 id="unitedExamsTitle">United Exams</h3>
+              <p class="project-summary">I built adaptive question selection around weak topics while RLS protects each student’s attempts and progress.</p>
+              <div class="project-footer">
+                <p class="project-tech">Next.js · PostgreSQL · Row-Level Security</p>
+                <span class="project-availability">Private product walkthrough available</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" id="playable-bosses" aria-labelledby="playableBossesTitle">
+            <div class="project-media">
+              <img src="Images/projects/competitive-playable-bosses.webp" alt="Competitive Playable Bosses artwork featuring multiple playable boss characters" width="1600" height="896" loading="lazy" decoding="async">
+              <button class="project-facts-toggle" type="button" aria-expanded="false" aria-controls="facts-playable-bosses">Facts <span aria-hidden="true">+</span></button>
+              <div class="project-facts" id="facts-playable-bosses">
+                <ul>
+                  <li>I built low-level Rust tooling with memory safety as a first constraint.</li>
+                  <li>The work required debugging concurrency and systems-resource behavior.</li>
+                  <li>Explicit failure handling protects runtime compatibility and stability.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-body">
+              <p class="project-kicker"><span class="project-status">Public mod</span> Non-commercial</p>
+              <h3 id="playableBossesTitle">Competitive Playable Bosses</h3>
+              <p class="project-summary">I built memory-safe Rust tooling for performance-sensitive runtime behavior in a public, non-commercial game mod.</p>
+              <div class="project-footer">
+                <p class="project-tech">Rust · Runtime systems · Concurrency</p>
+                <span class="project-availability">Technical walkthrough available</span>
+              </div>
+            </div>
           </article>
         </div>
 
-        <section class="more-work reveal" aria-labelledby="moreWorkTitle">
-          <div class="more-work-head">
-            <p class="overline">Also building</p>
-            <h3 id="moreWorkTitle">Additional projects.</h3>
+        <aside class="project-contact reveal" aria-label="Request a private project walkthrough">
+          <div>
+            <p class="overline">Private demos</p>
+            <h3>Want the code, architecture, or a live walkthrough?</h3>
           </div>
-          <div class="project-index">
-            <article>
-              <span class="project-index-number">A</span>
-              <div><h4>RealForge Workbench</h4><p>A desktop workbench that connects to a user-run local model. I’m building its dry-run preview and approval boundaries.</p></div>
-              <div class="project-meta"><span>React · Tauri · Python</span><span>Active</span></div>
-            </article>
-            <article>
-              <span class="project-index-number">B</span>
-              <div><h4>HeartHaven</h4><p>A browser multiplayer space with shared rooms, companions, and gardening. Player state persists in Postgres behind per-user policies.</p></div>
-              <div class="project-meta"><span>Next.js · Supabase</span><span>In development</span></div>
-            </article>
-            <article>
-              <span class="project-index-number">C</span>
-              <div><h4>Runtime tooling</h4><p>Rust tooling for a public, non-commercial game mod, focused on runtime compatibility and explicit failure handling.</p></div>
-              <div class="project-meta"><span>Rust · Concurrency</span><span>Active</span></div>
-            </article>
-            <article>
-              <span class="project-index-number">D</span>
-              <div><h4>UnitedExams</h4><p>A practice app that chooses questions from weak topics and keeps each user’s attempts and progress private with Row-Level Security.</p></div>
-              <div class="project-meta"><span>Next.js · PostgreSQL</span><span>Built 2025</span></div>
-            </article>
-          </div>
-        </section>
+          <a class="button button-dark" href="mailto:nicholaslasagna@gmail.com?subject=Portfolio%20project%20walkthrough">Ask me directly <span aria-hidden="true">↗</span></a>
+        </aside>
       </div>
     </section>
 
