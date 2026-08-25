@@ -7,7 +7,7 @@
   --surface: #fbfaf6;
   --ink: #131416;
   --ink-2: #35373b;
-  --muted: #696b70;
+  --muted: #5f6165;
   --line: rgba(19, 20, 22, 0.18);
   --line-strong: rgba(19, 20, 22, 0.42);
   --blue: #2f55ff;
@@ -644,7 +644,7 @@ ol {
 .project-tech {
   color: var(--work-muted);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   line-height: 1.55;
   letter-spacing: 0.055em;
@@ -691,7 +691,7 @@ ol {
   gap: 6px 12px;
   color: var(--work-muted);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.055em;
   text-transform: uppercase;
@@ -945,7 +945,7 @@ a.plink:focus-visible {
 .education-card dt {
   color: rgba(255,255,255,0.92);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -965,7 +965,7 @@ a.plink:focus-visible {
   margin-bottom: 6px;
   color: white;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -1016,7 +1016,7 @@ a.plink:focus-visible {
 .working-notes li > span {
   color: var(--blue-deep);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
 }
 .working-notes p {
   color: var(--ink-2);
@@ -1072,7 +1072,7 @@ a.plink:focus-visible {
   justify-content: space-between;
   gap: 20px;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
