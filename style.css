@@ -663,7 +663,7 @@ ol {
   grid-template-columns: 104px minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(14px, 1.8vw, 24px);
-  padding: 10px 0;
+  padding: 8px 0;
   border-bottom: 1px solid var(--work-line);
 }
 .project-thumb {
@@ -708,10 +708,10 @@ ol {
   max-width: 58ch;
   color: var(--work-muted);
   font-size: 13.5px;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 .project-info .project-tech {
-  margin-top: 3px;
+  margin-top: 2px;
   max-width: none;
 }
 .project-links {
