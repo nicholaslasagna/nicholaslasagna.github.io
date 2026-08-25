@@ -736,6 +736,13 @@ a.plink:focus-visible {
   color: var(--blue);
   border-bottom-color: currentColor;
 }
+/* Names the account a Source link leads to, so a different handle is expected, not a surprise. */
+.plink-handle {
+  color: var(--work-muted);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+}
 .plink-none {
   color: var(--work-muted);
   opacity: 0.75;
