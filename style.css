@@ -328,7 +328,7 @@ ol {
   border-color: currentColor;
 }
 /* Current section, set by the scroll spy. aria-current carries it to screen readers too. */
-.site-nav > a[aria-current="true"] {
+.site-nav > a:not(.nav-contact)[aria-current="true"] {
   color: var(--blue-deep);
   border-color: currentColor;
 }
@@ -755,6 +755,31 @@ a.plink:focus-visible {
     gap: 6px 16px;
     margin-top: 8px;
   }
+}
+
+/* Permalink per project. Quiet until the row is hovered, always reachable by keyboard. */
+.project-anchor {
+  margin-left: 8px;
+  color: var(--work-muted);
+  font-family: var(--mono);
+  font-size: 0.62em;
+  font-weight: 500;
+  vertical-align: 0.18em;
+  opacity: 0;
+  transition: opacity 160ms ease, color 160ms ease;
+}
+.project-row:hover .project-anchor,
+.project-row:focus-within .project-anchor,
+.project-anchor:focus-visible {
+  opacity: 1;
+}
+.project-anchor:hover,
+.project-anchor:focus-visible {
+  color: var(--blue);
+}
+@media (hover: none), (pointer: coarse) {
+  /* No hover to reveal it on touch, so keep it visible but understated. */
+  .project-anchor { opacity: 0.55; }
 }
 
 .project-note {
