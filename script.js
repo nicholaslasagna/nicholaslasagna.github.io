@@ -124,6 +124,46 @@
     window.setInterval(update, 60_000);
   }
 
+  function initSectionSpy() {
+    const links = $$('#siteNav a[href^="#"]');
+    if (!links.length) return;
+
+    const targets = links
+      .map((link) => ({ link, section: document.getElementById(link.getAttribute('href').slice(1)) }))
+      .filter((entry) => entry.section);
+    if (!targets.length) return;
+
+    const header = $('.site-header');
+    let scheduled = false;
+
+    const update = () => {
+      scheduled = false;
+      const offset = (header ? header.getBoundingClientRect().height : 0) + 24;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+      // Geometry beats intersection ratios here: pick the last section whose top has
+      // passed under the header, so a tall section stays current while it fills the screen.
+      let current = null;
+      for (const entry of targets) {
+        if (entry.section.getBoundingClientRect().top <= offset) current = entry;
+      }
+      if (atBottom) current = targets[targets.length - 1];
+
+      targets.forEach((entry) => {
+        if (entry === current) entry.link.setAttribute('aria-current', 'true');
+        else entry.link.removeAttribute('aria-current');
+      });
+    };
+
+    window.addEventListener('scroll', () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(update);
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  }
+
   function initYear() {
     const year = $('#year');
     if (year) year.textContent = String(new Date().getFullYear());
@@ -140,7 +180,7 @@
 
   if (enhancementReady) document.documentElement.classList.add('js-ready');
 
-  [initTheme, initScrollProgress, initLocalTime, initYear].forEach((initializer) => {
+  [initTheme, initScrollProgress, initLocalTime, initSectionSpy, initYear].forEach((initializer) => {
     try { initializer(); } catch (_) {}
   });
 })();

@@ -322,7 +322,13 @@ ol {
   padding-block: 8px;
   border-bottom: 1px solid transparent;
 }
-.site-nav > a:not(.nav-contact):hover {
+.site-nav > a:not(.nav-contact):hover,
+.site-nav > a:not(.nav-contact):focus-visible {
+  color: var(--blue-deep);
+  border-color: currentColor;
+}
+/* Current section, set by the scroll spy. aria-current carries it to screen readers too. */
+.site-nav > a[aria-current="true"] {
   color: var(--blue-deep);
   border-color: currentColor;
 }
