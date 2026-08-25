@@ -438,7 +438,7 @@ ol {
   color: var(--blue-deep);
 }
 .hero-intro {
-  max-width: 66ch;
+  max-width: 56ch;
   margin-top: 34px;
   color: var(--ink-2);
   font-size: clamp(17px, 1.6vw, 21px);
@@ -705,7 +705,7 @@ ol {
 }
 .project-info .project-summary {
   margin-top: 2px;
-  max-width: 78ch;
+  max-width: 58ch;
   color: var(--work-muted);
   font-size: 13.5px;
   line-height: 1.4;
@@ -998,7 +998,7 @@ a.plink:focus-visible {
 }
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(250px, 0.8fr) minmax(320px, 1.1fr) minmax(270px, 0.72fr);
+  grid-template-columns: minmax(200px, 0.62fr) minmax(400px, 1.45fr) minmax(250px, 0.68fr);
   gap: clamp(36px, 6vw, 82px);
   align-items: start;
 }
