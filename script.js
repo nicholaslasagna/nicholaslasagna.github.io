@@ -124,37 +124,6 @@
     window.setInterval(update, 60_000);
   }
 
-  function initProjectFacts() {
-    const toggles = $$('.project-facts-toggle');
-    if (!toggles.length) return;
-
-    const setOpen = (button, open) => {
-      const card = button.closest('.project-card');
-      const factsId = button.getAttribute('aria-controls');
-      const facts = factsId ? document.getElementById(factsId) : null;
-
-      card?.classList.toggle('is-facts-open', open);
-      button.setAttribute('aria-expanded', String(open));
-      facts?.setAttribute('aria-hidden', String(!open));
-    };
-
-    toggles.forEach((button) => {
-      setOpen(button, false);
-      button.addEventListener('click', () => {
-        const shouldOpen = button.getAttribute('aria-expanded') !== 'true';
-        toggles.forEach((other) => {
-          if (other !== button) setOpen(other, false);
-        });
-        setOpen(button, shouldOpen);
-      });
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key !== 'Escape') return;
-      toggles.forEach((button) => setOpen(button, false));
-    });
-  }
-
   function initYear() {
     const year = $('#year');
     if (year) year.textContent = String(new Date().getFullYear());
@@ -164,7 +133,6 @@
   try {
     initNavigation();
     initReveal();
-    initProjectFacts();
     enhancementReady = true;
   } catch (_) {
     // Keep the full page visible and the navigation expanded if enhancement fails.

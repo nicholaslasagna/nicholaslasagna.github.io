@@ -405,8 +405,8 @@ ol {
 
 /* Hero */
 .hero {
-  padding-top: clamp(36px, 5vw, 70px);
-  padding-bottom: clamp(72px, 8vw, 120px);
+  padding-top: clamp(30px, 4vw, 56px);
+  padding-bottom: clamp(48px, 5.5vw, 84px);
 }
 
 .hero-status {
@@ -458,8 +458,8 @@ ol {
 }
 
 .hero h1 {
-  max-width: 10.6ch;
-  font-size: clamp(60px, 8vw, 112px);
+  max-width: 13.5ch;
+  font-size: clamp(52px, 6.4vw, 88px);
   font-weight: 750;
   line-height: 0.88;
   letter-spacing: -0.068em;
@@ -484,8 +484,8 @@ ol {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 18px 26px;
-  margin-top: 36px;
+  gap: 16px 24px;
+  margin-top: 28px;
 }
 
 .portrait {
@@ -746,78 +746,25 @@ ol {
   aspect-ratio: 1600 / 1091;
 }
 
-.project-facts-toggle {
-  position: absolute;
-  z-index: 4;
-  top: 18px;
-  right: 18px;
-  display: none;
-  min-height: 38px;
-  align-items: center;
-  gap: 14px;
-  padding: 9px 12px;
-  border: 1px solid rgba(255,255,255,0.42);
-  color: white;
-  background: rgba(8,9,13,0.78);
-  cursor: pointer;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  transition: color 180ms ease, background 180ms ease;
-}
 
-.js-ready .project-facts-toggle {
-  display: inline-flex;
-}
 
-.project-facts-toggle:hover,
-.project-facts-toggle:focus-visible {
-  color: #111;
-  background: #c9ef55;
-}
 
-.project-facts-toggle span {
-  font-size: 15px;
-  line-height: 0.7;
-  transition: transform 180ms ease;
-}
 
-.project-card.is-facts-open .project-facts-toggle span {
-  transform: rotate(45deg);
-}
+
+
 
 .project-facts {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
   display: grid;
-  align-content: end;
-  padding: clamp(22px, 3vw, 40px);
-  color: white;
-  background:
-    linear-gradient(180deg, rgba(8,9,13,0.08) 4%, rgba(8,9,13,0.84) 55%, rgba(8,9,13,0.97) 100%);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px);
-  transition:
-    opacity 260ms ease,
-    transform 340ms var(--ease);
+  gap: 7px;
+  margin-top: 14px;
+  max-width: 62ch;
 }
-
-.project-facts ul {
-  display: grid;
-  max-width: 58ch;
-  gap: 10px;
-}
-
 .project-facts li {
   position: relative;
-  padding-left: 20px;
-  color: rgba(255,255,255,0.94);
-  font-size: clamp(13px, 1.15vw, 16px);
-  line-height: 1.45;
+  padding-left: 18px;
+  color: var(--work-muted);
+  font-size: 14.5px;
+  line-height: 1.5;
 }
 
 .project-facts li::before {
@@ -828,24 +775,11 @@ ol {
   font-family: var(--mono);
 }
 
-.project-card.is-facts-open .project-facts {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-.project-card.is-facts-open .project-media img {
-  filter: saturate(0.68) brightness(0.8);
-  transform: scale(1.015);
-}
 
 @media (hover: hover) and (pointer: fine) {
-  .project-card:hover:not(:focus-within) .project-facts {
-    opacity: 1;
-    transform: translateY(0);
-  }
 
   .project-card:hover:not(:focus-within) .project-media img {
-    filter: saturate(0.68) brightness(0.8);
     transform: scale(1.015);
   }
 }
@@ -1005,28 +939,6 @@ ol {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .project-facts-toggle {
-    position: static;
-    width: 100%;
-    justify-content: space-between;
-    padding: 14px 18px;
-    border: 0;
-    border-top: 1px solid var(--work-line);
-    background: #181a20;
-  }
-
-  .js-ready .project-card:not(.is-facts-open) .project-facts {
-    display: none;
-  }
-
-  .project-facts {
-    position: static;
-    padding: 22px;
-    background: #181a20;
-    opacity: 1;
-    transform: none;
-  }
-
   .project-media::after {
     display: none;
   }
@@ -1731,9 +1643,7 @@ ol {
     background: white;
   }
 
-  .work::before,
-  .project-facts-toggle,
-  .project-facts {
+  .work::before {
     display: none;
   }
 
