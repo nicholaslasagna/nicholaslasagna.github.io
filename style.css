@@ -789,6 +789,27 @@ a.plink:focus-visible {
   .project-anchor { opacity: 0.55; }
 }
 
+/* Touch targets: WCAG 2.2 asks for 24x24 CSS px. These are small inline links,
+   so grow the hit area on coarse pointers without moving anything visually. */
+@media (pointer: coarse) {
+  .plink,
+  .project-anchor,
+  .project-note-link,
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+  }
+  .project-anchor {
+    justify-content: center;
+    min-width: 24px;
+    margin-left: 2px;
+  }
+  .project-links {
+    gap: 8px 14px;
+  }
+}
+
 .project-note {
   margin-top: 18px;
   color: var(--work-muted);
