@@ -1371,9 +1371,36 @@ a.plink:focus-visible {
   .scroll-line,
   .nav-toggle,
   .theme-toggle,
-  .contact,
   .site-footer {
     display: none !important;
+  }
+
+  /* Contact stays: a printed portfolio with no way to reach the author is a dead end. */
+  .contact {
+    color: #111;
+    background: white;
+    break-before: page;
+  }
+
+  /* On paper a link shows no destination, so print the URL beside it. */
+  .project-links a[href^="http"]::after,
+  .contact a[href^="http"]::after,
+  .contact a[href^="mailto"]::after {
+    content: " " attr(href);
+    font-weight: 400;
+    font-size: 9px;
+    color: #555;
+    word-break: break-all;
+  }
+
+  /* Keep a project's row, and each section heading, from splitting across pages. */
+  .project-row,
+  .education-card,
+  .experience-card {
+    break-inside: avoid;
+  }
+  .section-heading {
+    break-after: avoid;
   }
 
   body,
