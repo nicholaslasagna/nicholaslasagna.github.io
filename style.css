@@ -406,18 +406,6 @@ ol {
   color: var(--ink);
 }
 
-.availability i,
-.status i {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 14%, transparent);
-}
-.availability i {
-  color: var(--green);
-}
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.58fr) minmax(300px, 0.58fr);
@@ -834,14 +822,6 @@ a.plink:focus-visible {
   align-items: center;
   margin-right: 8px;
   color: #ffc25e;
-}
-.project-status::before {
-  width: 6px;
-  height: 6px;
-  margin-right: 7px;
-  content: "";
-  background: currentColor;
-  border-radius: 50%;
 }
 .project-status-live {
   color: #77e3a9;
