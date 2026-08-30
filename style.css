@@ -802,6 +802,88 @@ a.plink:focus-visible {
   }
 }
 
+/* Commit activity. Blue-to-violet rather than the usual green, to match the site
+   and to avoid reintroducing a status-indicator palette. Sits on the dark work band. */
+.contrib {
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  padding-top: clamp(26px, 3vw, 36px);
+  border-top: 1px solid var(--work-line);
+}
+.contrib[hidden] { display: none; }
+.contrib-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 18px;
+}
+.contrib-total {
+  color: var(--work-muted);
+  font-size: 14px;
+}
+.contrib-total strong {
+  color: var(--work-text);
+  font-weight: 700;
+}
+.contrib-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.contrib-cell {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--work-text) 7%, transparent);
+}
+.contrib-cell.is-pad { background: none; }
+.contrib-cell[data-lvl="1"] { background: color-mix(in srgb, var(--blue) 30%, transparent); }
+.contrib-cell[data-lvl="2"] { background: color-mix(in srgb, var(--blue) 55%, transparent); }
+.contrib-cell[data-lvl="3"] { background: color-mix(in srgb, var(--blue) 80%, transparent); }
+.contrib-cell[data-lvl="4"] { background: color-mix(in srgb, var(--blue) 55%, var(--violet)); }
+.contrib-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 20px;
+  margin-top: 14px;
+  color: var(--work-muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.contrib-scale {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.contrib-scale i {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+}
+.contrib-scale i[data-lvl="1"] { background: color-mix(in srgb, var(--blue) 30%, transparent); }
+.contrib-scale i[data-lvl="2"] { background: color-mix(in srgb, var(--blue) 55%, transparent); }
+.contrib-scale i[data-lvl="3"] { background: color-mix(in srgb, var(--blue) 80%, transparent); }
+.contrib-scale i[data-lvl="4"] { background: color-mix(in srgb, var(--blue) 55%, var(--violet)); }
+.contrib-link {
+  color: var(--work-text);
+  border-bottom: 1px solid transparent;
+}
+.contrib-link:hover,
+.contrib-link:focus-visible { border-bottom-color: currentColor; }
+
+@media (max-width: 720px) {
+  .contrib-cell,
+  .contrib-scale i { width: 9px; height: 9px; }
+}
+
 .project-note {
   margin-top: 18px;
   color: var(--work-muted);

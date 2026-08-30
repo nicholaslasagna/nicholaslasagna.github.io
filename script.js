@@ -164,6 +164,52 @@
     update();
   }
 
+  async function initContributions() {
+    const figure = $('#contrib');
+    if (!figure) return;
+    const grid = $('[data-contrib-grid]', figure);
+    const total = $('[data-contrib-total]', figure);
+    if (!grid || !total) return;
+
+    let data;
+    try {
+      const res = await fetch('https://github-contributions-api.jogruber.de/v4/nicholaslasagna?y=last', { mode: 'cors' });
+      if (!res.ok) return;
+      data = await res.json();
+    } catch (_) {
+      return; // Leave the section hidden rather than showing an empty grid.
+    }
+
+    const days = Array.isArray(data?.contributions) ? data.contributions : [];
+    const count = Number(data?.total?.lastYear);
+    if (!days.length || !Number.isFinite(count)) return;
+
+    // Pad the front so the first column starts on a Sunday and the columns read as weeks.
+    const lead = new Date(days[0].date + 'T00:00:00').getDay();
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < lead; i += 1) {
+      const pad = document.createElement('span');
+      pad.className = 'contrib-cell is-pad';
+      fragment.appendChild(pad);
+    }
+
+    const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    days.forEach((day) => {
+      const cell = document.createElement('span');
+      cell.className = 'contrib-cell';
+      cell.dataset.lvl = String(Math.max(0, Math.min(4, Number(day.level) || 0)));
+      const n = Number(day.count) || 0;
+      cell.title = `${n} contribution${n === 1 ? '' : 's'} on ${fmt.format(new Date(day.date + 'T00:00:00Z'))}`;
+      fragment.appendChild(cell);
+    });
+
+    grid.appendChild(fragment);
+    total.textContent = count.toLocaleString();
+    grid.setAttribute('aria-label',
+      `${count.toLocaleString()} contributions in the last year, across ${days.filter((d) => Number(d.count) > 0).length} active days`);
+    figure.hidden = false;
+  }
+
   function initYear() {
     const year = $('#year');
     if (year) year.textContent = String(new Date().getFullYear());
@@ -180,7 +226,7 @@
 
   if (enhancementReady) document.documentElement.classList.add('js-ready');
 
-  [initTheme, initScrollProgress, initLocalTime, initSectionSpy, initYear].forEach((initializer) => {
+  [initTheme, initScrollProgress, initLocalTime, initSectionSpy, initContributions, initYear].forEach((initializer) => {
     try { initializer(); } catch (_) {}
   });
 })();
