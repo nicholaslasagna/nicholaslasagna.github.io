@@ -173,14 +173,18 @@
 
     let data;
     try {
-      const res = await fetch('https://github-contributions-api.jogruber.de/v4/nicholaslasagna?y=last', { mode: 'cors' });
+      const res = await fetch('https://github-contributions-api.jogruber.de/v4/nicholaslasagna?y=last', { mode: 'cors', signal: AbortSignal.timeout(5000) });
       if (!res.ok) return;
       data = await res.json();
     } catch (_) {
       return; // Leave the section hidden rather than showing an empty grid.
     }
 
-    const days = Array.isArray(data?.contributions) ? data.contributions : [];
+    const days = Array.isArray(data?.contributions) ? data.contributions.filter((day) =>
+      /^\d{4}-\d{2}-\d{2}$/.test(day?.date) &&
+      Number.isFinite(new Date(day.date + 'T00:00:00Z').getTime()) &&
+      Number.isFinite(Number(day.count)) && Number(day.count) >= 0
+    ) : [];
     const count = Number(data?.total?.lastYear);
     if (!days.length || !Number.isFinite(count)) return;
 
