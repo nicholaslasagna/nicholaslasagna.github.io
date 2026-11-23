@@ -209,10 +209,11 @@
               <a class="plink" href="https://github.com/nicholaslasagna/RealForge-releases/releases" aria-label="View RealForge downloads on GitHub">View downloads<span aria-hidden="true"> ↗</span></a>
             </div>
             <details class="project-detail">
-              <summary>Local-first AI workflows<span class="sr-only">: RealForge Workbench</span></summary>
+              <summary>How patch review works<span class="sr-only">: RealForge Workbench</span></summary>
               <dl>
                 <div><dt>Coding workflow</dt><dd>Start with a local workspace, generate a proposed patch, and review the diff before applying or cancelling it. Previewing the patch does not edit the files.</dd></div>
                 <div><dt>Engineering focus</dt><dd>The React and TypeScript interface handles review; the native Tauri layer checks for approval before writing the proposed patch to the workspace.</dd></div>
+                <div><dt>Example: decide whether to apply a patch</dt><dd>Suppose you ask for duration formatter tests: 0 seconds should render as <code>0s</code>, and 90 seconds as <code>1m 30s</code>. Check both expected results in the diff. Apply the patch only if it adds the tests and leaves the formatter unchanged; cancel if it rewrites the formatter.</dd></div>
                 <div><dt>macOS preview</dt><dd>Look for the Apple Silicon DMG under Assets on GitHub. The Workbench uses an Imagicast account, and coding runs require a configured model provider. Local inference is supported; account and connected features use network services. The Workbench source is private.</dd></div>
               </dl>
             </details>
@@ -250,7 +251,7 @@
             <div class="project-links">
               <a class="plink" href="#realfiction-case-study">Read case study<span class="sr-only">: RealFiction</span><span aria-hidden="true"> ↓</span></a>
               <a class="plink plink-live" href="https://realfiction.live" aria-label="RealFiction: view website (opens in a new tab)" target="_blank" rel="noreferrer">Live<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in a new tab)</span></a>
-              <span class="plink plink-none">Source private</span>
+              <a class="plink plink-src" href="https://github.com/nicholaslasagna/RealFiction-Web" aria-label="RealFiction: view web integration source (opens in a new tab)" target="_blank" rel="noreferrer">Web integration source<span aria-hidden="true"> ↗</span></a>
             </div>
             <article class="project-detail project-case" id="realfiction-case-study" aria-labelledby="realfictionCaseTitle" tabindex="-1">
               <p class="overline">Engineering case study</p>
@@ -265,6 +266,7 @@
               <summary>Day-to-day operations<span class="sr-only">: RealFiction</span></summary>
               <dl>
                 <div><dt>Live operations</dt><dd>I’ve operated RealFiction since 2023. My responsibilities include process monitoring, JVM tuning, and debugging across the network’s backend services.</dd></div>
+                <div><dt>Public source</dt><dd>The repo link is for the web integration. The sync case study describes my own operations work. Production configuration is private.</dd></div>
               </dl>
             </details>
           </li>
