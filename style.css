@@ -1546,6 +1546,9 @@ a.plink:focus-visible {
 .project-detail dl { display: grid; gap: 18px; border-left: 2px solid #687bc7; padding: 4px 0 4px 20px; max-width: 76ch; }
 .project-detail dt { color: var(--work-text); font-weight: 650; margin-bottom: 4px; }
 .project-detail dd { margin: 0; line-height: 1.65; }
+.project-case { margin-block: 8px; }
+.project-case .overline { color: #a9b7ff; margin-bottom: 6px; }
+.project-case h4 { color: var(--work-text); font-size: clamp(18px, 2vw, 24px); line-height: 1.2; margin-bottom: 16px; }
 .contact-context { margin-top: 24px; color: #fff; font-size: 16px; line-height: 1.8; }
 @media (max-width: 860px) {
   .work-paths { grid-template-columns: 1fr; }
