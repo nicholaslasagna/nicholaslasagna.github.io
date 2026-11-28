@@ -265,7 +265,7 @@
             <details class="project-detail">
               <summary>Day-to-day operations<span class="sr-only">: RealFiction</span></summary>
               <dl>
-                <div><dt>Live operations</dt><dd>I’ve operated RealFiction since 2023. My responsibilities include process monitoring, JVM tuning, and debugging across the network’s backend services.</dd></div>
+                <div><dt>Live operations</dt><dd>I’ve operated RealFiction since 2023. My responsibilities include monitoring and managing Ubuntu services over SSH with systemd, configuring Java processes, and debugging across the network.</dd></div>
                 <div><dt>Public source</dt><dd>The repo link is for the web integration. The sync case study describes my own operations work. Production configuration is private.</dd></div>
               </dl>
             </details>
@@ -277,15 +277,15 @@
             <div class="project-info">
               <p class="project-meta"><span class="project-status project-status-live">Live</span> <span>Social multiplayer</span></p>
               <h3>HeartHaven<a class="project-anchor" href="#hearthaven" aria-label="Link to HeartHaven"><span aria-hidden="true">#</span></a></h3>
-              <p class="project-summary">A shared browser world with persistent rooms, real-time presence, and version-checked updates to keep concurrent edits consistent.</p>
+              <p class="project-summary">A shared browser world with persistent rooms, real-time presence, and version checks on room saves.</p>
               <p class="project-tech">Next.js · TypeScript · Supabase · PostgreSQL</p>
             </div>
             <div class="project-links"><a class="plink plink-live" href="https://realfiction.store" aria-label="HeartHaven: view website (opens in a new tab)" target="_blank" rel="noreferrer">Live<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="plink plink-src" href="https://github.com/nicholaslasagna/HeartHaven" aria-label="HeartHaven: view source on GitHub (opens in a new tab)" target="_blank" rel="noreferrer">Source<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in a new tab)</span></a></div>
             <details class="project-detail">
-              <summary>Keeping shared state consistent<span class="sr-only">: HeartHaven</span></summary>
+              <summary>How room saves work<span class="sr-only">: HeartHaven</span></summary>
               <dl>
                 <div><dt>System</dt><dd>Supabase Realtime handles presence and position broadcasts. Host-owned database rows hold the canonical room and garden layouts.</dd></div>
-                <div><dt>Key decision</dt><dd>Edits go through database RPCs with optimistic-concurrency version checks. Row-Level Security policies define access to persistent player data.</dd></div>
+                <div><dt>Key decision</dt><dd>The editor sends its expected room version when saving and handles a conflict response if that version is stale. Row-Level Security policies define access to persistent player data.</dd></div>
                 <div><dt>Scope</dt><dd>A browser-based multiplayer project built with Next.js, TypeScript, Supabase, and PostgreSQL. Architecture and database migrations are available in the public repository.</dd></div>
               </dl>
             </details>
@@ -296,15 +296,15 @@
             </div>
             <div class="project-info">
               <p class="project-meta"><span class="project-status project-status-wip">In development</span> <span>2021 — present</span></p>
-              <h3>Imagicast Studios / Abandoned Horror<a class="project-anchor" href="#imagicast" aria-label="Link to Imagicast Studios / Abandoned Horror"><span aria-hidden="true">#</span></a></h3>
-              <p class="project-summary">As co-founder and lead developer, I own core multiplayer systems for <em>Abandoned Horror</em>, a 6v1v1 Unreal title in development.</p>
-              <p class="project-tech">Unreal Engine 4/5 · C++ · C# · Multiplayer</p>
+              <h3>Imagicast Studios<a class="project-anchor" href="#imagicast" aria-label="Link to Imagicast Studios"><span aria-hidden="true">#</span></a></h3>
+              <p class="project-summary">As co-founder and lead developer, I build C++ gameplay and multiplayer systems for an asymmetrical Unreal Engine game in development.</p>
+              <p class="project-tech">Unreal Engine · C++ · Multiplayer</p>
             </div>
-            <div class="project-links"><a class="plink plink-live" href="https://imagicaststudios.com/games/abandoned-horror" aria-label="Imagicast Studios / Abandoned Horror: view website (opens in a new tab)" target="_blank" rel="noreferrer">Project overview<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in a new tab)</span></a><span class="plink plink-none">Source private</span><a class="plink" href="#experience">Role<span aria-hidden="true"> ↓</span></a></div>
+            <div class="project-links"><a class="plink plink-live" href="https://imagicaststudios.com/games/abandoned-horror" aria-label="Imagicast Studios: view website (opens in a new tab)" target="_blank" rel="noreferrer">Project overview<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in a new tab)</span></a><span class="plink plink-none">Source private</span><a class="plink" href="#experience">Role<span aria-hidden="true"> ↓</span></a></div>
             <details class="project-detail">
-              <summary>Multiplayer game systems<span class="sr-only">: Imagicast Studios / Abandoned Horror</span></summary>
+              <summary>Multiplayer game systems<span class="sr-only">: Imagicast Studios</span></summary>
               <dl>
-                <div><dt>Project</dt><dd>Abandoned Horror is an asymmetrical 6v1v1 multiplayer title in development at Imagicast Studios.</dd></div>
+                <div><dt>Project</dt><dd>An asymmetrical multiplayer horror game in development at Imagicast Studios.</dd></div>
                 <div><dt>Role</dt><dd>Co-founder and lead developer, working on gameplay state, input handling, and multiplayer runtime systems in Unreal Engine.</dd></div>
                 <div><dt>Scope</dt><dd>The studio site is public; the game is still in development and its source is private.</dd></div>
               </dl>
@@ -395,7 +395,7 @@
               <p class="experience-org">Imagicast Studios · Berkeley, CA</p>
             </div>
             <ul role="list">
-              <li>Lead core systems architecture for <em>Abandoned Horror</em>, an in-development asymmetrical multiplayer game.</li>
+              <li>Lead core systems development for an asymmetrical multiplayer game in Unreal Engine.</li>
               <li>Build engine-level gameplay state, input handling, and runtime multiplayer logic in Unreal Engine 4/5.</li>
               <li>Coordinate a distributed development workflow while balancing maintainability with feature delivery.</li>
             </ul>
